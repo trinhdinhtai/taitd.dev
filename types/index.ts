@@ -18,3 +18,12 @@ export interface NavItem {
 export interface ContentNavItem extends NavItem {
   href: string;
 }
+
+export type SiteMetaData = {
+  title: {
+    template: string;
+    default: string;
+  };
+  description: string;
+  newsletterUrl?: string;
+};

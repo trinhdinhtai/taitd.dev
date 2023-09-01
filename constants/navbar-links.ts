@@ -1,4 +1,4 @@
-import { defaultAuthor } from "@/lib/metadata";
+import { defaultAuthor, siteMetadata } from "@/lib/metadata";
 import { ContentNavItem, NavItem } from "@/types";
 
 const content: ContentNavItem[] = [
@@ -19,6 +19,11 @@ const content: ContentNavItem[] = [
       (platform) => platform.name === "youtube"
     )?.link as string,
     description: "My YouTube channel where I talk about web development.",
+  },
+  {
+    title: "Newsletter",
+    href: siteMetadata.newsletterUrl as string,
+    description: "My newsletter about software development",
   },
   {
     title: "Teaching",

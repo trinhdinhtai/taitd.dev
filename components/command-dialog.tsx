@@ -1,12 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Calculator,
   Calendar,
   CreditCard,
+  File,
+  Github,
+  Laptop,
+  Moon,
   Settings,
   Smile,
+  Sun,
+  Twitter,
   User,
 } from "lucide-react";
 
@@ -23,8 +29,14 @@ import {
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { DialogProps } from "@radix-ui/react-dialog";
+import { navigationLinks } from "@/constants/navbar-links";
+import { useRouter } from "next/navigation";
+import { defaultAuthor } from "@/lib/metadata";
+import { useTheme } from "next-themes";
 
 export function CommandShortcutDialog({ ...props }: DialogProps) {
+  const router = useRouter();
+  const { setTheme } = useTheme();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -37,6 +49,19 @@ export function CommandShortcutDialog({ ...props }: DialogProps) {
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
+  }, []);
+
+  const navigate = (href: string) => {
+    if (href.startsWith("http")) {
+      window.open(href, "_blank");
+    } else {
+      router.push(href);
+    }
+  };
+
+  const runCommand = useCallback((command: () => unknown) => {
+    setOpen(false);
+    command();
   }, []);
 
   return (
@@ -58,36 +83,83 @@ export function CommandShortcutDialog({ ...props }: DialogProps) {
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Suggestions">
-            <CommandItem>
-              <Calendar className="mr-2 h-4 w-4" />
-              <span>Calendar</span>
+          <CommandGroup heading="Content">
+            {navigationLinks.map((link) =>
+              link.content ? (
+                link.content.map((subItem) => (
+                  <CommandItem
+                    key={subItem.title.trim()}
+                    onSelect={() => {
+                      runCommand(() => navigate(subItem.href as string));
+                    }}
+                  >
+                    <File className="mr-2 h-4 w-4" />
+                    <span>{subItem.title}</span>
+                  </CommandItem>
+                ))
+              ) : (
+                <CommandItem
+                  key={link.title.trim()}
+                  onSelect={() => {
+                    runCommand(() => navigate(link.href as string));
+                  }}
+                >
+                  <File className="mr-2 h-4 w-4" />
+                  <span>{link.title}</span>
+                </CommandItem>
+              )
+            )}
+          </CommandGroup>
+
+          <CommandSeparator />
+
+          {/* Social */}
+          <CommandGroup heading="Social">
+            <CommandItem
+              onSelect={() => {
+                runCommand(() =>
+                  navigate(
+                    defaultAuthor.socialProfiles.find(
+                      (platform) => platform.name === "twitter"
+                    )?.link as string
+                  )
+                );
+              }}
+            >
+              <Twitter className="mr-2 h-4 w-4" />
+              <span>Twitter</span>
             </CommandItem>
-            <CommandItem>
-              <Smile className="mr-2 h-4 w-4" />
-              <span>Search Emoji</span>
-            </CommandItem>
-            <CommandItem>
-              <Calculator className="mr-2 h-4 w-4" />
-              <span>Calculator</span>
+            <CommandItem
+              onSelect={() => {
+                runCommand(() =>
+                  navigate(
+                    defaultAuthor.socialProfiles.find(
+                      (platform) => platform.name === "github"
+                    )?.link as string
+                  )
+                );
+              }}
+            >
+              <Github className="mr-2 h-4 w-4" />
+              <span>Github</span>
             </CommandItem>
           </CommandGroup>
+
           <CommandSeparator />
-          <CommandGroup heading="Settings">
-            <CommandItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-              <CommandShortcut>⌘P</CommandShortcut>
+
+          {/* Theme setting */}
+          <CommandGroup heading="Theme">
+            <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
+              <Sun className="mr-2 h-4 w-4" />
+              Light
             </CommandItem>
-            <CommandItem>
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>Billing</span>
-              <CommandShortcut>⌘B</CommandShortcut>
+            <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
+              <Moon className="mr-2 h-4 w-4" />
+              Dark
             </CommandItem>
-            <CommandItem>
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
-              <CommandShortcut>⌘S</CommandShortcut>
+            <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
+              <Laptop className="mr-2 h-4 w-4" />
+              System
             </CommandItem>
           </CommandGroup>
         </CommandList>

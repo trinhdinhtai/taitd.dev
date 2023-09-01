@@ -1,6 +1,15 @@
-import PostPreview from "@/components/posts/PostPreview";
+import PostCard from "@/components/posts/PostCard";
+import { defaultAuthor } from "@/lib/metadata";
 import { sortByDate } from "@/lib/utils";
-import { allPosts, Post } from "contentlayer/generated";
+import { allPosts } from "contentlayer/generated";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Posts",
+    description: `Posts by ${defaultAuthor.name}`,
+  };
+}
 
 const PostsPage = () => {
   const posts = allPosts
@@ -14,7 +23,7 @@ const PostsPage = () => {
         <hr className="my-4" />
         <div className="grid grid-flow-row gap-2">
           {posts.map((post) => (
-            <PostPreview post={post} key={post._id} />
+            <PostCard post={post} key={post._id} />
           ))}
         </div>
       </div>

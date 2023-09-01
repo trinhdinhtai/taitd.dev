@@ -9,6 +9,7 @@ import { useState } from "react";
 import MobileNavbar from "./mobile-navbar";
 import MainNavbar from "./main-navbar";
 import { ThemeToggle } from "../theme-toggle";
+import { CommandShortcutDialog } from "../command-dialog";
 
 const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -48,7 +49,7 @@ const Navbar = () => {
             </div>
 
             <div className="order-2 flex w-full items-center gap-2 sm:order-3 sm:w-fit">
-              {/* <CommandDialogComponent /> */}
+              <CommandShortcutDialog />
               <ThemeToggle />
             </div>
           </div>

@@ -23,7 +23,7 @@ const Navbar = () => {
           visible && "top-4 animate-in"
         )}
       >
-        <div className="flex items-center gap-2 rounded-full border-b border-foreground/25 bg-background/95 px-3 py-2 shadow-md supports-[backdrop-filter]:bg-background/60 supports-[backdrop-filter]:bg-clip-padding supports-[backdrop-filter]:backdrop-blur sm:justify-between sm:rounded-none sm:px-3">
+        <div className="flex items-center gap-2 rounded-full dark:border-b dark:border-foreground/25 bg-background/95 px-3 py-2 shadow dark:shadow-none supports-[backdrop-filter]:bg-background/60 supports-[backdrop-filter]:bg-clip-padding supports-[backdrop-filter]:backdrop-blur sm:justify-between sm:rounded-none sm:px-3">
           <div className="container mx-auto flex max-w-6xl">
             <div className="flex items-center justify-start">
               <div className="group aspect-square h-auto w-10 overflow-hidden rounded-full">

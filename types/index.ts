@@ -1,5 +1,11 @@
+export type SocialProfile = {
+  name: string;
+  link: string;
+};
+
 export type AuthorType = {
   name: string;
+  socialProfiles: SocialProfile[];
 };
 
 export interface NavItem {

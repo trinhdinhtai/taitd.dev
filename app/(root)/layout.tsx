@@ -1,9 +1,17 @@
 import Navbar from "@/components/navbar";
+import { cn } from "@/lib/utils";
 
-const RootLayout = () => {
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <>
       <Navbar />
+      <main className={cn("mt-20")} id="main-content">
+        {children}
+      </main>
     </>
   );
 };

@@ -1,11 +1,15 @@
 import { Post } from "@/.contentlayer/generated";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { compareDesc } from "date-fns";
+import { compareDesc, format, parseISO } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const formatDate = (date: string) => {
+  return format(parseISO(date), "LLLL d, yyyy");
+};
 
 export const sortByDate = (a: Post, b: Post) =>
   compareDesc(

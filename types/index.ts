@@ -38,3 +38,9 @@ export type SeriesItem = {
 };
 
 export type PostSeries = Series & { posts: SeriesItem[] };
+
+export interface PostHeading {
+  heading: number;
+  text: string;
+  slug: string;
+}

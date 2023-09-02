@@ -1,5 +1,6 @@
 import { defineDocumentType } from "contentlayer/source-files";
 import { calculateReadingTime } from "../utils";
+import { Series } from "./series";
 
 const tagOptions = [
   "starter",
@@ -42,6 +43,10 @@ export const Post = defineDocumentType(() => ({
       type: "list",
       of: { type: "string", options: tagOptions },
       required: false,
+    },
+    series: {
+      type: "nested",
+      of: Series,
     },
   },
   computedFields: {

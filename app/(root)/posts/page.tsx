@@ -1,4 +1,4 @@
-import PostCard from "@/components/posts/PostCard";
+import PostCard from "@/components/posts/post-card";
 import { defaultAuthor } from "@/lib/metadata";
 import { sortByDate } from "@/lib/utils";
 import { allPosts } from "contentlayer/generated";

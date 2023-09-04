@@ -1,6 +1,13 @@
 import { Series, allPosts } from "@/.contentlayer/generated";
 import BreadcrumbNavigation from "@/components/posts/breadcrumb-navigation";
+import PostContent from "@/components/posts/post-content";
 import TableOfContents from "@/components/posts/table-of-content";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { formatDate } from "@/lib/utils";
 import { PostSeries, SeriesItem } from "@/types";
 import { notFound } from "next/navigation";
@@ -43,7 +50,6 @@ interface PostProps {
 
 const PostPage = async ({ params }: PostProps) => {
   const post = await getPostFromParams(params);
-  console.log("🚀 ~ file: page.tsx:46 ~ PostPage ~ post:", post);
 
   if (
     !post ||
@@ -57,6 +63,7 @@ const PostPage = async ({ params }: PostProps) => {
       <BreadcrumbNavigation title={post.title} />
 
       <div className="flex flex-col lg:flex-row">
+        {/* Mobile Post metadata and TOC */}
         <div className="lg:hidden">
           <div className="mb-4 mt-1 text-sm leading-snug text-muted-foreground">
             <p className="mb-2">{`${post.readTimeMinutes} mins read`}</p>
@@ -66,9 +73,17 @@ const PostPage = async ({ params }: PostProps) => {
               <time>Last updated: {formatDate(post.lastUpdatedDate)}</time>
             )}
           </div>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="table-of-contents">
+              <AccordionTrigger>Table of Contents</AccordionTrigger>
+              <AccordionContent>
+                <TableOfContents chapters={post.headings} />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
 
-        <TableOfContents chapters={post.heading} />
+        <PostContent post={post} />
       </div>
     </div>
   );

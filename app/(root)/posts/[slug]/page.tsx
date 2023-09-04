@@ -1,4 +1,4 @@
-import { Series, allPosts } from "@/.contentlayer/generated";
+import { allPosts } from "@/.contentlayer/generated";
 import BreadcrumbNavigation from "@/components/posts/breadcrumb-navigation";
 import PostContent from "@/components/posts/post-content";
 import TableOfContents from "@/components/posts/table-of-content";

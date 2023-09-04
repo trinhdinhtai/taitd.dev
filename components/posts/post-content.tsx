@@ -1,7 +1,7 @@
-import { Post } from "@/.contentlayer/generated";
+import PostSeriesBox from "./post-series-box";
 
 interface PostContentProps {
-  post: Post;
+  post: any;
 }
 
 const PostContent = ({ post }: PostContentProps) => {
@@ -12,6 +12,12 @@ const PostContent = ({ post }: PostContentProps) => {
         <p className="mb-2 mt-0 text-xl text-slate-700 dark:text-slate-200">
           {post.description}
         </p>
+      )}
+      <hr className="my-4" />
+      {post?.series && (
+        <div className="not-prose">
+          <PostSeriesBox data={post.series} />
+        </div>
       )}
     </article>
   );

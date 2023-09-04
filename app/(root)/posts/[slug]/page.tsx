@@ -2,6 +2,7 @@ import { allPosts } from "@/.contentlayer/generated";
 import BreadcrumbNavigation from "@/components/posts/breadcrumb-navigation";
 import PostContent from "@/components/posts/post-content";
 import TableOfContents from "@/components/posts/table-of-content";
+import TOCCard from "@/components/posts/toc-card";
 import {
   Accordion,
   AccordionContent,
@@ -84,6 +85,8 @@ const PostPage = async ({ params }: PostProps) => {
         </div>
 
         <PostContent post={post} />
+
+        <TOCCard post={post} />
       </div>
     </div>
   );

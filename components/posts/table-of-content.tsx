@@ -46,11 +46,11 @@ const TableOfContents = ({ chapters }: TableOfContentsProps) => {
           <li
             key={heading.slug}
             className={cn(
-              "list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-accent-foreground",
+              "list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-blue-500",
               heading.heading === 3 && "ml-6 font-normal",
               heading.heading === 4 && "ml-8 font-normal",
               heading.heading === 5 && "ml-10 font-normal",
-              activeSlug === heading.slug && "text-accent-foreground",
+              activeSlug === heading.slug && "text-blue-500",
             )}
           >
             <Link href={`#${heading.slug}`}>{heading.text}</Link>

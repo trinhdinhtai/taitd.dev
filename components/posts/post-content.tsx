@@ -1,3 +1,4 @@
+import { Mdx } from "../mdx";
 import PostSeriesBox from "./post-series-box";
 
 interface PostContentProps {
@@ -19,6 +20,7 @@ const PostContent = ({ post }: PostContentProps) => {
           <PostSeriesBox data={post.series} />
         </div>
       )}
+      <Mdx code={post.body.code} />
     </article>
   );
 };

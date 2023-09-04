@@ -23,6 +23,7 @@ const tagOptions = [
 export const Post = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: `posts/**/*.mdx`,
+  contentType: "mdx",
   fields: {
     title: { type: "string", required: true },
     description: {

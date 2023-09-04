@@ -1,5 +1,9 @@
+import Link from "next/link";
 import { Mdx } from "../mdx";
 import PostSeriesBox from "./post-series-box";
+import SocialShareButton from "../social-share-button";
+import { defaultAuthor } from "@/lib/metadata";
+import { BASE_URL } from "@/constants";
 
 interface PostContentProps {
   post: any;
@@ -21,6 +25,27 @@ const PostContent = ({ post }: PostContentProps) => {
         </div>
       )}
       <Mdx code={post.body.code} />
+      <hr className="my-4" />
+      <div className="flex flex-row items-center justify-between">
+        {post.tags && (
+          <ul className="m-0 list-none space-x-2 p-0 text-sm text-muted-foreground">
+            {post.tags.map((tag: string) => (
+              <li className="inline-block p-0" key={tag}>
+                <Link
+                  href={`/tags/${tag}`}
+                  className="inline-block transition hover:text-muted-foreground/70"
+                >
+                  {tag}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        <SocialShareButton
+          text={`${post.title} via ${defaultAuthor.handle}`}
+          url={`${BASE_URL}/${post._raw.flattenedPath}`}
+        />
+      </div>
     </article>
   );
 };

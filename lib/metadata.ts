@@ -3,6 +3,7 @@ import { AuthorType, SiteMetaData } from "@/types";
 
 export const defaultAuthor: AuthorType = {
   name: "Trịnh Đình Tài",
+  handle: "@taitddev",
   socialProfiles,
 };
 

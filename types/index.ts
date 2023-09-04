@@ -8,6 +8,7 @@ export type SocialProfile = {
 export type AuthorType = {
   name: string;
   socialProfiles: SocialProfile[];
+  handle: string;
 };
 
 export interface NavItem {

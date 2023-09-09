@@ -1,5 +1,6 @@
 import { allPosts } from "@/.contentlayer/generated";
 import { HeroSection } from "@/components/hero-section";
+import NewsletterSubscribe from "@/components/newsletter-subscribe";
 import PostCard from "@/components/posts/post-card";
 import { siteMetadata } from "@/lib/metadata";
 import { sortByDate } from "@/lib/utils";
@@ -32,11 +33,17 @@ export default function Home() {
               See all posts <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
-          {/* <aside className="w-full">
-            <Sidebar />
-          </aside> */}
         </div>
       </div>
+
+      {siteMetadata.newsletterUrl && (
+        <NewsletterSubscribe
+          title="I also write deep dives in email"
+          description="I write about coding, design, digital nomad life, and solopreneurship. Join over 1,000 other developers in
+            getting better in business. Unsubscribe whenever."
+          buttonText="Send me the emails"
+        />
+      )}
     </div>
   );
 }

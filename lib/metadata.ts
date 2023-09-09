@@ -17,4 +17,5 @@ export const siteMetadata: SiteMetaData = {
   },
   description: defaultDescription,
   newsletterUrl: "https://tinyletter.com/tailwind-nextjs-starter-blog",
+  postsOnHomePage: 8,
 };

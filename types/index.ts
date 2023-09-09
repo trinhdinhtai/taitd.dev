@@ -29,6 +29,7 @@ export type SiteMetaData = {
   };
   description: string;
   newsletterUrl?: string;
+  postsOnHomePage: number;
 };
 
 export type SeriesItem = {

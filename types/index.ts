@@ -9,6 +9,7 @@ export type AuthorType = {
   name: string;
   socialProfiles: SocialProfile[];
   handle: string;
+  email: string;
 };
 
 export interface NavItem {
@@ -30,6 +31,7 @@ export type SiteMetaData = {
   description: string;
   newsletterUrl?: string;
   postsOnHomePage: number;
+  siteRepoUrl?: string;
 };
 
 export type SeriesItem = {

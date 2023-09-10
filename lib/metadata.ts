@@ -5,6 +5,7 @@ export const defaultAuthor: AuthorType = {
   name: "Trịnh Đình Tài",
   handle: "@taitddev",
   socialProfiles,
+  email: "taitd153.dev@gmail.com",
 };
 
 const defaultTitle = `${defaultAuthor.name}'s Blog`;
@@ -18,4 +19,5 @@ export const siteMetadata: SiteMetaData = {
   description: defaultDescription,
   newsletterUrl: "https://tinyletter.com/tailwind-nextjs-starter-blog",
   postsOnHomePage: 8,
+  siteRepoUrl: "https://github.com/trinhdinhtai/next-blog",
 };

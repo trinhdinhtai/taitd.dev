@@ -1,12 +1,8 @@
-import { defaultAuthor, siteMetadata } from "@/lib/metadata";
 import { ContentNavItem, NavItem } from "@/types";
 
-const content: ContentNavItem[] = [
-  {
-    title: "Blog",
-    href: "/posts",
-    description: "Blog posts. Mostly about web development. Or chicken fingers",
-  },
+import { defaultAuthor, siteMetadata } from "@/lib/metadata";
+
+const blogContent: ContentNavItem[] = [
   {
     title: "Speaking",
     href: "/speaking",
@@ -16,7 +12,7 @@ const content: ContentNavItem[] = [
   {
     title: "Videos",
     href: defaultAuthor.socialProfiles.find(
-      (platform) => platform.name === "youtube"
+      (platform) => platform.name === "youtube",
     )?.link as string,
     description: "My YouTube channel where I talk about web development.",
   },
@@ -32,21 +28,33 @@ const content: ContentNavItem[] = [
   },
 ];
 
+const moreContent: ContentNavItem[] = [
+  {
+    title: "Uses",
+    href: "/uses",
+    description: "My hardware, software, and other tools.",
+  },
+];
+
 export const navigationLinks: NavItem[] = [
   {
-    title: "Content",
-    content,
+    title: "About",
+    href: "/about",
+  },
+  {
+    title: "Blog",
+    href: "/posts",
   },
   {
     title: "Projects",
     href: "/projects",
   },
   {
-    title: "Uses",
-    href: "/uses",
+    title: "Content",
+    content: blogContent,
   },
   {
-    title: "Now",
-    href: "/now",
+    title: "More",
+    content: moreContent,
   },
 ];

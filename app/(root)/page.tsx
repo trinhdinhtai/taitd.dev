@@ -1,11 +1,12 @@
+import Link from "next/link";
 import { allPosts } from "@/.contentlayer/generated";
+import { ArrowRight } from "lucide-react";
+
+import { siteMetadata } from "@/lib/metadata";
+import { sortByDate } from "@/lib/utils";
 import { HeroSection } from "@/components/hero-section";
 import NewsletterSubscribe from "@/components/newsletter-subscribe";
 import PostCard from "@/components/posts/post-card";
-import { siteMetadata } from "@/lib/metadata";
-import { sortByDate } from "@/lib/utils";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 
 export default function Home() {
   const posts = allPosts

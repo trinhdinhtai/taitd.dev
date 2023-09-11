@@ -14,10 +14,8 @@ const UsesPage = () => {
             are affiliate links. It does not cost you anything to use them, but
             I get a small commission if you do.
           </p>
-          <AlertTriangle className="inline h-5 w-5 text-amber-500" /> Note: This
-          page is heavily under construction!{" "}
-          <AlertTriangle className="inline h-5 w-5 text-amber-500" />
         </div>
+
         <time className="text-sm text-slate-500">
           Last updated: {formatDate("2023-06-11")}
         </time>

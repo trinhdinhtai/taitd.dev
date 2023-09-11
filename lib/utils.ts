@@ -1,7 +1,7 @@
 import { Post } from "@/.contentlayer/generated";
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from "clsx";
 import { compareDesc, format, parseISO } from "date-fns";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,3 +26,22 @@ export const calculateReadingTime = (text: string): number => {
 
   return readTime;
 };
+
+export function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number,
+  immediate?: boolean,
+) {
+  let timeout: ReturnType<typeof setTimeout> | null;
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+    const context = this;
+    const later = function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout!);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}

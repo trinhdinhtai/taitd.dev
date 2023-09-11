@@ -1,4 +1,5 @@
 import { cn, formatDate } from "@/lib/utils";
+
 import {
   Card,
   CardContent,
@@ -6,8 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import TableOfContents from "./table-of-content";
 import { Separator } from "../ui/separator";
+import TableOfContents from "./table-of-content";
 
 interface TOCCardProps {
   post: any;
@@ -18,7 +19,7 @@ const TOCCard = ({ post }: TOCCardProps) => {
     <aside className="hidden lg:block">
       <Card className={cn("sticky top-28 mb-4")}>
         <CardHeader>
-          <CardTitle>Table of Contents</CardTitle>
+          <CardTitle className="capitalize">On this page</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
           <TableOfContents chapters={post.headings} />

@@ -5,13 +5,15 @@ import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+
+import { Page } from "./lib/contentlayer/page";
 import { Post } from "./lib/contentlayer/post";
 
 export const HEADING_LINK_ANCHOR = `anchor-heading-link`;
 
 export default makeSource({
   contentDirPath: "./content",
-  documentTypes: [Post],
+  documentTypes: [Post, Page],
   mdx: {
     remarkPlugins: [[remarkGfm], [remarkMath]],
     rehypePlugins: [

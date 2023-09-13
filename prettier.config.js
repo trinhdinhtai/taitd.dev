@@ -3,6 +3,7 @@ module.exports = {
   importOrder: [
     "^(react/(.*)$)|^(react$)",
     "^(next/(.*)$)|^(next$)",
+    "<BUILTIN_MODULES>",
     "<THIRD_PARTY_MODULES>",
     "",
     "^types$",
@@ -25,7 +26,7 @@ module.exports = {
   importOrderMergeDuplicateImports: true,
   importOrderCombineTypeAndValueImports: true,
   plugins: [
-    "prettier-plugin-tailwindcss",
     "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss",
   ],
 };

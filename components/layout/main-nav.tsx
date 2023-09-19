@@ -22,13 +22,6 @@ const MainNavbar = ({ children, items }: MainNavbarProps) => {
 
   return (
     <div className="flex gap-6 md:gap-10">
-      <Link href="/" className="hidden items-center space-x-2 md:flex">
-        <Icons.logo />
-        <span className="hidden font-bold sm:inline-block">
-          {siteConfig.name}
-        </span>
-      </Link>
-
       {items?.length ? (
         <nav className="hidden gap-6 md:flex">
           {items?.map((item, index) => (
@@ -53,8 +46,7 @@ const MainNavbar = ({ children, items }: MainNavbarProps) => {
         className="flex items-center space-x-2 md:hidden"
         onClick={() => setShowMobileMenu(!showMobileMenu)}
       >
-        {showMobileMenu ? <Icons.close /> : <Icons.logo />}
-        <span className="font-bold">Menu</span>
+        {showMobileMenu ? <Icons.close /> : <Icons.menu />}
       </button>
 
       {showMobileMenu && items && (

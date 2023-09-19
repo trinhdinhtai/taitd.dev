@@ -1,5 +1,6 @@
 import { navbarLinks } from "@/config/navbarLinks"
 import MainNavbar from "@/components/layout/main-nav"
+import Logo from "@/components/logo"
 
 interface MainLayoutProps {
   children: React.ReactNode
@@ -10,6 +11,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     <div className="flex min-h-screen flex-col">
       <header className="container z-40 bg-background">
         <div className="flex h-20 items-center justify-between py-6">
+          <Logo />
           <MainNavbar items={navbarLinks} />
         </div>
       </header>

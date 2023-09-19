@@ -1,14 +1,4 @@
-const { withContentlayer } = require("next-contentlayer");
-
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        hostname: "avatars.githubusercontent.com",
-      },
-    ],
-  },
-};
+const nextConfig = {}
 
-module.exports = withContentlayer(nextConfig);
+module.exports = nextConfig

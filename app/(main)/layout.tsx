@@ -9,7 +9,7 @@ interface MainLayoutProps {
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="container z-40 bg-background">
+      <header className="container z-40 max-w-4xl bg-background">
         <div className="flex h-20 items-center justify-between py-6">
           <Logo />
           <MainNavbar items={navbarLinks} />

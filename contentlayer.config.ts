@@ -52,4 +52,31 @@ export const Post = defineDocumentType(() => ({
   computedFields,
 }))
 
-export default makeSource({ contentDirPath: "content", documentTypes: [Post] })
+export const Author = defineDocumentType(() => ({
+  name: "Author",
+  filePathPattern: `authors/**/*.mdx`,
+  contentType: "mdx",
+  fields: {
+    title: {
+      type: "string",
+      required: true,
+    },
+    description: {
+      type: "string",
+    },
+    avatar: {
+      type: "string",
+      required: true,
+    },
+    twitter: {
+      type: "string",
+      required: true,
+    },
+  },
+  computedFields,
+}))
+
+export default makeSource({
+  contentDirPath: "content",
+  documentTypes: [Post, Author],
+})

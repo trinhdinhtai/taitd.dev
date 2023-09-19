@@ -33,7 +33,7 @@ const BlogPage = () => {
       {posts?.length ? (
         <div className="grid gap-10 sm:grid-cols-2">
           {posts.map((post, index) => (
-            <PostCard key={post._id} />
+            <PostCard key={post._id} post={post} index={index} />
           ))}
         </div>
       ) : null}

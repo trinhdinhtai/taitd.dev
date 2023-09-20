@@ -8,7 +8,7 @@ async function getPageFromParams(params: { slug: string[] }) {
   const page = allPages.find((page) => page.slugAsParams === slug)
 
   if (!page) {
-    null
+    return null
   }
 
   return page

@@ -8,6 +8,7 @@ import { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
+import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -69,6 +70,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <TailwindIndicator />
         </ThemeProvider>
       </body>
     </html>

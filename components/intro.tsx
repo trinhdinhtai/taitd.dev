@@ -6,12 +6,12 @@ import { motion } from "framer-motion"
 
 import { AVATAR_URL } from "@/config/data"
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
 const Intro = () => {
   return (
-    <section className="my-16 flex max-w-[50rem] scroll-mt-[100rem] flex-col space-y-4 text-center sm:mb-0">
+    <section className="flex min-h-[calc(100vh-80px)] max-w-[50rem] scroll-mt-[100rem] flex-col justify-center space-y-4 text-center sm:mb-0">
       <div className="flex items-center justify-center">
         <div className="relative">
           <motion.div
@@ -60,17 +60,21 @@ const Intro = () => {
         }}
       >
         <Link
-          href="/"
-          className={cn(buttonVariants({ variant: "default" }), "group ")}
+          href="#contact"
+          className={cn(buttonVariants({ variant: "default" }), "group")}
         >
           Contact me
           <Icons.arrowRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1" />
         </Link>
 
-        <Button variant="outline" className="group">
+        <Link
+          href="/CV.pdf"
+          download
+          className={cn(buttonVariants({ variant: "outline" }), "group")}
+        >
           My Resume
           <Icons.download className="ml-2 h-4 w-4 transition group-hover:translate-y-1" />
-        </Button>
+        </Link>
       </motion.div>
     </section>
   )

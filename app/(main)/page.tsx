@@ -1,12 +1,14 @@
+import BlogSection from "@/components/blog-section"
 import Contact from "@/components/contact"
 import Intro from "@/components/intro"
 
 export default function Home() {
   return (
     <>
-      <section className="container max-w-4xl py-6 lg:py-10">
-        <div className="flex flex-col items-center space-y-16">
-          <Intro />
+      <section className="container max-w-4xl">
+        <Intro />
+        <div className="mb-20 flex flex-col items-center space-y-40">
+          <BlogSection />
           <Contact />
         </div>
       </section>

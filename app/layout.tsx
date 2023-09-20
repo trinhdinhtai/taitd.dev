@@ -1,4 +1,4 @@
-import { Inter as FontSans } from "next/font/google"
+import { Roboto_Mono as FontCode, Inter as FontSans } from "next/font/google"
 import localFont from "next/font/local"
 
 import "@/styles/globals.css"
@@ -12,6 +12,11 @@ import { ThemeProvider } from "@/components/theme-provider"
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
+})
+
+const fontCode = FontCode({
+  subsets: ["latin"],
+  variable: "--font-code",
 })
 
 // Font files can be colocate inside of `pages`
@@ -53,6 +58,7 @@ export default function RootLayout({
         className={cn(
           "min-h-screen font-sans antialiased",
           fontSans.variable,
+          fontCode.variable,
           fontHeading.variable
         )}
       >

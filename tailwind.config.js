@@ -60,6 +60,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        mono: ["var(--font-code)", ...fontFamily.mono],
         heading: ["var(--font-heading)", ...fontFamily.sans],
       },
       keyframes: {

@@ -1,4 +1,12 @@
-import { Laptop, Menu, Moon, Sun, TerminalSquare, X } from "lucide-react"
+import {
+  ChevronLeft,
+  Laptop,
+  Menu,
+  Moon,
+  Sun,
+  TerminalSquare,
+  X,
+} from "lucide-react"
 
 export const Icons = {
   logo: TerminalSquare,
@@ -7,4 +15,5 @@ export const Icons = {
   sun: Sun,
   moon: Moon,
   laptop: Laptop,
+  chevronLeft: ChevronLeft,
 }

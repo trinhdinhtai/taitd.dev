@@ -3,8 +3,10 @@ import {
   ChevronLeft,
   Download,
   Laptop,
+  Mail,
   Menu,
   Moon,
+  Send,
   Sun,
   TerminalSquare,
   X,
@@ -20,4 +22,6 @@ export const Icons = {
   chevronLeft: ChevronLeft,
   arrowRight: ArrowRight,
   download: Download,
+  mail: Mail,
+  send: Send,
 }

@@ -7,6 +7,7 @@ export const siteConfig: SiteConfig = {
   url: "https://taitd.io.vn",
   ogImage: "https://taitd.io.vn/og.jpg",
   links: {
+    mail: "taitd153.dev@gmail.com",
     twitter: "https://twitter.com/taitddev",
     github: "https://github.com/trinhdinhtai/next-blog",
   },

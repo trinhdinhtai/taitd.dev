@@ -15,3 +15,10 @@ export type NavItem = {
   href: string
   disabled?: boolean
 }
+
+export type Project = {
+  title: string
+  description: string
+  tags: string[]
+  imageUrl: string
+}

@@ -2,9 +2,9 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { AVATAR_URL } from "@/constants/author-data"
 import { motion } from "framer-motion"
 
-import { AVATAR_URL } from "@/config/data"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"

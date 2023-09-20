@@ -1,0 +1,216 @@
+---
+title: Ơ động đất à ? Không phải đấy là Bunjs đang đi lên.
+description: Bun js là một phần bổ sung cho những nhà phát triển javascript. Một cách ngắn gọn để có thể mô tả Bun là All In One. Đúng vậy, Bun là một javascript runtime (hoạt động tương tự như NodeJs) Bun rất nhanh đến mức một số người nghĩ rằng nó có thể là kẻ huỷ diệt nodejs.
+image: /images/blog/blog-post-3.jpg
+date: "2023-09-13"
+authors:
+  - taitd
+---
+
+## Giới thiệu
+
+Bun js là một phần bổ sung cho những nhà phát triển javascript. Một cách ngắn gọn để có thể mô tả Bun là **All In One**. Đúng vậy, Bun là một javascript runtime (hoạt động tương tự như NodeJs) Bun rất nhanh đến mức một số người nghĩ rằng nó có thể là kẻ huỷ diệt nodejs. Ngoài ra Bun còn là một bộ toolkit giúp developer có thể bundle, runner, test. Bun giống như Deno, hỗ trợ Typescript cung cấp những tính năng thân thiện cho các lập trình cao cấp. Nó đã tạo nên làn sóng ngang với làn sóng do Deno tạo ra khi ra mắt vào năm 2018. Tuy nhiên không giống như Deno, Bun js được thiết kế thay thế cho Node, Webpack, Babel tất cả trong package.
+
+![](https://images.viblo.asia/4b0342a2-cb15-4f6f-beab-447a4ffcf0a1.png)Bun được phát hành với Giấy phép MIT và LGPL2 (do JavaScriptCore) và tại thời điểm viết bài, nó đã được release [version 1.0.1](https://github.com/oven-sh/bun/releases/tag/bun-v1.0.1).
+
+## So sánh Bun với Deno và Node?
+
+Mặc dù Bun được lấy cảm hứng từ Node và Deno nhưng rõ ràng nó cũng đang cố gắng cải thiện trải nghiệm phát triển và năng suất bằng cách cung cấp bộ công cụ đi kèm dưới đây.
+
+Bun JavaScript lấy các tính năng từ Deno, như vận chuyển dưới dạng nhị phân duy nhất và có hỗ trợ TypeScript gốc.
+
+### Với Deno
+
+| Feature                                    | Bun                  | Deno        |
+| ------------------------------------------ | -------------------- | ----------- |
+| TypeScript/TSX/JSX support                 | Yes                  | Yes         |
+| Single executable                          | Yes                  | Yes         |
+| Built-in test runner                       | Yes (in development) | Yes         |
+| Built-in Web APIs (fetch, WebSocket, etc.) | Yes                  | Yes         |
+| Top-level awaits                           | Yes                  | Yes         |
+| npm compatibility                          | Yes                  | No          |
+| Node compatibility                         | Yes                  | Partial     |
+| tsconfig.json support                      | Yes                  | No          |
+| WebAssembly support                        | Yes                  | Yes         |
+| Built-in linter & formatter                | No                   | Yes         |
+| Permission system                          | No                   | Yes         |
+| Package manifest format                    | package.json         | N/A         |
+| Module support                             | ES Modules, CommonJS | ES Modules  |
+| License                                    | MIT, LGPL2           | MIT         |
+| JS Engine                                  | JavaScriptCore       | V8          |
+| Language                                   | Zig, C++             | Rust, Tokio |
+
+### Với Nodejs, Bun phát triển nhiều tính năng hơn nhưng vẫn đảm bảo tính tương thích
+
+| Feature                       | Bun            | Node               |
+| ----------------------------- | -------------- | ------------------ |
+| npm compatibility             | Yes            | Yes                |
+| Node compatibility            | Yes            | Yes                |
+| Single binary                 | Yes            | No                 |
+| Built-in bundler & transpiler | Yes            | No                 |
+| Native TypeScript support     | Yes            | No                 |
+| Package manifest format       | package.json   | package.json       |
+| Lockfile format               | Binary         | JSON               |
+| Native live-reload            | Yes            | No                 |
+| Built-in .env, .toml support  | Yes            | No                 |
+| Top-level Awaits              | Yes            | Only on ES Modules |
+| JS Engine                     | JavaScriptCore | V8                 |
+| Language                      | Zig, C++       | C, C++             |
+| License                       | MIT, LGPL2     | MIT                |
+
+**Mặc dù vậy Bun vẫn còn một số điểm hạn chế:**
+
+- Không hỗ trợ Windows gốc (mặc dù có thể khắc phục bằng WSL).
+- Bun có thể bị kẹt khi cài đặt các gói, quá trình tìm nạp không đáng tin cậy và mặc dù điều đó chưa bao giờ xảy ra với tôi nhưng theo một số report, đôi khi tình trạng lỗi có thể xảy ra.
+- Bun chưa tương thích hoàn toàn với Node, không phải tất cả npm package đều hoạt động. Cái này thì không phải vấn đề lắm, vì hầu hết các package phổ biến đều được hỗ trợ rồi, theo thời gian các bổ sung sẽ được update.
+
+## Bun có thật sự nhanh?
+
+Nếu lấy nodejs là mốc so sánh, thì phải nói Bun nhanh, super nhanh. Bun được sinh ra từ sự thất vọng của Jarred Sumner (Founder/CEO của Bun) với tốc độ và sự thiếu thốn của Javascript: “Tôi rất thất vọng vì mọi thứ trong JavaScript đều chậm đến mức nào. Tôi biết JavaScript có thể nhanh hơn rất nhiều”. Là cựu nhà phát triển giao diện người dùng tại Stripe, Jarred biết chu kỳ lặp lại nhanh là điều cần thiết để tăng năng suất. Kinh nghiệm của nhà phát triển rất quan trọng. Do đó, tốc độ của Bun không bị giới hạn ở việc phục vụ các yêu cầu nhanh hơn các thời gian chạy khác mà còn có nghĩa là tốc độ cài đặt gói, chạy thử nghiệm, đóng gói và dịch mã nhanh hơn.
+
+### Benchmarking Bun
+
+Trang chủ của Bun báo cáo hiệu suất được cải thiện gấp 3 và 4 lần khi so sánh với Deno và Node. Đó là những con số ấn tượng thực sự:
+
+![](https://images.viblo.asia/24293fcc-f255-4128-a217-b3e4a1624505.png)[View benchmark](https://github.com/oven-sh/bun/tree/main/bench/install)
+
+![](https://images.viblo.asia/b9d3b288-95b7-48f2-8d62-087863e19f97.png)[View benchmark](https://gist.github.com/colinhacks/e3095172a883a9ee9c972caf33b5f54f) Điều này quá ấn tượng khiến mình muốn tự kiểm tra nó.
+
+### Managing packages with Bun
+
+Trong thử nghiệm đầu tiên này, chúng ta sẽ so sánh hiệu suất của Bun JavaScript với npm khi tạo dự án mới. Như bạn có thể thấy bên dưới, npm mất 49 giây để tạo Ứng dụng React app
+
+```none
+$ time npx create-react-app myapp
+Creating a new React app in /code/myapp.
+Installing packages. This might take a couple of minutes.Installing react, react-dom, and react-scripts with cra-template...
+added 1392 packages in 38s​16.50s user 6.33s system 46% cpu 49.016 total
+```
+
+Bun gửi lệnh bun create có khả năng thực hiện tương tự:
+
+```none
+$ time bun create react myapp
+[package.json] Detected React - added "react-refresh"
+
+bun install v0.1.4
+🔍 Resolving [1/4]
+[29.00ms] git
++ react-refresh@0.10.0
++ typescript@4.7.4
++ react@18.2.0
++ react-dom@18.2.0
++ web-vitals@2.1.4
+
+8 packages installed [2.39s]
+
+2.48s user 0.30s system 66% cpu 4.160 total
+```
+
+Bun chỉ mất chưa đầy một giây để hoàn tất quá trình thiết lập. Đó là một sự cải tiến khá lớn. Nhưng đây có phải là một so sánh hợp lệ? Khi kiểm tra kỹ hơn, tôi thấy rằng:
+
+- npm đã cài đặt 1.392 gói và kích thước node_modules là 250 MB.
+- Bun chỉ cài đặt 8 gói, với tổng dung lượng là 72 MB. Mẫu React ban đầu của Bun thực sự ít hơn nhiều, đó là lý do tại sao nó chỉ mất thời gian rất ít so với npm để khởi tạo. Thật ngạc nhiên là nó vẫn có thể sử dụng để develop. Tôi có thể chạy lệnh `bun dev` để start dự án ngay lập tức. Bun cũng sẽ tự động reload sau mỗi lần change code. Tuy nhiên, React khởi đầu của Bun không thể tạo bản dựng sản xuất. Để làm được điều đó, chúng ta sẽ cần thêm [react-scripts](https://www.npmjs.com/package/react-scripts) với:
+
+```none
+$ bun add react-scripts -d
+```
+
+Phần phụ thuộc mới cài đặt thêm 1.133 gói, đưa node_modules lên tổng cộng 298 MB. Bây giờ chúng ta đang ở vị trí tốt hơn để so sánh. Sau khi tạo ứng dụng mới 10 lần với mỗi công cụ, chúng ta có một số con số để so sánh.
+
+| Package Manager | Create React App (10 runs) |
+| --------------- | -------------------------- |
+| npm             | 17.937 ± 28.813            |
+| Bun             | 3.210 ± 5.430              |
+
+Tất cả các thử nghiệm đều được thực hiện với npm và bun cache, điều này giải thích tại sao npm hoạt động tốt hơn nhiều trong lần thứ hai.![](https://images.viblo.asia/4545026f-9e78-4d82-8e62-f9267152344e.jpg)Trong thử nghiệm này, Bun JavaScript trông khá tốt: nó nhanh hơn npm ít nhất 6 lần. Tuy nhiên, thỉnh thoảng Bun sẽ bị lock. Ngoài ra, đôi khi npm sẽ chậm lại đáng kể. Tôi không thể xác định nguyên nhân cho việc này.
+
+Còn một số các thử nghiệm benmark khác như:
+
+- Bun vs. npm as a script runner.
+- Bun vs. npm for CI/CD workflows.
+- Bun vs. Node vs. Deno for copying large files.
+- Bun vs. Node vs. Deno for serving HTTP requests.
+
+Bạn có thể tham khảo thêm tại [đây](https://bun.sh/docs/project/benchmarking)
+
+## Rồi bla...bla... thế là đủ rồi. Cùng triển thôi nào:
+
+Rất tiếc là hiện tại Bun chỉ hỗ trợ macOS và Linux. Phiên bản window vẫn còn trong quá trình chưa phát triển, nếu bạn nào dùng window có thể sử dụng wsl để thay thế nhé:
+
+```none
+curl -fsSL https://bun.sh/install | bash
+# to install a specific version
+curl -fsSL https://bun.sh/install | bash -s "bun-v1.0.0"
+```
+
+Hoặc với npm:
+
+```none
+npm install -g bun
+```
+
+Upgrade với:
+
+```none
+bun upgrade
+```
+
+Ta...ra...! Giờ thì tạo một file nho nhỏ để chạy thử nhé:
+
+```none
+mkdir quickstart
+cd quickstart
+```
+
+```none
+bun init
+bun init helps you get started with a minimal project and tries to
+guess sensible defaults. Press ^C anytime to quit.
+
+package name (quickstart):
+entry point (index.ts):
+
+Done! A package.json file was saved in the current directory.
+ + index.ts
+ + .gitignore
+ + tsconfig.json (for editor auto-complete)
+ + README.md
+
+To get started, run:
+  bun run index.ts
+```
+
+Hãy mở file **index.ts** vừa init và thêm một đoạn code đơn giản sau:
+
+```none
+const server = Bun.serve({
+  port: 3000,
+  fetch(req) {
+    return new Response("Bun!");
+  },
+});
+
+console.log(`Listening on http://localhost:${server.port} ...`);
+```
+
+Trên terminal run:
+
+```none
+bun index.ts
+```
+
+---
+
+Và Bùm! Nhanh như tàu điện ta đã có 1 server được khởi tạo ở [http://localhost:3000](http://localhost:3000/)
+
+## Kết luận
+
+- Bun không chỉ nhanh mà còn có cảm giác nhanh. Cảm giác như bạn có thể làm bất cứ điều gì trong chưa đầy một giây.
+- Bun sẽ thay thế Node? Còn quá sớm để nói. Khi Deno xuất hiện, nó chắc chắn không giết chết Node - nhưng tôi không nghĩ đó là mục đích, vì nó chưa bao giờ có mục đích thay thế Node. Nhưng Bun JavaScript hướng đến sự tương thích nên có cơ hội tốt hơn. Và như chúng ta đã thấy, ngay cả ở giai đoạn đầu này, nó vẫn có thể là một công cụ rất mạnh mẽ.
+- Tóm cái váy lại là còn quá sớm để nhận định về việc Bun có thể thay thế node hay không, nhưng sự ra mắt của phiên v1.0.0 là một thành công rực rỡ của team phát triển và cộng đồng Bun. Bun quả thực là một công cụ khá triển vọng để trải nghiệm.
+
+## Nguồn tham khảo
+
+- [https://semaphoreci.com/blog/javascript-bun](https://semaphoreci.com/blog/javascript-bun)
+- [https://anonystick.com/blog-developer/bun-js-la-gi-lieu-co-the-giet-chet-nodejs-va-deno-xem-bang-chung-2022081928499419](https://anonystick.com/blog-developer/bun-js-la-gi-lieu-co-the-giet-chet-nodejs-va-deno-xem-bang-chung-2022081928499419)

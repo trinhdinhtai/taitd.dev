@@ -1,5 +1,7 @@
 import {
+  ArrowRight,
   ChevronLeft,
+  Download,
   Laptop,
   Menu,
   Moon,
@@ -16,4 +18,6 @@ export const Icons = {
   moon: Moon,
   laptop: Laptop,
   chevronLeft: ChevronLeft,
+  arrowRight: ArrowRight,
+  download: Download,
 }

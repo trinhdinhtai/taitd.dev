@@ -10,7 +10,7 @@ interface MainLayoutProps {
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 w-full border-b bg-background">
+      <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-md">
         <div className="container max-w-4xl">
           <div className="flex h-20 items-center justify-between py-6">
             <Logo />

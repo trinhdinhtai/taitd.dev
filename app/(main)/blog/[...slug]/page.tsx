@@ -6,6 +6,7 @@ import { allAuthors, allPosts } from "@/.contentlayer/generated"
 import { cn, formatDate } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
+import Mdx from "@/components/mdx-components"
 
 async function getPostFromParams(params: { slug: string[] }) {
   const slug = params?.slug?.join("/")
@@ -95,6 +96,8 @@ const PostPage = async ({ params }: PostPageProps) => {
           />
         )}
       </div>
+
+      <Mdx code={post.body.code} />
     </article>
   )
 }

@@ -1,4 +1,5 @@
 import { navbarLinks } from "@/config/navbarLinks"
+import Footer from "@/components/layout/footer"
 import MainNavbar from "@/components/layout/main-nav"
 import Logo from "@/components/logo"
 
@@ -9,13 +10,16 @@ interface MainLayoutProps {
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="bg-background container z-40 max-w-4xl">
-        <div className="flex h-20 items-center justify-between py-6">
-          <Logo />
-          <MainNavbar items={navbarLinks} />
+      <header className="sticky top-0 z-40 w-full border-b bg-background">
+        <div className="container max-w-4xl">
+          <div className="flex h-20 items-center justify-between py-6">
+            <Logo />
+            <MainNavbar items={navbarLinks} />
+          </div>
         </div>
       </header>
       <main className="flex-1">{children}</main>
+      <Footer />
     </div>
   )
 }

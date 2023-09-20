@@ -1,0 +1,113 @@
+---
+title: Components
+description: Use React components in Markdown using MDX.
+image: /images/blog/blog-post-1.jpg
+date: "2023-03-04"
+authors:
+  - shadcn
+---
+
+## 1. HTML Element
+
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
+[This is a link](https://github.com/tailwindcss/typography/blob/master/README.md).
+
+Unorder List:
+
+- Item 1
+- Item 2
+- Item 3
+
+Order List:
+
+1. Item 1
+2. Item 2
+3. Item 3
+
+Block quote:
+
+> Why is Tailwind removing the default styles on my h1 elements? How do I disable this? What do you mean I lose all the other base styles too? We hear you, but we're not convinced that simply disabling our base styles is what you really want. You don't want to have to remove annoying margins every time you use a p element in a piece of your dashboard UI. And I doubt you really want your blog posts to use the user-agent styles either — you want them to look awesome, not awful.
+
+Image:
+
+![Image](https://images.unsplash.com/photo-1682687220247-9f786e34d472?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1965&q=80)
+
+## Custom Components
+
+You can add your own custom components using the `components` props from `useMDXComponent`.
+
+```ts title="components/mdx.tsx" {2,6}
+import { Callout } from "@/components/callout"
+import { CustomComponent } from "@/components/custom"
+
+const components = {
+  Callout,
+  CustomComponent,
+}
+
+export function Mdx({ code }) {
+  const Component = useMDXComponent(code)
+
+  return (
+    <div className="mdx">
+      <Component components={components} />
+    </div>
+  )
+}
+```
+
+Once you've added your custom component, you can use it in MDX as follows:
+
+```js
+<CustomComponent propName="value" />
+```
+
+---
+
+## HTML Elements
+
+You can overwrite HTML elements using the same technique above.
+
+```ts {4}
+const components = {
+  Callout,
+  CustomComponent,
+  hr: ({ ...props }) => <hr className="my-4 border-slate-200 md:my-6" />,
+}
+```
+
+This will overwrite the `<hr />` tag or `---` in Mardown with the HTML output above.
+
+---
+
+## Styling
+
+Tailwind CSS classes can be used inside MDX for styling.
+
+```mdx
+<p className="text-red-600">This text will be red.</p>
+```
+
+Make sure you have configured the path to your content in your `tailwind.config.js` file:
+
+```js title="tailwind.config.js" {6}
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./content/**/*.{md,mdx}",
+  ],
+}
+```

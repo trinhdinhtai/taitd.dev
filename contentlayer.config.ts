@@ -3,6 +3,9 @@ import {
   defineDocumentType,
   makeSource,
 } from "contentlayer/source-files"
+import rehypePrettyCode from "rehype-pretty-code"
+import rehypeSlug from "rehype-slug"
+import remarkGfm from "remark-gfm"
 
 const computedFields: ComputedFields = {
   slug: {
@@ -79,4 +82,29 @@ export const Author = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "content",
   documentTypes: [Post, Author],
+  mdx: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        // @ts-ignore
+        rehypePrettyCode,
+        {
+          theme: "github-dark",
+          onVisitLine(node: any) {
+            if (node.children.length === 0) {
+              node.children = [{ type: "text", value: " " }]
+            }
+            node.properties.className = ["line"]
+          },
+          onVisitHighlightedLine(node: any) {
+            node.properties.className.push("line--highlighted")
+          },
+          onVisitHighlightedWord(node: any) {
+            node.properties.className = ["word--highlighted"]
+          },
+        },
+      ],
+    ],
+  },
 })

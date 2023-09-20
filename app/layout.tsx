@@ -1,7 +1,7 @@
 import { Inter as FontSans } from "next/font/google"
 import localFont from "next/font/local"
 
-import "./globals.css"
+import "@/styles/globals.css"
 
 import { Metadata } from "next"
 

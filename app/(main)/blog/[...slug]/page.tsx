@@ -12,6 +12,8 @@ import "@/styles/mdx.css"
 import { Metadata } from "next"
 
 import { env } from "@/env.mjs"
+import { getTableOfContents } from "@/lib/toc"
+import DashboardTableOfContents from "@/components/toc"
 
 interface PostPageProps {
   params: {
@@ -88,68 +90,80 @@ const PostPage = async ({ params }: PostPageProps) => {
     allAuthors.find(({ slug }) => slug === `/authors/${author}`)
   )
 
+  const toc = await getTableOfContents(post.body.raw)
+
   return (
-    <article className="container relative max-w-4xl py-6 lg:py-12">
-      <Link href="/blog" className="flex items-center">
-        <Icons.chevronLeft className="mr-2 h-4 w-4" />
-        See all posts
-      </Link>
+    <article className="container relative py-6 md:max-w-2xl lg:max-w-4xl lg:gap-10 lg:py-12 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_300px]">
+      {/* Blog content */}
+      <div className="w-full min-w-0">
+        <Link href="/blog" className="flex items-center">
+          <Icons.chevronLeft className="mr-2 h-4 w-4" />
+          See all posts
+        </Link>
 
-      <div className="mt-6">
-        {post.date && (
-          <time
-            dateTime={post.date}
-            className="block text-sm text-muted-foreground"
-          >
-            Published on {formatDate(post.date)}
-          </time>
-        )}
+        <div className="mt-6">
+          {post.date && (
+            <time
+              dateTime={post.date}
+              className="block text-sm text-muted-foreground"
+            >
+              Published on {formatDate(post.date)}
+            </time>
+          )}
 
-        <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
-          {post.title}
-        </h1>
+          <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
+            {post.title}
+          </h1>
 
-        {authors?.length ? (
-          <div className="mt-4 flex space-x-4">
-            {authors.map((author) =>
-              author ? (
-                <Link
-                  key={author._id}
-                  href={`https://twitter.com/${author.twitter}`}
-                  className="flex items-center space-x-2 text-sm"
-                >
-                  <Image
-                    src={author.avatar}
-                    alt={author.title}
-                    width={42}
-                    height={42}
-                    className="rounded-full bg-white"
-                  />
-                  <div className="flex-1 text-left leading-tight">
-                    <p className="font-medium">{author.title}</p>
-                    <p className="text-[12px] text-muted-foreground">
-                      @{author.twitter}
-                    </p>
-                  </div>
-                </Link>
-              ) : null
-            )}
-          </div>
-        ) : null}
+          {authors?.length ? (
+            <div className="mt-4 flex space-x-4">
+              {authors.map((author) =>
+                author ? (
+                  <Link
+                    key={author._id}
+                    href={`https://twitter.com/${author.twitter}`}
+                    className="flex items-center space-x-2 text-sm"
+                  >
+                    <Image
+                      src={author.avatar}
+                      alt={author.title}
+                      width={42}
+                      height={42}
+                      className="rounded-full bg-white"
+                    />
+                    <div className="flex-1 text-left leading-tight">
+                      <p className="font-medium">{author.title}</p>
+                      <p className="text-[12px] text-muted-foreground">
+                        @{author.twitter}
+                      </p>
+                    </div>
+                  </Link>
+                ) : null
+              )}
+            </div>
+          ) : null}
 
-        {post.image && (
-          <Image
-            src={post.image}
-            alt={post.title}
-            width={832}
-            height={405}
-            className="my-8 rounded-md border bg-muted transition-colors"
-            priority
-          />
-        )}
+          {post.image && (
+            <Image
+              src={post.image}
+              alt={post.title}
+              width={832}
+              height={405}
+              className="my-8 rounded-md border bg-muted transition-colors"
+              priority
+            />
+          )}
+        </div>
+
+        <Mdx code={post.body.code} />
       </div>
 
-      <Mdx code={post.body.code} />
+      {/* Table of contents */}
+      <div className="hidden text-sm xl:block">
+        <div className="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-10">
+          <DashboardTableOfContents toc={toc} />
+        </div>
+      </div>
     </article>
   )
 }

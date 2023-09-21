@@ -3,7 +3,11 @@ interface ContainerProps {
 }
 
 const Container = ({ children }: ContainerProps) => {
-  return <div className="container max-w-4xl py-6 lg:py-10">{children}</div>
+  return (
+    <div className="container py-6 md:max-w-2xl lg:max-w-4xl lg:py-10 2xl:max-w-6xl">
+      {children}
+    </div>
+  )
 }
 
 export default Container

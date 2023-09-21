@@ -1,7 +1,14 @@
+import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { allPages } from "@/.contentlayer/generated/Page/_index.mjs"
 
 import Mdx from "@/components/mdx-components"
+
+interface PageProps {
+  params: {
+    slug: string[]
+  }
+}
 
 async function getPageFromParams(params: { slug: string[] }) {
   const slug = params?.slug?.join("/")
@@ -12,12 +19,6 @@ async function getPageFromParams(params: { slug: string[] }) {
   }
 
   return page
-}
-
-interface PageProps {
-  params: {
-    slug: string[]
-  }
 }
 
 export default async function PagePage({ params }: PageProps) {

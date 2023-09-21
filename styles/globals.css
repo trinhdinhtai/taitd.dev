@@ -33,6 +33,7 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+    --line-color: #e5e7eb;
   }
 
   .dark {
@@ -63,6 +64,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    --line-color: rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -73,4 +75,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.vertical-timeline--two-columns {
+  width: 100% !important;
 }

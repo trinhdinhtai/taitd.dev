@@ -3,11 +3,68 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { allAuthors, allPosts } from "@/.contentlayer/generated"
 
-import { formatDate } from "@/lib/utils"
+import { absoluteUrl, formatDate } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import Mdx from "@/components/mdx-components"
 
 import "@/styles/mdx.css"
+
+import { Metadata } from "next"
+
+import { env } from "@/env.mjs"
+
+interface PostPageProps {
+  params: {
+    slug: string[]
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: PostPageProps): Promise<Metadata> {
+  const post = await getPostFromParams(params)
+
+  if (!post) {
+    return {}
+  }
+
+  const { title, description, authors } = post
+
+  const url = env.NEXT_PUBLIC_APP_URL
+
+  const ogUrl = new URL(`${url}/api/og`)
+  ogUrl.searchParams.set("heading", title)
+  ogUrl.searchParams.set("type", "Blog Post")
+  ogUrl.searchParams.set("mode", "dark")
+
+  return {
+    title: title,
+    description: description,
+    authors: authors.map((author) => ({
+      name: author,
+    })),
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      url: absoluteUrl(post.slug),
+      images: [
+        {
+          url: ogUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogUrl.toString()],
+    },
+  }
+}
 
 async function getPostFromParams(params: { slug: string[] }) {
   const slug = params?.slug?.join("/")
@@ -18,12 +75,6 @@ async function getPostFromParams(params: { slug: string[] }) {
   }
 
   return post
-}
-
-interface PostPageProps {
-  params: {
-    slug: string[]
-  }
 }
 
 const PostPage = async ({ params }: PostPageProps) => {

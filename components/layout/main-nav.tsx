@@ -6,9 +6,11 @@ import { useSelectedLayoutSegment } from "next/navigation"
 import { NavItem } from "@/types"
 
 import { cn } from "@/lib/utils"
+import Logo from "@/components/logo"
+import SearchCommand from "@/components/search-command"
+import { ModeToggle } from "@/components/theme-toggle"
 
 import { Icons } from "../icons"
-import { ModeToggle } from "../theme-toggle"
 import MobileNav from "./mobile-nav"
 
 interface MainNavbarProps {
@@ -21,7 +23,7 @@ const MainNavbar = ({ children, items }: MainNavbarProps) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false)
 
   return (
-    <div className="flex gap-6 md:gap-10">
+    <div className="flex flex-1 justify-end gap-6 md:justify-between md:gap-10">
       {items?.length ? (
         <nav className="hidden gap-6 md:flex">
           {items?.map((item, index) => (
@@ -39,10 +41,15 @@ const MainNavbar = ({ children, items }: MainNavbarProps) => {
               {item.title}
             </Link>
           ))}
-
-          <ModeToggle />
         </nav>
       ) : null}
+
+      <div className="hidden items-center gap-4 md:flex">
+        <div className="flex-1 sm:grow-0">
+          <SearchCommand />
+        </div>
+        <ModeToggle />
+      </div>
 
       <button
         className="flex items-center space-x-2 md:hidden"

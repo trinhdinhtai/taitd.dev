@@ -89,7 +89,7 @@ added 1392 packages in 38s​16.50s user 6.33s system 46% cpu 49.016 total
 
 Bun gửi lệnh bun create có khả năng thực hiện tương tự:
 
-```none
+```shell
 $ time bun create react myapp
 [package.json] Detected React - added "react-refresh"
 
@@ -112,7 +112,7 @@ Bun chỉ mất chưa đầy một giây để hoàn tất quá trình thiết l
 - npm đã cài đặt 1.392 gói và kích thước node_modules là 250 MB.
 - Bun chỉ cài đặt 8 gói, với tổng dung lượng là 72 MB. Mẫu React ban đầu của Bun thực sự ít hơn nhiều, đó là lý do tại sao nó chỉ mất thời gian rất ít so với npm để khởi tạo. Thật ngạc nhiên là nó vẫn có thể sử dụng để develop. Tôi có thể chạy lệnh `bun dev` để start dự án ngay lập tức. Bun cũng sẽ tự động reload sau mỗi lần change code. Tuy nhiên, React khởi đầu của Bun không thể tạo bản dựng sản xuất. Để làm được điều đó, chúng ta sẽ cần thêm [react-scripts](https://www.npmjs.com/package/react-scripts) với:
 
-```none
+```shell
 $ bun add react-scripts -d
 ```
 
@@ -138,7 +138,7 @@ Bạn có thể tham khảo thêm tại [đây](https://bun.sh/docs/project/ben
 
 Rất tiếc là hiện tại Bun chỉ hỗ trợ macOS và Linux. Phiên bản window vẫn còn trong quá trình chưa phát triển, nếu bạn nào dùng window có thể sử dụng wsl để thay thế nhé:
 
-```none
+```shell
 curl -fsSL https://bun.sh/install | bash
 # to install a specific version
 curl -fsSL https://bun.sh/install | bash -s "bun-v1.0.0"
@@ -146,24 +146,24 @@ curl -fsSL https://bun.sh/install | bash -s "bun-v1.0.0"
 
 Hoặc với npm:
 
-```none
+```shell
 npm install -g bun
 ```
 
 Upgrade với:
 
-```none
+```shell
 bun upgrade
 ```
 
 Ta...ra...! Giờ thì tạo một file nho nhỏ để chạy thử nhé:
 
-```none
+```shell
 mkdir quickstart
 cd quickstart
 ```
 
-```none
+```shell
 bun init
 bun init helps you get started with a minimal project and tries to
 guess sensible defaults. Press ^C anytime to quit.
@@ -183,20 +183,20 @@ To get started, run:
 
 Hãy mở file **index.ts** vừa init và thêm một đoạn code đơn giản sau:
 
-```none
+```ts
 const server = Bun.serve({
   port: 3000,
   fetch(req) {
-    return new Response("Bun!");
+    return new Response("Bun!")
   },
-});
+})
 
-console.log(`Listening on http://localhost:${server.port} ...`);
+console.log(`Listening on http://localhost:${server.port} ...`)
 ```
 
 Trên terminal run:
 
-```none
+```shell
 bun index.ts
 ```
 

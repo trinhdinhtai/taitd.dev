@@ -1,4 +1,17 @@
-import { NavItem } from "@/types"
+import { ContentNavItem, NavItem } from "@/types"
+
+const moreContent: ContentNavItem[] = [
+  {
+    title: "Stats",
+    href: "/stats",
+    description: "My personal statistics about coding and other things.",
+  },
+  {
+    title: "Uses",
+    href: "/uses",
+    description: "My hardware, software, and other tools.",
+  },
+]
 
 export const navbarLinks: NavItem[] = [
   {
@@ -12,5 +25,9 @@ export const navbarLinks: NavItem[] = [
   {
     title: "Project",
     href: "/project",
+  },
+  {
+    title: "More",
+    content: moreContent,
   },
 ]

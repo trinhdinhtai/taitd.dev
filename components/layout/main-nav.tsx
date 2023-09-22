@@ -1,12 +1,26 @@
 "use client"
 
-import { ReactNode, useState } from "react"
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  forwardRef,
+  ReactNode,
+  useState,
+} from "react"
 import Link from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
-import { NavItem } from "@/types"
 
+import { navbarLinks } from "@/config/navbarLinks"
 import { cn } from "@/lib/utils"
-import Logo from "@/components/logo"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
 import SearchCommand from "@/components/search-command"
 import { ModeToggle } from "@/components/theme-toggle"
 
@@ -15,34 +29,57 @@ import MobileNav from "./mobile-nav"
 
 interface MainNavbarProps {
   children?: ReactNode
-  items?: NavItem[]
 }
 
-const MainNavbar = ({ children, items }: MainNavbarProps) => {
+const MainNavbar = ({ children }: MainNavbarProps) => {
   const segment = useSelectedLayoutSegment()
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false)
 
   return (
     <div className="flex flex-1 justify-end gap-6 md:justify-between md:gap-10">
-      {items?.length ? (
-        <nav className="hidden gap-6 md:flex">
-          {items?.map((item, index) => (
-            <Link
-              key={index}
-              href={item.disabled ? "#" : item.href}
-              className={cn(
-                "flex items-center font-medium transition-colors hover:text-foreground/80",
-                item.href.startsWith(`/${segment}`)
-                  ? "text-foreground"
-                  : "text-foreground/60",
-                item.disabled && "cursor-not-allowed opacity-80"
+      <NavigationMenu>
+        <NavigationMenuList>
+          {navbarLinks.map((link) => (
+            <NavigationMenuItem key={link.title.trim()}>
+              {link.content ? (
+                <>
+                  <NavigationMenuTrigger>{link.title}</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {link.content.map((subItem) => (
+                        <ListItem
+                          key={subItem.href.trim()}
+                          title={subItem.title}
+                          href={subItem.href}
+                          target={
+                            subItem.href.startsWith("http") ? "_blank" : "_self"
+                          }
+                        >
+                          {subItem.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </>
+              ) : (
+                <Link href={link.href as string} legacyBehavior passHref>
+                  <NavigationMenuLink
+                    target={link?.href?.startsWith("http") ? "_blank" : "_self"}
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      link?.href?.startsWith(`/${segment}`) &&
+                        "bg-accent font-semibold",
+                      link.disabled && "cursor-not-allowed opacity-80"
+                    )}
+                  >
+                    {link.title}
+                  </NavigationMenuLink>
+                </Link>
               )}
-            >
-              {item.title}
-            </Link>
+            </NavigationMenuItem>
           ))}
-        </nav>
-      ) : null}
+        </NavigationMenuList>
+      </NavigationMenu>
 
       <div className="hidden items-center gap-4 md:flex">
         <div className="flex-1 sm:grow-0">
@@ -58,11 +95,38 @@ const MainNavbar = ({ children, items }: MainNavbarProps) => {
         {showMobileMenu ? <Icons.close /> : <Icons.menu />}
       </button>
 
-      {showMobileMenu && items && (
-        <MobileNav items={items}>{children}</MobileNav>
+      {showMobileMenu && navbarLinks && (
+        <MobileNav items={navbarLinks}>{children}</MobileNav>
       )}
     </div>
   )
 }
+
+const ListItem = forwardRef<ElementRef<"a">, ComponentPropsWithoutRef<"a">>(
+  ({ className, title, children, ...props }, ref) => {
+    return (
+      <li>
+        <NavigationMenuLink asChild>
+          {/* TODO: Figure out how to type this */}
+          {/* @ts-expect-error */}
+          <Link
+            ref={ref}
+            className={cn(
+              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+              className
+            )}
+            {...props}
+          >
+            <div className="text-sm font-medium leading-none">{title}</div>
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+              {children}
+            </p>
+          </Link>
+        </NavigationMenuLink>
+      </li>
+    )
+  }
+)
+ListItem.displayName = "ListItem"
 
 export default MainNavbar

@@ -1,4 +1,3 @@
-import { navbarLinks } from "@/config/navbarLinks"
 import Footer from "@/components/layout/footer"
 import MainNavbar from "@/components/layout/main-nav"
 import Logo from "@/components/logo"
@@ -14,7 +13,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         <div className="container md:max-w-2xl lg:max-w-4xl xl:max-w-6xl">
           <div className="flex h-20 items-center space-x-8 py-6">
             <Logo />
-            <MainNavbar items={navbarLinks} />
+            <MainNavbar />
           </div>
         </div>
       </header>

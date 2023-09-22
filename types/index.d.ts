@@ -12,8 +12,14 @@ export type SiteConfig = {
 
 export type NavItem = {
   title: string
-  href: string
+  href?: string
   disabled?: boolean
+  description?: string
+  content?: ContentNavItem[]
+}
+
+export interface ContentNavItem extends NavItem {
+  href: string
 }
 
 export type Project = {

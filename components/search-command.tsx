@@ -64,17 +64,27 @@ const SearchCommand = ({ ...props }: DialogProps) => {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Links">
-            {navbarLinks.map((link) => (
-              <CommandItem
-                key={link.href}
-                value={link.title}
-                onSelect={() => {
-                  runCommand(() => router.push(link.href as string))
-                }}
-              >
-                {link.title}
-              </CommandItem>
-            ))}
+            {navbarLinks.map((link) =>
+              link.content ? (
+                link.content.map((subLink) => (
+                  <MenuCommandItem
+                    key={subLink.href}
+                    value={subLink.title}
+                    onSelect={() => {
+                      runCommand(() => router.push(subLink.href))
+                    }}
+                  />
+                ))
+              ) : (
+                <MenuCommandItem
+                  key={link.href}
+                  value={link.title}
+                  onSelect={() => {
+                    runCommand(() => router.push(link?.href as string))
+                  }}
+                />
+              )
+            )}
           </CommandGroup>
 
           <CommandSeparator />
@@ -98,5 +108,17 @@ const SearchCommand = ({ ...props }: DialogProps) => {
     </>
   )
 }
+
+interface MenuCommandProps {
+  value: string
+  onSelect?: (value: string) => void
+}
+
+const MenuCommandItem = ({ value, onSelect }: MenuCommandProps) => (
+  <CommandItem value={value} onSelect={onSelect}>
+    <Icons.file className="mr-2 h-4 w-4" />
+    <span>{value}</span>
+  </CommandItem>
+)
 
 export default SearchCommand

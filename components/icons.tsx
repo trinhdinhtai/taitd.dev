@@ -2,6 +2,7 @@ import {
   ArrowRight,
   ChevronLeft,
   Download,
+  File,
   GraduationCap,
   Laptop,
   Mail,
@@ -26,4 +27,5 @@ export const Icons = {
   mail: Mail,
   send: Send,
   graduationCap: GraduationCap,
+  file: File,
 }

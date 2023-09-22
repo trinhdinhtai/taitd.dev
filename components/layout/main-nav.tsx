@@ -37,7 +37,7 @@ const MainNavbar = ({ children }: MainNavbarProps) => {
 
   return (
     <div className="flex flex-1 justify-end gap-6 md:justify-between md:gap-10">
-      <NavigationMenu>
+      <NavigationMenu className="hidden md:flex">
         <NavigationMenuList>
           {navbarLinks.map((link) => (
             <NavigationMenuItem key={link.title.trim()}>

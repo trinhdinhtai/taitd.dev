@@ -93,7 +93,7 @@ const PostPage = async ({ params }: PostPageProps) => {
   const toc = await getTableOfContents(post.body.raw)
 
   return (
-    <article className="container relative py-6 md:max-w-2xl lg:max-w-4xl lg:gap-10 lg:py-12 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_300px]">
+    <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_300px]">
       {/* Blog content */}
       <div className="w-full min-w-0">
         <Link href="/blog" className="flex items-center">

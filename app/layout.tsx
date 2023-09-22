@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import ToasterProvider from "@/components/providers/toaster-provider"
+import { ScrollToTopButton } from "@/components/scroll-to-top-button"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 const fontSans = FontSans({
@@ -97,6 +98,7 @@ export default function RootLayout({
         >
           {children}
           <ToasterProvider />
+          <ScrollToTopButton />
           <TailwindIndicator />
         </ThemeProvider>
       </body>

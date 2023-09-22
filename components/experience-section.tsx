@@ -15,10 +15,7 @@ import { useTheme } from "next-themes"
 
 const ExperienceSection = () => {
   const { theme } = useTheme()
-  console.log(
-    "file: experience-section.tsx:18 ~ ExperienceSection ~ theme:",
-    theme
-  )
+
   return (
     <div>
       <SectionHeading>My experience</SectionHeading>

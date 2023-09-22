@@ -1,8 +1,13 @@
 import { Fragment } from "react"
+import { Metadata } from "next"
 import { projectsData } from "@/constants/projects-data"
 
 import PageHeading from "@/components/page-heading"
 import ProjectCard from "@/components/project-card"
+
+export const metadata: Metadata = {
+  title: "Projects",
+}
 
 const ProjectPage = () => {
   return (

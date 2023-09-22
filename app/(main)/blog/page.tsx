@@ -2,7 +2,6 @@ import { Metadata } from "next"
 import { allPosts } from "@/.contentlayer/generated"
 import { compareDesc } from "date-fns"
 
-import Container from "@/components/layout/container"
 import PageHeading from "@/components/page-heading"
 import PostCard from "@/components/post-card"
 

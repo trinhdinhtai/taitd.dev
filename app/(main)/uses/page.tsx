@@ -1,8 +1,11 @@
+import { Metadata } from "next"
 import { hardware, software } from "@/constants/uses-data"
-import { format, parseISO } from "date-fns"
-import { AlertTriangle } from "lucide-react"
 
 import PageHeading from "@/components/page-heading"
+
+export const metadata: Metadata = {
+  title: "Uses",
+}
 
 const UsesPage = () => {
   return (

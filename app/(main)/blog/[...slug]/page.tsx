@@ -10,9 +10,11 @@ import Mdx from "@/components/mdx-components"
 import "@/styles/mdx.css"
 
 import { Metadata } from "next"
+import { PostSeries, SeriesItem } from "@/types"
 
 import { env } from "@/env.mjs"
 import { getTableOfContents } from "@/lib/toc"
+import PostSeriesBox from "@/components/post-series"
 import DashboardTableOfContents from "@/components/toc"
 
 interface PostPageProps {
@@ -74,6 +76,26 @@ async function getPostFromParams(params: { slug: string[] }) {
 
   if (!post) {
     return null
+  }
+
+  if (post?.series) {
+    const seriesPosts: SeriesItem[] = allPosts
+      .filter((p) => p.series?.title === post.series?.title)
+      .sort((a, b) => Number(a.series!.order) - Number(b.series!.order))
+      .map((p) => {
+        return {
+          title: p.title,
+          slug: p.slug,
+          published: p.published,
+          isCurrent: p.slug === post.slug,
+        }
+      })
+    if (seriesPosts.length > 0) {
+      return {
+        ...post,
+        series: { ...post.series, posts: seriesPosts } as PostSeries,
+      }
+    }
   }
 
   return post
@@ -154,6 +176,12 @@ const PostPage = async ({ params }: PostPageProps) => {
             />
           )}
         </div>
+
+        {post?.series && (
+          <div className="not-prose">
+            <PostSeriesBox series={post.series} />
+          </div>
+        )}
 
         <Mdx code={post.body.code} />
       </div>

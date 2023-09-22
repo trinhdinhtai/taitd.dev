@@ -1,3 +1,5 @@
+import { Post } from "@/.contentlayer/generated"
+
 export type SiteConfig = {
   name: string
   description: string
@@ -28,3 +30,14 @@ export type Project = {
   tags: string[]
   imageUrl: string
 }
+
+export type SeriesItem = {
+  title: string
+  slug: Post["slug"]
+  published: Post["published"]
+  isCurrent: boolean
+}
+
+export type PostSeries = Series & { posts: SeriesItem[] }
+
+export type PostWithSeries = Omit<Post, "series"> & { series: PostSeries }

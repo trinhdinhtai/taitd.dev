@@ -1,11 +1,43 @@
 import {
   ComputedFields,
   defineDocumentType,
+  defineNestedType,
   makeSource,
 } from "contentlayer/source-files"
 import rehypePrettyCode from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
+
+export const tagOptions = [
+  "starter",
+  "development",
+  "docs",
+  "freelancing",
+  "opinion",
+  "jamstack",
+  "frontend",
+  "development",
+  "javascript",
+  "typescript",
+  "react",
+  "nextjs",
+  "gatsby",
+  "tailwindcss",
+]
+
+export const Series = defineNestedType(() => ({
+  name: "Series",
+  fields: {
+    title: {
+      type: "string",
+      required: true,
+    },
+    order: {
+      type: "number",
+      required: true,
+    },
+  },
+}))
 
 const computedFields: ComputedFields = {
   slug: {
@@ -41,6 +73,15 @@ export const Post = defineDocumentType(() => ({
     image: {
       type: "string",
       required: true,
+    },
+    tags: {
+      type: "list",
+      of: { type: "string", options: tagOptions },
+      required: false,
+    },
+    series: {
+      type: "nested",
+      of: Series,
     },
     authors: {
       // Reference types are not embedded.

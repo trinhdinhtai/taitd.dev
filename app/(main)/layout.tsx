@@ -1,3 +1,4 @@
+import Container from "@/components/layout/container"
 import Footer from "@/components/layout/footer"
 import MainNavbar from "@/components/layout/main-nav"
 import Logo from "@/components/logo"
@@ -17,7 +18,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           </div>
         </div>
       </header>
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        <Container>{children}</Container>
+      </main>
       <Footer />
     </div>
   )

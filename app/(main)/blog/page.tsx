@@ -18,7 +18,7 @@ const BlogPage = () => {
     })
 
   return (
-    <Container>
+    <>
       <PageHeading
         title="Blog"
         description="A blog built using Contentlayer. Posts are written in MDX."
@@ -31,7 +31,7 @@ const BlogPage = () => {
           ))}
         </div>
       ) : null}
-    </Container>
+    </>
   )
 }
 

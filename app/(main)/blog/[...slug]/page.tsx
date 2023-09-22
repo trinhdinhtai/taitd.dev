@@ -12,10 +12,14 @@ import { Metadata } from "next"
 import { PostSeries, SeriesItem } from "@/types"
 
 import { env } from "@/env.mjs"
+import { siteConfig } from "@/config/site"
 import { getTableOfContents } from "@/lib/toc"
 import Breadcrumb from "@/components/breadcrumb"
 import PostSeriesBox from "@/components/post-series"
+import SocialShare from "@/components/social-share"
 import DashboardTableOfContents from "@/components/toc"
+
+const BASE_URL = env.NEXT_PUBLIC_APP_URL
 
 interface PostPageProps {
   params: {
@@ -34,9 +38,7 @@ export async function generateMetadata({
 
   const { title, description, authors } = post
 
-  const url = env.NEXT_PUBLIC_APP_URL
-
-  const ogUrl = new URL(`${url}/api/og`)
+  const ogUrl = new URL(`${BASE_URL}/api/og`)
   ogUrl.searchParams.set("heading", title)
   ogUrl.searchParams.set("type", "Blog Post")
   ogUrl.searchParams.set("mode", "dark")
@@ -181,6 +183,29 @@ const PostPage = async ({ params }: PostPageProps) => {
         )}
 
         <Mdx code={post.body.code} />
+
+        <hr className="my-4" />
+
+        <div className="flex flex-row items-center justify-between">
+          {post.tags && (
+            <ul className="m-0 list-none space-x-2 p-0 text-sm text-muted-foreground">
+              {post.tags.map((tag: string) => (
+                <li className="inline-block p-0" key={tag}>
+                  <Link
+                    href={`/tags/${tag}`}
+                    className="inline-block transition hover:text-muted-foreground/70"
+                  >
+                    {tag}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+          <SocialShare
+            text={`${post.title} via ${siteConfig.handle}`}
+            url={`${BASE_URL}/${post._raw.flattenedPath}`}
+          />
+        </div>
       </div>
 
       {/* Table of contents */}

@@ -2,6 +2,7 @@ import { Post } from "@/.contentlayer/generated"
 
 export type SiteConfig = {
   name: string
+  handle: string
   description: string
   url: string
   ogImage: string

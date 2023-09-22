@@ -122,6 +122,9 @@ dependencies:
   shiki:
     specifier: ^0.14.4
     version: 0.14.4
+  simple-icons:
+    specifier: ^9.15.0
+    version: 9.15.0
   sonner:
     specifier: ^1.0.3
     version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
@@ -6663,6 +6666,11 @@ packages:
 
   /signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
+    dev: false
+
+  /simple-icons@9.15.0:
+    resolution: {integrity: sha512-76lKUjLHV5xQmNd5uglZitthQjY+Y15e+sKsryEk4Xo9OXmC1E1trBNC5Q4R2FHkHu8lAUhW7Up0mCcG6e0Nqg==}
+    engines: {node: '>=0.12.18'}
     dev: false
 
   /slash@3.0.0:

@@ -2,6 +2,7 @@ import { SiteConfig } from "@/types"
 
 export const siteConfig: SiteConfig = {
   name: "Taitd",
+  handle: "@taitd",
   description:
     "This website is my personal blog. I write about web development, JavaScript, TypeScript, React, Node.js, CSS, and more.",
   url: "https://taitd.io.vn",

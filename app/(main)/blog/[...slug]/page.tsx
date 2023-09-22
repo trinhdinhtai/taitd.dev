@@ -3,8 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { allAuthors, allPosts } from "@/.contentlayer/generated"
 
-import { absoluteUrl, formatDate } from "@/lib/utils"
-import { Icons } from "@/components/icons"
+import { absoluteUrl, cn, formatDate } from "@/lib/utils"
 import Mdx from "@/components/mdx-components"
 
 import "@/styles/mdx.css"
@@ -14,6 +13,7 @@ import { PostSeries, SeriesItem } from "@/types"
 
 import { env } from "@/env.mjs"
 import { getTableOfContents } from "@/lib/toc"
+import Breadcrumb from "@/components/breadcrumb"
 import PostSeriesBox from "@/components/post-series"
 import DashboardTableOfContents from "@/components/toc"
 
@@ -118,24 +118,21 @@ const PostPage = async ({ params }: PostPageProps) => {
     <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_300px]">
       {/* Blog content */}
       <div className="w-full min-w-0">
-        <Link href="/blog" className="flex items-center">
-          <Icons.chevronLeft className="mr-2 h-4 w-4" />
-          See all posts
-        </Link>
+        <Breadcrumb title={post.title} />
 
-        <div className="mt-6">
+        <div>
+          <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
+            {post.title}
+          </h1>
+
           {post.date && (
             <time
               dateTime={post.date}
-              className="block text-sm text-muted-foreground"
+              className="mt-4 block text-sm text-muted-foreground"
             >
               Published on {formatDate(post.date)}
             </time>
           )}
-
-          <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
-            {post.title}
-          </h1>
 
           {authors?.length ? (
             <div className="mt-4 flex space-x-4">

@@ -1,8 +1,10 @@
 import {
   ArrowRight,
   ArrowUp,
+  Check,
   ChevronLeft,
   ChevronRight,
+  Copy,
   Download,
   File,
   GraduationCap,
@@ -34,4 +36,6 @@ export const Icons = {
   graduationCap: GraduationCap,
   file: File,
   home: Home,
+  check: Check,
+  copy: Copy,
 }

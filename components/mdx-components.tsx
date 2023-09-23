@@ -7,6 +7,8 @@ import ComponentPreview from "@/components/component-preview"
 import GridContainer from "@/components/grid-container"
 import LoadingSkeleton from "@/components/loading-skeleton"
 
+import CopyButton from "./copy-button"
+
 const components = {
   h1: ({ className, ...props }) => (
     <h1
@@ -130,14 +132,23 @@ const components = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }) => (
-    <pre
-      className={cn(
-        "mb-4 mt-6 overflow-x-auto rounded-lg border !bg-black py-4",
-        className
-      )}
-      {...props}
-    />
+  pre: ({
+    className,
+    __rawString__,
+    ...props
+  }: React.HTMLAttributes<HTMLPreElement> & {
+    __rawString__?: string
+  }) => (
+    <>
+      <pre
+        className={cn(
+          "mb-4 mt-6 overflow-x-auto rounded-lg border !bg-black py-4",
+          className
+        )}
+        {...props}
+      />
+      {__rawString__ && <CopyButton value={__rawString__} />}
+    </>
   ),
   code: ({ className, ...props }) => (
     <code

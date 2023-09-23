@@ -19,7 +19,7 @@ const ComponentPreview = ({
   return (
     <div
       {...props}
-      className={cn("group relative my-4 flex flex-col space-y-2", className)}
+      className={cn("flex justify-center rounded-lg border p-8", className)}
     >
       {children}
     </div>

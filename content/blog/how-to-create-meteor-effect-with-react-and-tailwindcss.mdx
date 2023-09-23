@@ -1,0 +1,182 @@
+---
+title: "Tailwind CSS Meteor Effect trong 1 nốt nhạc"
+description: Bạn muốn giao diện trang web nhìn ngầu hơn ? đây là bài viết dành cho bạn 👌👌👌
+date: "2023-09-13"
+image: /images/blog/meteor-effect.png
+authors:
+  - taitd
+series:
+  order: 2
+  title: "Quick Tip"
+---
+
+Trong bài viết này, mình sẽ sử dụng Nextjs và TailwindCSS nhé, bạn có thể sử dụng Vite hoặc CRA cũng được nhưng mình thích dùng Nextjs hơn vì không phải cài TailwindCSS một cách thủ công.
+
+- Tạo một dự án mới với terminal (ở đây mình dùng `pnpm` nhưng bạn có thể sử dụng `yarn` hoặc `npm`), hãy sử dụng những config mặc định của Nextjs.
+
+```sh
+pnpm create next-app@ next-meteor-effect
+```
+
+- Sau đó bạn update file `page.tsx` như sau:
+
+```tsx showLineNumbers
+export default function Home() {
+  return (
+    <div className="mx-auto flex min-h-screen items-center justify-center">
+      <div className="relative h-3/4 w-3/4 max-w-sm md:h-1/2">
+        <div className="relative flex h-full flex-col items-start  justify-end overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 px-4 py-8 shadow-xl">
+          <div className="mb-4 flex h-5 w-5 items-center justify-center rounded-full border border-gray-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="h-2 w-2 text-gray-300"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25"
+              />
+            </svg>
+          </div>
+
+          <h1 className="relative z-50 mb-0 mt-2 text-xl font-bold text-white">
+            Meteors because they're cool
+          </h1>
+
+          <p className="relative z-50 my-4 text-base font-normal text-slate-500">
+            I don't know what to write so I'll just paste something cool here.
+            One more sentence because lorem ipsum is just unacceptable.
+          </p>
+
+          <button className="rounded-lg border border-gray-500 px-4 py-1  !text-sm text-gray-300">
+            Explore &rarr;
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+```
+
+Thành quả bạn sẽ có được một cái card như sau:
+
+![Test](https://res.cloudinary.com/dffmwnljn/image/upload/v1692035735/Pasted_image_20230814215703_ggwsuh.png)
+
+- Tạo 1 component khác để render đống sao băng chạy qua chạy lại:
+
+```tsx showLineNumbers
+import React from "react"
+import clsx from "clsx"
+
+interface MeteorsProps {
+  number?: number
+}
+
+export const Meteors = ({ number = 20 }: MeteorsProps) => {
+  const meteors = new Array(number).fill(true)
+  return (
+    <>
+      {meteors.map((_, idx) => (
+        <span
+          key={"meteor" + idx}
+          className={clsx(
+            "animate-meteor-effect absolute left-1/2 top-1/2 h-0.5 w-0.5 rotate-[215deg] rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10]",
+            "before:absolute before:top-1/2 before:h-[1px] before:w-[50px] before:-translate-y-[50%] before:transform before:bg-gradient-to-r before:from-[#64748b] before:to-transparent before:content-['']"
+          )}
+          style={{
+            top: 0,
+            left: Math.floor(Math.random() * (400 - -400) + -400) + "px",
+            animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + "s",
+            animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + "s",
+          }}
+        ></span>
+      ))}
+    </>
+  )
+}
+```
+
+Giải thích qua một chút nhé:
+
+    - Components `Meteors` nhận vào `props` là `number` - số lượng sao băng, với giá trị mặc định là 20.
+    - Tạo một thẻ `span` định hướng sao băng đi từ trái qua phải
+    - Thuộc tính `style` sẽ quyết định vị trí của sao băng trong DOM. Mình sử dụng `Math.random()` để đặt ngẫu nhiên các sao băng trên card background.
+
+- Tiếp theo thêm `animation` và `keyframes` ở file `taiwind.config.ts` để tạo animation cho nó.
+
+```ts showLineNumbers
+ theme: {
+    extend: {
+      animation: {
+        "meteor-effect": "meteor 5s linear infinite",
+      },
+      keyframes: {
+
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: 1 },
+          "70%": { opacity: 1 },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: 0,
+          },
+        },
+      },
+    },
+  },
+```
+
+- Bây giờ thì import component `Meoteors` và thêm một tí overlay cho `Card` Component:
+
+```tsx showLineNumbers {7, 40}
+import { Meteors } from "@/components/Meteors"
+
+export default function Home() {
+  return (
+    <div className="mx-auto flex min-h-screen items-center justify-center">
+      <div className="relative h-3/4 w-3/4 max-w-sm md:h-1/2">
+        <div className="absolute inset-0 h-full w-full scale-[0.80] transform rounded-full bg-red-500 bg-gradient-to-r from-blue-500 to-teal-500 blur-3xl" />
+        <div className="relative flex h-full flex-col items-start  justify-end overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 px-4 py-8 shadow-xl">
+          <div className="mb-4 flex h-5 w-5 items-center justify-center rounded-full border border-gray-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="h-2 w-2 text-gray-300"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25"
+              />
+            </svg>
+          </div>
+
+          <h1 className="relative z-50 mb-0 mt-2 text-xl font-bold text-white">
+            Meteors because they're cool
+          </h1>
+
+          <p className="relative z-50 my-4 text-base font-normal text-slate-500">
+            I don't know what to write so I'll just paste something cool here.
+            One more sentence because lorem ipsum is just unacceptable.
+          </p>
+
+          <button className="rounded-lg border border-gray-500 px-4 py-1  !text-sm text-gray-300">
+            Explore &rarr;
+          </button>
+
+          {/* Meaty part - Meteor effect */}
+          <Meteors number={10} />
+        </div>
+      </div>
+    </div>
+  )
+}
+```
+
+Và thế là bạn đã có một cái Card Component với hiệu ứng xịn vãi ò =)))

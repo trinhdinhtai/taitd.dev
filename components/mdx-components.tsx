@@ -3,6 +3,7 @@ import { useMDXComponent } from "next-contentlayer/hooks"
 
 import { cn } from "@/lib/utils"
 import { Callout } from "@/components/callout"
+import ComponentPreview from "@/components/component-preview"
 import GridContainer from "@/components/grid-container"
 import LoadingSkeleton from "@/components/loading-skeleton"
 
@@ -151,6 +152,7 @@ const components = {
   Callout,
   GridContainer,
   LoadingSkeleton,
+  ComponentPreview,
 }
 
 interface MdxProps {

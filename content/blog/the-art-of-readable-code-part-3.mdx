@@ -1,0 +1,142 @@
+---
+title: "The Art Of Readable Code - Part 3: Tái cấu trúc code"
+description: "Trong phần này, chúng ta sẽ thảo luận về các cách tái cấu trúc code ở level function"
+date: "2023-09-28"
+image: /images/blog/clean-code-chapter-4.jpg
+authors:
+  - taitd
+series:
+  order: 2
+  title: "The Art Of Readable code"
+---
+
+## Chapter 10: Extracting unrelated subproblems – Tách rời những vấn đề không liên quan
+
+Đây là kỹ thuật chia nhỏ những vấn đề lớn thành những vấn đề nhỏ hơn và tập hợp các giải pháp cho những vấn đề đó lại với nhau. Áp dụng nguyên tắc này vào code sẽ làm cho nó hiệu quả hơn và dễ đọc hơn.
+
+The advice for this chapter is to aggressively identify and extract unrelated
+subproblems. Here’s what we mean:
+
+1. Look at a given function or block of code, and ask yourself, “What is the high-level goal
+   of this code?”
+2. For each line of code, ask, “Is it working directly to that goal? Or is it solving an unrelated
+   subproblem needed to meet it?”
+3. If enough lines are solving an unrelated subproblem, extract that code into a separate
+   function.
+   Extracting code into separate functions is something you probably do every day. But for this
+   chapter, we decided to focus on the specific case of extracting unrelated subproblems, where the
+   extracted code is blissfully unaware of why it’s being called.
+   As you’ll see, it’s an easy technique to apply but can improve your code substantially. Yet for
+   some reason, many programmers don’t use this technique enough. The trick is to actively look
+   for these unrelated subproblems.
+   In this chapter, we will go through a variety
+
+### Introductory Example: `findClosestLocation()`
+
+The high-level goal of the following JavaScript code is, find the location that’s closest to a given
+point (don’t get bogged down by the advanced geometry, which we’ve italicized):
+
+The high-level goal of the following JavaScript code is, find the location that’s closest to a given
+point (don’t get bogged down by the advanced geometry, which we’ve italicized):
+
+```java
+// Return which element of 'array' is closest to the given latitude/longitude.
+// Models the Earth as a perfect sphere.
+var findClosestLocation = function (lat, lng, array) {
+    var closest;
+    var closest_dist = Number.MAX_VALUE;
+    for (var i = 0; i < array.length; i += 1) {
+        // Convert both points to radians.
+        var lat_rad = radians(lat);
+        var lng_rad = radians(lng);
+        var lat2_rad = radians(array[i].latitude);
+        var lng2_rad = radians(array[i].longitude);
+
+        // Use the "Spherical Law of Cosines" formula.
+        var dist = Math.acos(Math.sin(lat_rad) * Math.sin(lat2_rad) +
+                             Math.cos(lat_rad) * Math.cos(lat2_rad) *
+                             Math.cos(lng2_rad - lng_rad));
+
+        if (dist < closest_dist) {
+            closest = array[i];
+            closest_dist = dist;
+        }
+    }
+    return closest;
+};
+```
+
+Most of the code inside the loop is working on an unrelated subproblem: Compute the spherical
+distance between two lat/long points. Because there is so much of that code, it makes sense to
+extract it into a separate `spherical_distance()` function:
+
+```java
+var spherical_distance = function (lat1, lng1, lat2, lng2) {
+    var lat1_rad = radians(lat1);
+    var lng1_rad = radians(lng1);
+    var lat2_rad = radians(lat2);
+    var lng2_rad = radians(lng2);
+
+    // Use the "Spherical Law of Cosines" formula.
+    return Math.acos(Math.sin(lat1_rad) * Math.sin(lat2_rad) +
+    Math.cos(lat1_rad) * Math.cos(lat2_rad) *
+    Math.cos(lng2_rad - lng1_rad));
+}
+```
+
+Now the remaining code becomes:
+
+```java
+var findClosestLocation = function (lat, lng, array) {
+    var closest;
+    var closest_dist = Number.MAX_VALUE;
+    for (var i = 0; i < array.length; i += 1) {
+        var dist = spherical_distance(lat, lng, array[i].latitude, array[i].longitude);
+        if (dist < closest_dist) {
+            closest = array[i];
+            closest_dist = dist;
+        }
+    }
+ return closest;
+};
+```
+
+This code is far more readable because the reader can focus on the high-level goal without
+getting distracted by intense geometry equations.
+As an added bonus, spherical_distance() will be easier to test in isolation. And
+spherical_distance() is the type of function that could be reused in the future. This is why it’s
+an “unrelated” subproblem—it’s completely self-contained and unaware of how applications
+are using it.
+
+## Pure Utility Code
+
+There is a core set of basic tasks that most programs do, such as manipulating strings, using
+hash tables, and reading/writing files.
+Often, these “basic utilities” are implemented by the built-in libraries in your programming
+language. For instance, if you want to read the entire contents of a file, in PHP you can call
+file_get_contents("filename"), or in Python, you can do open("filename").read().
+
+But sometimes you have to fill in the gaps yourself. In C++, for instance, there is no succinct
+way to read an entire file. Instead, you inevitably end up writing code like this:
+
+```java
+if stream file(file_name);
+
+// Calculate the file's size, and allocate a buffer of that size.
+file.seekg(0, ios::end);
+const int file_size = file.tellg();
+char\* file_buf = new char [file_size];
+
+// Read the entire file into the buffer.
+file.seekg(0, ios::beg);
+file.read(file_buf, file_size);
+file.close();
+...
+```
+
+This is a classic example of an unrelated subproblem that should be extracted into a new
+function like ReadFileToString(). Now, the rest of your codebase can act as if C++ did have a
+ReadFileToString() function.
+In general, if you find yourself thinking, “I wish our library had an XYZ() function,” go ahead
+and write it! (Assuming it doesn’t already exist.) Over time, you’ll build up a nice collection of
+utility code that can be used across projects.

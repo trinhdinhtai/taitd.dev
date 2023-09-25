@@ -1,6 +1,7 @@
 import {
   ArrowRight,
   ArrowUp,
+  Briefcase,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -38,4 +39,5 @@ export const Icons = {
   home: Home,
   check: Check,
   copy: Copy,
+  work: Briefcase,
 }

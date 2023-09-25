@@ -1,8 +1,8 @@
 ---
 title: "The Art Of Readable Code - Chapter 4: Aesthetics (Tính thẩm mỹ)"
-description: "Trong chương này, chúng tôi sẽ tập trung vào những cải tiến mang tính “thẩm mỹ” cho code. Những cải tiến này rất dễ thực hiện và thường cải thiện khả năng đọc code khá nhiều."
+description: "Trong chương này, chúng ta sẽ tập trung vào những cải tiến mang tính “thẩm mỹ” cho code. Những cải tiến này rất dễ thực hiện và thường cải thiện khả năng đọc code khá nhiều."
 date: "2023-09-24"
-image: /images/blog/skeleton-loading.png
+image: /images/blog/clean-code-chapter-4.jpg
 authors:
   - taitd
 series:
@@ -126,7 +126,7 @@ public class PerformanceTester {
 }
 ```
 
-## Sử dụng các method để làm sạch sự bất thường
+## Tách method để xoá bỏ sự bất thường
 
 Giả sử trong cơ sở dữ liệu có một function như sau:
 
@@ -206,7 +206,7 @@ Bạn hãy cứ thử nó, nếu nó không mất nhiều công sức như bạn
 
 ## Chọn 1 thứ tự có nghĩa và duy trì một cách nhất quán:
 
-Có nhiều trường hợp thì thứ tự không ảnh hưởng đến tính chính xác của chương tình, ví dụ chúng ta có 5 biến khai báo theo thứ tự bất kỳ:
+Có nhiều trường hợp thì thứ tự không ảnh hưởng đến tính chính xác của chương trình, ví dụ chúng ta có 5 biến khai báo theo thứ tự bất kỳ:
 
 ```java
 details  = request.POST.get('details')
@@ -218,8 +218,7 @@ url      = request.POST.get('url')
 
 Trong những tình huống như thế này, sẽ rất hữu ích nếu sắp xếp chúng theo một thứ tự có ý nghĩa nào đó chứ không chỉ ngẫu nhiên. Đây là một số ý tưởng:
 
-- So khớp thứ tự của các biến với thứ tự của trường `<input>` trên bảng tương ứng
-  dạng HTML.
+- So khớp thứ tự của các biến với thứ tự của hiển thị trên UI
 - Sắp xếp chúng theo độ quan trọng giảm dần.
 - Sắp xếp chúng theo thứ tự bảng chữ cái.
 
@@ -228,16 +227,16 @@ Cho dù là thứ tự là như nào, thì bạn cần phải đảm bảo đư�
 Thật khó hiểu nếu bạn định nghĩa ở một nơi khác như thế này:
 
 ```java
-if details: rec.details = details
-if phone:   rec.phone   = phone      # Hey, where did 'location' go?
-if email:   rec.email   = email
-if url:     rec.url     = url
-if location: rec.location = location # Why is 'location' down here now?
+if details:     rec.details  = details
+if phone:       rec.phone    = phone      # Hey, where did 'location' go?
+if email:       rec.email    = email
+if url:         rec.url      = url
+if location:    rec.location = location   # Why is 'location' down here now?
 ```
 
 ## Nhóm các lệnh khai báo thành từng khối
 
-Bộ não suy nghĩ một cách tự nhiên về các nhóm và hệ thống phân cấp, vì vậy bạn có thể giúp người đọc tiêu hóa code của bạn một cách nhanh chóng hơn bằng cách tổ chức nó theo cách đó.
+Bộ não suy nghĩ một cách tự nhiên về các nhóm và hệ thống phân cấp, vì vậy bạn có thể giúp người đọc tiêu hóa code của bạn một cách nhanh chóng hơn bằng cách tổ chức code theo cách này.
 
 Ví dụ đoạn code C++ sau đây:
 
@@ -257,7 +256,6 @@ public:
 ```
 
 Đoạn code trên không quá tệ, tuy nhiên bố cục chắc chắn không giúp người đọc hiểu được tất cả những phương thức trên.
-
 Thay vì liệt kê tất cả các phương thức trong một khối khổng lồ, chúng nên được sắp xếp hợp lý thành các nhóm như sau:
 
 ```c
@@ -289,7 +287,6 @@ Phiên bản này dễ đọc hơn nhiều mặc dù nó có nhiều dòng hơn,
 Mã nên được chia thành các “đoạn” vì những lý do sau:
 
 - Đó là một cách để nhóm các ý tưởng tương tự lại với nhau và tách chúng ra khỏi những ý tưởng khác.
-- Nó cung cấp một “bước đệm” trực quan, không có nó, bạn rất dễ đánh mất vị trí của mình trên trang.
 - Nó tạo điều kiện thuận lợi cho việc điều hướng từ đoạn này sang đoạn khác.
 
 Ví dụ, không ai thích đọc một đoạn code khổng lồ như thế này:
@@ -310,7 +307,7 @@ def suggest_new_friends(user, email_password):
     return render("suggested_friends.html", display)
 ```
 
-Nó có thể không rõ ràng, nhưng function này trải qua một số bước riêng biệt. Vì vậy nó sẽ đặc biệt hữu ích khi chia block code trên thành các đoạn và comment tóm tắt cho mỗi đoạn như sau:
+Tuy không rõ ràng, nhưng function này trải qua một số bước riêng biệt. Vì vậy sẽ dễ tiêu hoá hơn khi chia block code trên thành các đoạn và comment tóm tắt cho mỗi đoạn như sau:
 
 ```python
 def suggest_new_friends(user, email_password):
@@ -356,7 +353,7 @@ class Logger
 
 Dù bạn theo trường phái nào thì hãy duy trì tính nhất quán ở mọi nơi, đừng dùng style một cách "linh hoạt".
 
-## Tổng kết:
+## Tổng kết
 
 Tất cả mọi developer đều thích đọc code có tính thẩm mỹ, bằng cách định dạng code theo tính nhất quán, có ý nghĩa, việc đọc code sẽ trở nên dễ dàng và nhanh chóng hơn.
 

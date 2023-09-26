@@ -16,6 +16,7 @@ import { siteConfig } from "@/config/site"
 import { getTableOfContents } from "@/lib/toc"
 import Breadcrumb from "@/components/breadcrumb"
 import LikeButton from "@/components/like-button"
+import PostMetrics from "@/components/post-metrics"
 import PostSeriesBox from "@/components/post-series"
 import SocialShare from "@/components/social-share"
 import TableOfContents from "@/components/toc"
@@ -128,14 +129,15 @@ const PostPage = async ({ params }: PostPageProps) => {
             {post.title}
           </h1>
 
-          {post.date && (
-            <time
-              dateTime={post.date}
-              className="mt-4 block text-sm text-muted-foreground"
-            >
-              Published on {formatDate(post.date)}
-            </time>
-          )}
+          <div className="mt-4 flex space-x-2 text-lg text-muted-foreground">
+            {post.date && (
+              <time dateTime={post.date}>{formatDate(post.date)}</time>
+            )}
+
+            <span>&middot;</span>
+
+            <PostMetrics slug={post.slugAsParams} />
+          </div>
 
           {authors?.length ? (
             <div className="mt-4 flex space-x-4">

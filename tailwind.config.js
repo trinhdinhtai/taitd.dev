@@ -1,4 +1,5 @@
 const { fontFamily } = require("tailwindcss/defaultTheme")
+const colors = require("tailwindcss/colors")
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -64,7 +65,7 @@ module.exports = {
         mono: ["var(--font-code)", ...fontFamily.mono],
         heading: ["var(--font-heading)", ...fontFamily.sans],
       },
-      keyframes: {
+      keyframes: ({ theme }) => ({
         "accordion-down": {
           from: { height: 0 },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -104,7 +105,19 @@ module.exports = {
             opacity: ".2",
           },
         },
-      },
+        mutation: {
+          "0%": {
+            background: theme("colors.rose.200 / 3%"),
+          },
+          "10%": {
+            background: theme("colors.rose.200 / 15%"),
+            color: theme("colors.rose.200 / 75%"),
+          },
+          "100%": {
+            background: theme("colors.rose.200 / 0%"),
+          },
+        },
+      }),
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",

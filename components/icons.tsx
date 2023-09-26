@@ -9,6 +9,7 @@ import {
   Download,
   File,
   GraduationCap,
+  HeartIcon,
   Home,
   Laptop,
   Mail,
@@ -40,4 +41,5 @@ export const Icons = {
   check: Check,
   copy: Copy,
   work: Briefcase,
+  heart: HeartIcon,
 }

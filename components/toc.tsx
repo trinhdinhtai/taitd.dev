@@ -2,18 +2,16 @@
 
 import { useMemo } from "react"
 
-import { TableOfContents } from "@/lib/toc"
+import { TableOfContents as TOC } from "@/lib/toc"
 import { cn } from "@/lib/utils"
 import useActiveItem from "@/hooks/use-active-item"
 import useMounted from "@/hooks/use-mounted"
 
-interface DashboardTableOfContentProps {
-  toc: TableOfContents
+interface TableOfContentProps {
+  toc: TOC
 }
 
-export default function DashboardTableOfContents({
-  toc,
-}: DashboardTableOfContentProps) {
+export default function TableOfContents({ toc }: TableOfContentProps) {
   const itemIds = useMemo(
     () =>
       toc.items
@@ -35,14 +33,14 @@ export default function DashboardTableOfContents({
 
   return (
     <div className="space-y-2">
-      <p className="font-medium">On This Page</p>
+      <p className="font-medium uppercase">On This Page</p>
       <Tree tree={toc} activeItem={activeHeading} />
     </div>
   )
 }
 
 interface TreeProps {
-  tree: TableOfContents
+  tree: TOC
   level?: number
   activeItem?: string | null
 }

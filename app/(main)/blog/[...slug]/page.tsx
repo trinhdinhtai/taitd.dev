@@ -3,7 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { allAuthors, allPosts } from "@/.contentlayer/generated"
 
-import { absoluteUrl, cn, formatDate } from "@/lib/utils"
+import { absoluteUrl, formatDate } from "@/lib/utils"
 import Mdx from "@/components/mdx-components"
 
 import "@/styles/mdx.css"
@@ -15,9 +15,10 @@ import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 import { getTableOfContents } from "@/lib/toc"
 import Breadcrumb from "@/components/breadcrumb"
+import LikeButton from "@/components/like-button"
 import PostSeriesBox from "@/components/post-series"
 import SocialShare from "@/components/social-share"
-import DashboardTableOfContents from "@/components/toc"
+import TableOfContents from "@/components/toc"
 
 const BASE_URL = env.NEXT_PUBLIC_APP_URL
 
@@ -117,7 +118,7 @@ const PostPage = async ({ params }: PostPageProps) => {
   const toc = await getTableOfContents(post.body.raw)
 
   return (
-    <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_300px]">
+    <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_250px]">
       {/* Blog content */}
       <div className="w-full min-w-0">
         <Breadcrumb title={post.title} />
@@ -210,8 +211,14 @@ const PostPage = async ({ params }: PostPageProps) => {
 
       {/* Table of contents */}
       <div className="hidden text-sm xl:block">
-        <div className="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-10">
-          <DashboardTableOfContents toc={toc} />
+        <div className="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] pt-10">
+          <TableOfContents toc={toc} />
+
+          <hr className="my-4" />
+
+          <div className="flex items-center justify-between">
+            <LikeButton slug={post.slug} />
+          </div>
         </div>
       </div>
     </article>

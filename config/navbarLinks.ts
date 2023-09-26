@@ -2,6 +2,12 @@ import { ContentNavItem, NavItem } from "@/types"
 
 const moreContent: ContentNavItem[] = [
   {
+    title: "Snippets",
+    href: "/snippets",
+    description:
+      "Code snippets that I use often. Mostly for personal reference.",
+  },
+  {
     title: "Stats",
     href: "/stats",
     description: "My personal statistics about coding and other things.",

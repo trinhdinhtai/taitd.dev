@@ -78,19 +78,31 @@ module.exports = {
             transform: "translateX(100%)",
           },
         },
-      },
-      emoji: {
-        "0%": {
-          opacity: "0",
-          transform: "translateY(0) scale(0)",
+        emoji: {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(0) scale(0)",
+          },
+          "50%": {
+            opacity: "1",
+            transform: "translateY(-40px) scale(1)",
+          },
+          to: {
+            opacity: "0",
+            transform: "translateY(-60px) scale(1.4)",
+          },
         },
-        "50%": {
-          opacity: "1",
-          transform: "translateY(-40px) scale(1)",
-        },
-        to: {
-          opacity: "0",
-          transform: "translateY(-60px) scale(1.4)",
+        loading: {
+          "0%": {
+            opacity: ".2",
+          },
+          "20%": {
+            opacity: "1",
+            transform: "translateX(1px)",
+          },
+          to: {
+            opacity: ".2",
+          },
         },
       },
       animation: {

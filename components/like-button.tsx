@@ -4,6 +4,7 @@ import { useState } from "react"
 import { HeartIcon } from "@heroicons/react/24/solid"
 
 import { cn } from "@/lib/utils"
+import usePostLikes from "@/hooks/use-post-likes"
 
 interface LikeButtonProps {
   slug: string
@@ -12,7 +13,10 @@ interface LikeButtonProps {
 const emojis = ["👍", "🙏", "🥰"]
 
 const LikeButton = ({ slug }: LikeButtonProps) => {
+  console.log("file: like-button.tsx:16 ~ LikeButton ~ slug:", slug)
   const currentUserLikes = 1
+  const { likes } = usePostLikes(slug)
+  console.log("file: like-button.tsx:18 ~ LikeButton ~ likes:", likes)
 
   const [animatedEmojis, setAnimatedEmojis] = useState<string[]>(
     currentUserLikes ? [emojis[currentUserLikes]] : []
@@ -51,7 +55,7 @@ const LikeButton = ({ slug }: LikeButtonProps) => {
 
       {/* Like counter text */}
       <div className="text-lg font-medium leading-none text-muted-foreground">
-        1530
+        {likes}
       </div>
     </div>
   )

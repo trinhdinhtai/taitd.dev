@@ -217,7 +217,7 @@ const PostPage = async ({ params }: PostPageProps) => {
           <hr className="my-4" />
 
           <div className="flex items-center justify-between">
-            <LikeButton slug={post.slug} />
+            <LikeButton slug={post.slugAsParams} />
           </div>
         </div>
       </div>

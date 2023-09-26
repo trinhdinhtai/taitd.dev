@@ -8,7 +8,7 @@ const Logo = () => {
   return (
     <Link href="/" className="flex items-center space-x-2">
       <Icons.logo />
-      <span className="font-bold">{siteConfig.name}</span>
+      <span className="font-mono font-bold lowercase">{`${siteConfig.name}.dev()`}</span>
     </Link>
   )
 }

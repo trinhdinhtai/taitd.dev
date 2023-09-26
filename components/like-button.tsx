@@ -4,7 +4,7 @@ import { useState } from "react"
 import { HeartIcon } from "@heroicons/react/24/solid"
 
 import { cn } from "@/lib/utils"
-import usePostLikes from "@/hooks/use-post-likes"
+import { usePostLikes } from "@/hooks/use-post-likes"
 
 interface LikeButtonProps {
   slug: string
@@ -13,10 +13,7 @@ interface LikeButtonProps {
 const emojis = ["👍", "🙏", "🥰"]
 
 const LikeButton = ({ slug }: LikeButtonProps) => {
-  console.log("file: like-button.tsx:16 ~ LikeButton ~ slug:", slug)
-  const currentUserLikes = 1
-  const { likes } = usePostLikes(slug)
-  console.log("file: like-button.tsx:18 ~ LikeButton ~ likes:", likes)
+  const { currentUserLikes, likes } = usePostLikes(slug)
 
   const [animatedEmojis, setAnimatedEmojis] = useState<string[]>(
     currentUserLikes ? [emojis[currentUserLikes]] : []
@@ -42,10 +39,10 @@ const LikeButton = ({ slug }: LikeButtonProps) => {
 
         <button
           className={cn(
-            "group block transform overflow-hidden rounded-lg bg-gradient-to-tl from-black/80 to-black/10 p-1 shadow-lg transition-all duration-300 ease-out hover:scale-110 hover:rounded-[10px] focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500/70 active:scale-100 active:rounded-lg dark:from-white/5 dark:to-white/30"
-            // currentUserLikes === 0
-            //   ? "hover:shadow-gray-500/30"
-            //   : "hover:shadow-red-500/50"
+            "group block transform overflow-hidden rounded-lg bg-gradient-to-tl from-black/80 to-black/10 p-1 shadow-lg transition-all duration-300 ease-out hover:scale-110 hover:rounded-[10px] focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500/70 active:scale-100 active:rounded-lg dark:from-white/5 dark:to-white/30",
+            currentUserLikes === 0
+              ? "hover:shadow-gray-500/30"
+              : "hover:shadow-red-500/50"
           )}
           onClick={handleClick}
         >

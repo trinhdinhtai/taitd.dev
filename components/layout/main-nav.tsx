@@ -36,8 +36,8 @@ const MainNavbar = ({ children }: MainNavbarProps) => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false)
 
   return (
-    <div className="flex flex-1 justify-end gap-6 md:justify-between md:gap-10">
-      <NavigationMenu className="hidden md:flex">
+    <div className="flex flex-1 justify-end gap-6 md:gap-10 lg:justify-between">
+      <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList>
           {navbarLinks.map((link) => (
             <NavigationMenuItem key={link.title.trim()}>
@@ -81,7 +81,7 @@ const MainNavbar = ({ children }: MainNavbarProps) => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="hidden items-center gap-4 md:flex">
+      <div className="hidden items-center gap-4 lg:flex">
         <div className="flex-1 sm:grow-0">
           <SearchCommand />
         </div>
@@ -89,7 +89,7 @@ const MainNavbar = ({ children }: MainNavbarProps) => {
       </div>
 
       <button
-        className="flex items-center space-x-2 md:hidden"
+        className="flex items-center space-x-2 lg:hidden"
         onClick={() => setShowMobileMenu(!showMobileMenu)}
       >
         {showMobileMenu ? <Icons.close /> : <Icons.menu />}

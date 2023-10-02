@@ -8,6 +8,8 @@ import {
   Copy,
   Download,
   File,
+  FileCode,
+  FolderIcon,
   GraduationCap,
   HeartIcon,
   Home,
@@ -42,4 +44,6 @@ export const Icons = {
   copy: Copy,
   work: Briefcase,
   heart: HeartIcon,
+  fileCode: FileCode,
+  folder: FolderIcon,
 }

@@ -1,0 +1,41 @@
+---
+title: "Next.js Project Clean Structure"
+description: "Hiệu ứng loading quá đơn điệu và tẻ nhạt ? Đây là cách để bạn biến nó trở nên sinh động và chuyên nghiệp hơn 👌👌👌"
+date: "2023-09-13"
+image: /images/blog/skeleton-loading.png
+authors:
+  - taitd
+series:
+  order: 1
+  title: "Next.js 13 App Router"
+---
+
+<Files
+  data={[
+    {
+      name: ".contentlayer [...]",
+      children: [],
+    },
+    {
+      name: "content [...]",
+      children: [],
+    },
+    {
+      name: "pages",
+      children: [
+        {
+          name: "blog",
+          children: [
+            {
+              name: "[slug].js",
+              isHighlighted: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "[...]",
+    },
+  ]}
+/>

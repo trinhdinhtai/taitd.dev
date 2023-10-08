@@ -1,0 +1,408 @@
+---
+title: "The Art Of Readable Code - Part 3: Tái cấu trúc code"
+description: "Trong phần này, chúng ta sẽ thảo luận về các cách tái cấu trúc code ở level function"
+date: "2023-09-28"
+image: /images/blog/clean-code-chapter-4.jpg
+authors:
+  - taitd
+series:
+  order: 2
+  title: "The Art Of Readable code"
+---
+
+## Chapter 10: Tách rời những vấn đề không liên quan
+
+Đây là kỹ thuật chia nhỏ những vấn đề lớn thành những vấn đề nhỏ hơn và tập hợp các giải pháp cho những vấn đề đó lại với nhau. Áp dụng nguyên tắc này vào code sẽ làm cho nó hiệu quả hơn và dễ đọc hơn.
+
+Lời khuyên trong chương này chính là luôn luôn tích cực xác định các bài toán con không liên quan và tách biệt nó, cụ thể là:
+
+1. Hãy xem xét một function hoặc một block cụ thể và tự đặt câu hỏi cho mình rằng: “Mục tiêu chính của đoạn code này là gì?”
+2. Đối với từng dòng code, bạn hãy thắc mắc: “Liệu nó có đang góp phần trực tiếp vào mục tiêu mà bạn đang hướng đến hay không? Hay nó đang giải quyết một vấn đề con không liên quan ?”
+3. Nếu nó đang giải quyết một vấn đề con không liên quan, hãy xem xét tách đoạn code đó thành một hàm riêng biệt.
+
+Việc tách code thành các hàm con là một phần trong quá trình làm việc hàng ngày, trong đó, hàm con này chỉ cần thực hiện nhiệm vụ cụ thể mà nó được giao mà không cần phải quan tâm đến ngữ cảnh hoặc mục tiêu lớn hơn của chương trình.
+
+### Ví dụ giới thiệu
+
+#### `findClosestLocation()`
+
+Chúng ta hãy cùng phân tích đoạn code sau đây:
+
+```js showLineNumbers
+// Return which element of 'array' is closest to the given latitude/longitude.
+// Models the Earth as a perfect sphere.
+var findClosestLocation = function (lat, lng, array) {
+  var closest
+  var closest_dist = Number.MAX_VALUE
+  for (var i = 0; i < array.length; i += 1) {
+    // Convert both points to radians.
+    var lat_rad = radians(lat)
+    var lng_rad = radians(lng)
+    var lat2_rad = radians(array[i].latitude)
+    var lng2_rad = radians(array[i].longitude)
+
+    // Use the "Spherical Law of Cosines" formula.
+    var dist = Math.acos(
+      Math.sin(lat_rad) * Math.sin(lat2_rad) +
+        Math.cos(lat_rad) * Math.cos(lat2_rad) * Math.cos(lng2_rad - lng_rad)
+    )
+
+    if (dist < closest_dist) {
+      closest = array[i]
+      closest_dist = dist
+    }
+  }
+  return closest
+}
+```
+
+Mục tiêu chính của hàm JavaScript trên là tìm vị trí gần nhất trong một mảng các vị trí dựa trên tọa độ địa lý (latitude/longitude).
+
+Hầu hết phần code bên trong vòng lặp hiện đang xử lý một vấn đề con không liên quan, đó là tính toán khoảng cách giữa hai điểm trên hình cầu dựa trên vĩ độ và kinh độ. Vì vậy hãy tách nhỏ đoạn xử lý này thành một hàm riêng biệtm có tên là `spherical_distance()`
+
+```js showLineNumbers
+var spherical_distance = function (lat1, lng1, lat2, lng2) {
+  var lat1_rad = radians(lat1)
+  var lng1_rad = radians(lng1)
+  var lat2_rad = radians(lat2)
+  var lng2_rad = radians(lng2)
+  // Use the "Spherical Law of Cosines" formula.
+  return Math.acos(
+    Math.sin(lat1_rad) * Math.sin(lat2_rad) +
+      Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.cos(lng2_rad - lng1_rad)
+  )
+}
+```
+
+Code sau khi refactor sẽ là:
+
+```js showLineNumbers {5-10}
+var findClosestLocation = function (lat, lng, array) {
+  var closest
+  var closest_dist = Number.MAX_VALUE
+  for (var i = 0; i < array.length; i += 1) {
+    var dist = spherical_distance(
+      lat,
+      lng,
+      array[i].latitude,
+      array[i].longitude
+    )
+    if (dist < closest_dist) {
+      closest = array[i]
+      closest_dist = dist
+    }
+  }
+  return closest
+}
+```
+
+Đoạn code trên đã trở nên dễ đọc hơn nhiều, vì người đọc có thể tập trung vào mục tiêu chính của đoạn code mà không bị xáo trộn bởi các xử lý phức tạp khác. Ngoài ra, hàm `spherical_distance` sẽ trở nên dễ để test hơn vì nó đã trở thành 1 hàm độc lập, hơn nữa, hàm `spherical_distance()` cũng có thể tái sử dụng trong tương lai là loại hàm có thể được sử dụng lại trong tương lai.
+
+### Pure Utility Code (Hàm tiện tích thuần tuý)
+
+Có một số hàm common mà hầu hết project nào cũng sẽ phải thực hiện, ví dụ như thao tác với chuỗi, format ngày tháng, đọc ghi tệp...vân vân mây mây, thông thường thì những xử lý này thường được thực hiện bằng các thư viện được tích hợp trong project theo từng ngôn ngữ lập trình cụ thể. Ví dụ: để đọc toàn bộ nội dung của một tệp, bạn có thể sử dụng `file_get_contents("filename")` trong PHP hoặc `open("filename").read()` trong Python.
+
+Tuy nhiên, không phải là toàn bộ vấn đề của bạn sẽ hoàn toàn được giải quyết bằng thư viện. Ví dụ, trong ngôn ngữ lập trình C++, không có cách ngắn gọn để đọc toàn bộ tệp, thay vào đó, bạn sẽ cần phải làm bằng cơm như sau:
+
+```c
+ifstream file(file_name);
+
+// Calculate the file's size, and allocate a buffer of that size.
+file.seekg(0, ios::end);
+const int file_size = file.tellg();
+char* file_buf = new char [file_size];
+
+// Read the entire file into the buffer.
+file.seekg(0, ios::beg);
+file.read(file_buf, file_size);
+file.close();
+...
+```
+
+Đây là một ví dụ điển hình về việc tách một bài toán con không liên quan và biến nó thành một hàm mới, ví dụ như bạn có thể tách hàm trên thành một hàm mới đặt tên là `ReadFileToString()`. Tóm lại, nếu bạn có suy nghĩ: “Tôi ước thư viện của chúng ta có hàm XYZ()”, thì hãy bắt tay vào viết nó! (Tất nhiên, với điều kiện nó chưa tồn tại.) Theo thời gian, bạn sẽ xây dựng được một bộ sưu tập những utility function, có thể tái sử dụng trong nhiều dự án khác nhau.
+
+### Tạo ra nhiều đoạn code xử lý chung
+
+Trong JavaScript, các lập trình viên thường sử dụng hàm `alert()` (hoặc `console.log()`) để hiển thị thông tin về giá trị của một biến hoặc return value của hàm.
+
+Ví dụ, trong đoạn code sau, nhiệm vụ chính là thực hiện call API và lấy data trả về sử dụng Ajax.
+
+```js showLineNumbers
+ajax_post({
+  url: "http://example.com/submit",
+  data: data,
+  on_success: function (response_data) {
+    var str = "{\n"
+    for (var key in response_data) {
+      str += " " + key + " = " + response_data[key] + "\n"
+    }
+    alert(str + "}")
+
+    // Continue handling 'response_data' ...
+  },
+})
+```
+
+Tuy nhiên, phần lớn của đoạn code đang thực hiện một công việc không liên quan, đó là in ra một từ chuỗi, rất dễ dàng để tách phần code đó ra và đặt nó vào một hàm riêng, ví dụ: `forcodet_pretty(obj)`, để làm cho code trở nên dễ đọc và quản lý hơn:
+
+```js showLineNumbers
+var format_pretty = function (obj) {
+  var str = "{\n"
+  for (var key in obj) {
+    str += " " + key + " = " + obj[key] + "\n"
+  }
+  return str + "}"
+}
+```
+
+Có nhiều lý do tại sao việc tách `forcodet_pretty()` thành một hàm riêng biệt là một ý tưởng hay.
+
+- Nó làm cho việc gọi hàm trở nên đơn giản hơn và bản thân `forcodet_pretty()` chính là một utility function.
+
+- Việc cải tiến `forcodet_pretty()` sẽ dễ dàng hơn, vì khi chúng ta làm việc với một chức năng nhỏ hơn một cách độc lập, sẽ dễ dàng hơn khi thêm tính năng, xử lý các trường hợp phức tạp,
+
+Tiếp tục với ví dụ trên thì hàm `forcodet_pretty(obj)` hiện tại không thể xử lý được những vấn đề sau:
+
+- Đối số truyền vào mong muốn là một object, nếu nó là một chuỗi hoặc là undefined thì sẽ xảy ra exception
+- Nếu obj là nested object, thì giá trị in ra của alert sẽ là [object Object], nó làm cho giao diện không được trực quan.
+
+<CodePlayground
+  files={{
+    "index.js": `var format_pretty = function (obj) {
+  var str = "{\\n"
+  for (var key in obj) {
+    str += " " + key + " = " + obj[key] + "\\n"
+  }
+  return str + "}"
+}
+
+const person = {
+name: "Bukayo Saka",
+age: 21,
+address: {
+street: "123 Main St",
+city: "London",
+}
+};
+
+console.log(format_pretty(person))
+`,
+}}
+/>
+
+Trước khi tách hàm `forcodet_pretty()` thành một hàm riêng biệt, có vẻ như việc thực hiện tất cả những cải tiến này đòi hỏi rất nhiều công sức. (Trong thực tế, việc thực hiện in đệ quy cho các đối tượng lồng nhau là khá phức tạp nếu không có một hàm riêng biệt.) Tuy nhiên, bây giờ, việc thêm chức năng này trở nên đơn giản hơn rất nhiều. Dưới đây là đoạn code đã được cải tiến
+
+```js showLineNumbers
+var format_pretty = function (obj, indent) {
+  // Handle null, undefined, strings, and non-objects.
+  if (obj === null) return "null"
+  if (obj === undefined) return "undefined"
+  if (typeof obj === "string") return '"' + obj + '"'
+  if (typeof obj !== "object") return String(obj)
+  if (indent === undefined) indent = ""
+  // Handle (non-null) objects.
+  var str = "{\n"
+  for (var key in obj) {
+    str += indent + " " + key + " = "
+    str += format_pretty(obj[key], indent + " ") + "\n"
+  }
+  return str + indent + "}"
+}
+```
+
+<CodePlayground
+  files={{
+    "index.js": `var format_pretty = function (obj) {
+  var str = "{\\n"
+  for (var key in obj) {
+    str += " " + key + " = " + obj[key] + "\\n"
+  }
+  return str + "}"
+}
+
+const person = {
+name: "Bukayo Saka",
+age: 21,
+address: {
+street: "123 Main St",
+city: "London",
+}
+};
+
+console.log(format_pretty(person))
+`,
+}}
+/>
+
+Hàm `ReadFileToString()` và `format_pretty()` mà mình lấy ví dụ ở phía trên là những ví dụ trực quan về việc tách những logic không liên quan thành các hàm riêng biệt. Chúng rất cơ bản và có thể được tái sử dụng trong nhiều dự án khác nhau.
+
+Thông thường, trong source code, những ultilify function này thường được lưu trữ vào một thư mục riêng (ví dụ: thư mục "util/" đối với project React.js) để dễ dàng chia sẻ và sử dụng lại. Việc tạo ra nhiều đoạn code xử lý chung như vậy rất hữu ích, vì nó hoàn toàn độc lập với phần còn lại của dự án, vừa dễ đọc, dễ debug hơn lại vừa dễ dàng maintain sau này.
+
+### Các hàm phục vụ riêng cho project
+
+Lý tưởng nhất, những bài toán con bạn tách ra không liên quan hoặc có kết nối gì đến project chính. Tuy nhiên, ngay cả khi chúng không phải như vậy, việc phân tách các vấn đề con vẫn mang lại lợi ích đáng kinh ngạc.
+
+Dưới đây là một ví dụ về 1 đoạn code Python để tạo một đối tượng Business mới và thiết lập các thuộc tính như tên, đường dẫn (URL) và ngày tạo, sau đó lưu vào database:
+
+```python showLineNumbers {4-8}
+business = Business()
+business.name = request.POST["name"]
+
+url_path_name = business.name.lower()
+url_path_name = re.sub(r"['\.]", "", url_path_name)
+url_path_name = re.sub(r"[^a-z0-9]+", "-", url_path_name)
+url_path_name = url_path_name.strip("-")
+business.url = "/biz/" + url_path_name
+
+business.date_created = datetime.datetime.utcnow()
+business.save_to_database()
+```
+
+Trong đoạn code trên, thì có 1 đoạn logic thiết lập thuộc tính `url_path_name` từ `business.name` bằng cách chuyển đổi nó thành chữ thường, sau đó loại bỏ các ký tự đặc biệt, sau đó, các ký tự không phải chữ cái và số được thay thế bằng dấu -, sau đó thì cắt các dấu - ở đầu và cuối chuỗi, và gán vào `business.url`.
+
+Tóm cái váy lại là đoạn này sẽ lấy tên của business và biến đổi nó thành một url hợp lệ, vì vậy chúng ta có thể tách riêng hàm này thành một hàm riêng biệt, như sau:
+
+```python showLineNumbers
+CHARS_TO_REMOVE = re.compile(r"['\.]+")
+CHARS_TO_DASH = re.compile(r"[^a-z0-9]+")
+
+def generate_business_url(businessName):
+ text = businessName.lower()
+ text = CHARS_TO_REMOVE.sub('', businessName)
+ text = CHARS_TO_DASH.sub('-', businessName)
+ return text.strip("-")
+```
+
+Code sau khi refactor sẽ như sau:
+
+```python showLineNumbers {3}
+business = Business()
+business.name = request.POST["name"]
+business.url = "/biz/" + generate_business_url(business.name)
+business.date_created = datetime.datetime.utcnow()
+business.save_to_database()
+```
+
+Đoạn code này dễ đọc hơn vì nó không chứa các thao tác chuỗi phức tạp. Hàm `generate_business_url()` có thể được đặt trong thư mục riêng biệt như `/util`, hoặc là thư mục để xử lý cho một chức năng nào đó cụ thể tuỳ theo yêu cầu của dự án, và sau này bạn có thể dễ dàng thay đổi định nghĩa của nó nếu cần.
+
+### Đơn giản hóa interface có sẵn
+
+Đa số mọi người thường thích một thư viện cung cấp một inteface “gọn gàng" - tức là inteface có ít đối số, không cần phải config lằng nhằng và dễ sử dụng. Điều này giúp cho code trở nên ngắn gọn, đơn giản và dễ hiểu hơn.
+
+Tuy nhiên nếu inteface hiện tại không thể đáp ứng được yêu cầu đó thì sao ?
+
+Dưới đây là một ví dụ về code để đọc giá trị của cookie có tên `max_results`:
+
+```js
+var max_results
+var cookies = document.cookie.split(";")
+for (var i = 0; i < cookies.length; i++) {
+  var c = cookies[i]
+  c = c.replace(/^[ ]+/, "") // remove leading spaces
+  if (c.indexOf("max_results=") === 0)
+    max_results = Number(c.substring(12, c.length))
+}
+```
+
+Rõ ràng chúng ta đã có một hàm `get_cookie()` để thực hiện việc này rồi:
+
+```js
+var max_results = Number(get_cookie("max_results"))
+```
+
+Việc tạo hoặc thay đổi giá trị cookie khá là khó khăn, bởi vì cần yêu cầu `document.cookie` theo đúng cú pháp chính xác:
+
+```js
+document.cookie = "max_results=50; expires=Wed, 1 Jan 2020 20:53:47 UTC; path=/"
+```
+
+Thoạt nhìn thì có vẻ như đoạn code trên sẽ ghi đè lên tất cả các cookie hiện có khác, nhưng (thật kỳ diệu) nó không làm như vậy! Một cách tốt hơn để đặt cookie sẽ là:
+
+```js
+set_cookie(name, value, days_to_expire)
+```
+
+Việc loại bỏ cookie không phải lúc nào cũng dễ dàng: bạn phải đặt thời gian hết hạn của cookie, thay vào đó thì bạn có thể định nghĩa một interface đơn giản như sau
+
+```js
+delete_cookie(name)
+```
+
+Bài học quan trọng ở đây là bạn không bao giờ chấp nhận một interface kém lý tưởng, hãy tìm cách tối ưu các interface có sẵn, bằng cách bọc chúng trong một inteface khác trông dễ hiểu hơn.
+
+### Chỉnh sửa inteface theo yêu cầu
+
+Có rất nhiều code trong một chương trình chỉ để hỗ trợ cho đoạn code khác, ví dụ như thiết lập input cho một function hoặc xử lý biến đổi output. Những xử lý này thường không liên quan gì đến logic thực sự của chương trình. Đây là một point có thể tách thành những hàm riêng biệt.
+
+Ví dụ bạn có một dictionary trong python chứa các cặp key-value nhạy cảm như `username` và `password` và bạn cần phải mã hoá chúng và đưa thông tin được mã hoá vào một URL.
+
+```python showLineNumbers
+user_info = { "username": "taitd", "password": "admin" }
+user_str = json.dumps(user_info)
+cipher = Cipher("aes_128_cbc", key=PRIVATE_KEY, init_vector=INIT_VECTOR, op=ENCODE)
+encrypted_bytes = cipher.update(user_str)
+encrypted_bytes += cipher.final() # flush out the current 128 bit block
+url = "http://example.com/?user_info=" + base64.urlsafe_b64encode(encrypted_bytes)
+...
+```
+
+Vấn đề xảy ra ở đây là `Cipher` mong muốn nhận vào là một chuỗi byte chứ không phải là dictionary, ngoài ra thì nó cũng nhận vào rất nhiều đối số cồng kềnh.
+
+Ở đây mục đích mà chúng ta đang cần làm là "Hãy mã hoá thông tin người dùng vào URL" nhưng phần lớn của đoạn code trên chỉ là thực hiện mã hoá đối tượng thành một chuỗi URL thân thiện với người dùng", hãy tách riêng những logic phụ đó thành một hàm khác, như sau:
+
+```python
+def url_safe_encrypt(obj):
+ obj_str = json.dumps(obj)
+ cipher = Cipher("aes_128_cbc", key=PRIVATE_KEY, init_vector=INIT_VECTOR, op=ENCODE)
+ encrypted_bytes = cipher.update(obj_str)
+ encrypted_bytes += cipher.final() # flush out the current 128 bit block
+ return base64.urlsafe_b64encode(encrypted_bytes)
+```
+
+Sau đó, đoạn code để thực thi logic thực của chương trình rất đơn giản:
+
+```python
+user_info = { "username": "taitd", "password": "admin" }
+url = "http://example.com/?user_info=" + url_safe_encrypt(user_info)
+```
+
+Rõ ràng là người đọc sẽ không cần phải focus vào và những logic thực thi lằng nhằng không cần thiết.
+
+### Vui thôi đừng vui quá
+
+Như mục đích ban đầu mà bài viết đề cập tới đó là "tích cực xác định các bài toán con không liên quan và tách biệt nó", từ "tích cực" ở đây có nghĩa là bạn không nên lạm dụng và đưa mọi thứ đi quá xa.
+
+Hãy quay trở lại với ví dụ trước, có một ông dev nào đó đã tách những xử lý trên thành rất nhiều hàm nhỏ như sau:
+
+```python showLineNumbers
+user_info = { "username": "taitd", "password": "admin" }
+url = "http://example.com/?user_info=" + url_safe_encrypt_obj(user_info)
+
+def url_safe_encrypt_obj(obj):
+ obj_str = json.dumps(obj)
+ return url_safe_encrypt_str(obj_str)
+
+def url_safe_encrypt_str(data):
+ encrypted_bytes = encrypt(data)
+ return base64.urlsafe_b64encode(encrypted_bytes)
+
+def encrypt(data):
+ cipher = make_cipher()
+ encrypted_bytes = cipher.update(data)
+ encrypted_bytes += cipher.final() # flush out any remaining bytes
+ return encrypted_bytes
+
+def make_cipher():
+ return Cipher("aes_128_cbc", key=PRIVATE_KEY, init_vector=INIT_VECTOR, op=ENCODE)
+...
+```
+
+Việc tách thành quá nhiều function nhỏ như trên làm giảm khả năng đọc code, nó yêu cầu người đọc cần phải di chuyển đến rất nhiều hàm con và tổng kết lại xem đoạn logic đó thực sự nhằm mục đích gì. Vì vậy đừng lạm dụng việc tách hàm một cách quá mức nếu cảm thấy không cần thiết.
+
+### Tổng kết
+
+Hiểu một cách đơn giản về chương này thì mục đích của nó là muốn chúng ta "tách riêng từng đoạn code chung khỏi một dự án cụ thể", bằng cách đó, xây dựng một tập hợp các đoạn code để xử lý những vấn đề chung, và có thể dễ dàng nâng cấp cũng như tái sử dụng nó sau này.
+
+Hy vọng bài viết này có thể giúp bạn viết code một cách khoa học hơn.
+
+Happy coding!

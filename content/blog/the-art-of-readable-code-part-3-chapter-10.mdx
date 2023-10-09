@@ -14,13 +14,13 @@ series:
 
 Đây là kỹ thuật chia nhỏ những vấn đề lớn thành những vấn đề nhỏ hơn và tập hợp các giải pháp cho những vấn đề đó lại với nhau. Áp dụng nguyên tắc này vào code sẽ làm cho nó hiệu quả hơn và dễ đọc hơn.
 
-Lời khuyên trong chương này chính là luôn luôn tích cực xác định các bài toán con không liên quan và tách biệt nó, cụ thể là:
+Lời khuyên trong chương này là luôn tích cực xác định các bài toán con không liên quan và tách biệt nó, cụ thể là:
 
-1. Hãy xem xét một function hoặc một block cụ thể và tự đặt câu hỏi cho mình rằng: “Mục tiêu chính của đoạn code này là gì?”
+1. Xem một function hoặc một block cụ thể và tự đặt câu hỏi cho mình rằng: “Mục tiêu chính của đoạn code này là gì?”
 2. Đối với từng dòng code, bạn hãy thắc mắc: “Liệu nó có đang góp phần trực tiếp vào mục tiêu mà bạn đang hướng đến hay không? Hay nó đang giải quyết một vấn đề con không liên quan ?”
 3. Nếu nó đang giải quyết một vấn đề con không liên quan, hãy xem xét tách đoạn code đó thành một hàm riêng biệt.
 
-Việc tách code thành các hàm con là một phần trong quá trình làm việc hàng ngày, trong đó, hàm con này chỉ cần thực hiện nhiệm vụ cụ thể mà nó được giao mà không cần phải quan tâm đến ngữ cảnh hoặc mục tiêu lớn hơn của chương trình.
+Việc tách code thành các hàm con là một phần trong quá trình làm việc hàng ngày, trong đó, hàm con này chỉ cần thực hiện nhiệm vụ cụ thể mà không cần phải quan tâm đến ngữ cảnh hoặc mục tiêu lớn hơn của chương trình.
 
 ### Ví dụ giới thiệu
 
@@ -58,7 +58,7 @@ var findClosestLocation = function (lat, lng, array) {
 
 Mục tiêu chính của hàm JavaScript trên là tìm vị trí gần nhất trong một mảng các vị trí dựa trên tọa độ địa lý (latitude/longitude).
 
-Hầu hết phần code bên trong vòng lặp hiện đang xử lý một vấn đề con không liên quan, đó là tính toán khoảng cách giữa hai điểm trên hình cầu dựa trên vĩ độ và kinh độ. Vì vậy hãy tách nhỏ đoạn xử lý này thành một hàm riêng biệtm có tên là `spherical_distance()`
+Hầu hết phần code bên trong vòng lặp hiện đang xử lý một vấn đề con không liên quan, đó là tính toán khoảng cách giữa hai điểm dựa trên vĩ độ và kinh độ. Vì vậy hãy tách nhỏ đoạn xử lý này thành một hàm riêng biệt có tên là `spherical_distance()`
 
 ```js showLineNumbers
 var spherical_distance = function (lat1, lng1, lat2, lng2) {
@@ -96,7 +96,7 @@ var findClosestLocation = function (lat, lng, array) {
 }
 ```
 
-Đoạn code trên đã trở nên dễ đọc hơn nhiều, vì người đọc có thể tập trung vào mục tiêu chính của đoạn code mà không bị xáo trộn bởi các xử lý phức tạp khác. Ngoài ra, hàm `spherical_distance` sẽ trở nên dễ để test hơn vì nó đã trở thành 1 hàm độc lập, hơn nữa, hàm `spherical_distance()` cũng có thể tái sử dụng trong tương lai là loại hàm có thể được sử dụng lại trong tương lai.
+Đoạn code trên đã trở nên dễ đọc hơn nhiều, vì người đọc có thể tập trung vào mục tiêu chính của đoạn code mà không bị xáo trộn bởi các xử lý phức tạp khác. Ngoài ra, hàm `spherical_distance` sẽ trở nên dễ để test hơn vì nó đã trở thành 1 hàm độc lập, hơn nữa, hàm `spherical_distance()` cũng có thể tái sử dụng trong tương lai.
 
 ### Pure Utility Code (Hàm tiện tích thuần tuý)
 
@@ -177,12 +177,12 @@ Tiếp tục với ví dụ trên thì hàm `forcodet_pretty(obj)` hiện tại 
 }
 
 const person = {
-name: "Bukayo Saka",
-age: 21,
-address: {
-street: "123 Main St",
-city: "London",
-}
+  name: "Bukayo Saka",
+  age: 21, 
+  address: {
+    street: "123 Main St",
+    city: "London",
+  }
 };
 
 console.log(format_pretty(person))
@@ -212,21 +212,29 @@ var format_pretty = function (obj, indent) {
 
 <CodePlayground
   files={{
-    "index.js": `var format_pretty = function (obj) {
+    "index.js": `var format_pretty = function (obj, indent) {
+  // Handle null, undefined, strings, and non-objects.
+  if (obj === null) return "null"
+  if (obj === undefined) return "undefined"
+  if (typeof obj === "string") return '"' + obj + '"'
+  if (typeof obj !== "object") return String(obj)
+  if (indent === undefined) indent = ""
+  // Handle (non-null) objects.
   var str = "{\\n"
   for (var key in obj) {
-    str += " " + key + " = " + obj[key] + "\\n"
+    str += indent + " " + key + " = "
+    str += format_pretty(obj[key], indent + " ") + "\\n"
   }
-  return str + "}"
+  return str + indent + "}"
 }
 
 const person = {
-name: "Bukayo Saka",
-age: 21,
-address: {
-street: "123 Main St",
-city: "London",
-}
+  name: "Bukayo Saka",
+  age: 21, 
+  address: {
+    street: "123 Main St",
+    city: "London",
+  }
 };
 
 console.log(format_pretty(person))
@@ -236,7 +244,7 @@ console.log(format_pretty(person))
 
 Hàm `ReadFileToString()` và `format_pretty()` mà mình lấy ví dụ ở phía trên là những ví dụ trực quan về việc tách những logic không liên quan thành các hàm riêng biệt. Chúng rất cơ bản và có thể được tái sử dụng trong nhiều dự án khác nhau.
 
-Thông thường, trong source code, những ultilify function này thường được lưu trữ vào một thư mục riêng (ví dụ: thư mục "util/" đối với project React.js) để dễ dàng chia sẻ và sử dụng lại. Việc tạo ra nhiều đoạn code xử lý chung như vậy rất hữu ích, vì nó hoàn toàn độc lập với phần còn lại của dự án, vừa dễ đọc, dễ debug hơn lại vừa dễ dàng maintain sau này.
+Thông thường, trong source code, những ultilify function này thường được lưu trữ vào một thư mục riêng (ví dụ: thư mục `/util` đối với project React.js) để dễ dàng chia sẻ và sử dụng lại. Việc tạo ra nhiều đoạn code xử lý chung như vậy rất hữu ích, vì nó hoàn toàn độc lập với phần còn lại của dự án, vừa dễ đọc, dễ debug hơn lại vừa dễ dàng maintain sau này.
 
 ### Các hàm phục vụ riêng cho project
 
@@ -304,7 +312,7 @@ for (var i = 0; i < cookies.length; i++) {
 }
 ```
 
-Rõ ràng chúng ta đã có một hàm `get_cookie()` để thực hiện việc này rồi:
+Rõ ràng chúng ta có thể tách riêng nó thành một hàm `get_cookie()` để thực hiện việc này:
 
 ```js
 var max_results = Number(get_cookie("max_results"))
@@ -316,16 +324,15 @@ Việc tạo hoặc thay đổi giá trị cookie khá là khó khăn, bởi vì
 document.cookie = "max_results=50; expires=Wed, 1 Jan 2020 20:53:47 UTC; path=/"
 ```
 
-Thoạt nhìn thì có vẻ như đoạn code trên sẽ ghi đè lên tất cả các cookie hiện có khác, nhưng (thật kỳ diệu) nó không làm như vậy! Một cách tốt hơn để đặt cookie sẽ là:
+Một cách tốt hơn để đặt cookie sẽ là wrap đoạn code trên vào trong 1 function và truyền vào những đối số nhìn thân thiện hơn như sau:
 
 ```js
-set_cookie(name, value, days_to_expire)
-```
-
-Việc loại bỏ cookie không phải lúc nào cũng dễ dàng: bạn phải đặt thời gian hết hạn của cookie, thay vào đó thì bạn có thể định nghĩa một interface đơn giản như sau
-
-```js
-delete_cookie(name)
+function setCookie(name, value, days_to_expire) {
+  const date = new Date();
+  date.setTime(date.getTime() + (days_to_expire*24*60*60*1000));
+  let expires = "expires="+ date.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
 ```
 
 Bài học quan trọng ở đây là bạn không bao giờ chấp nhận một interface kém lý tưởng, hãy tìm cách tối ưu các interface có sẵn, bằng cách bọc chúng trong một inteface khác trông dễ hiểu hơn.
@@ -346,9 +353,7 @@ url = "http://example.com/?user_info=" + base64.urlsafe_b64encode(encrypted_byte
 ...
 ```
 
-Vấn đề xảy ra ở đây là `Cipher` mong muốn nhận vào là một chuỗi byte chứ không phải là dictionary, ngoài ra thì nó cũng nhận vào rất nhiều đối số cồng kềnh.
-
-Ở đây mục đích mà chúng ta đang cần làm là "Hãy mã hoá thông tin người dùng vào URL" nhưng phần lớn của đoạn code trên chỉ là thực hiện mã hoá đối tượng thành một chuỗi URL thân thiện với người dùng", hãy tách riêng những logic phụ đó thành một hàm khác, như sau:
+Vấn đề xảy ra ở đây là `Cipher` đang nhận vào khá nhiều đối số cồng kềnh. Ở đây mục đích mà chúng ta đang cần làm là "Hãy mã hoá thông tin người dùng vào URL" nhưng phần lớn của đoạn code trên chỉ là thực hiện mã hoá đối tượng thành một chuỗi URL thân thiện với người dùng", hãy tách riêng những logic phụ đó thành một hàm khác, như sau:
 
 ```python
 def url_safe_encrypt(obj):

@@ -1,0 +1,48 @@
+---
+title: useRandomInterval
+description: It's like setInterval, but more random!
+category: React Hooks
+lastUpdatedDate: "2023-10-04"
+---
+
+```ts
+// Utility helper for random number generation
+const random = (min, max) => Math.floor(Math.random() * (max - min)) + min
+const useRandomInterval = (callback, minDelay, maxDelay) => {
+  const timeoutId = React.useRef(null)
+  const savedCallback = React.useRef(callback)
+  React.useEffect(() => {
+    savedCallback.current = callback
+  }, [callback])
+  React.useEffect(() => {
+    let isEnabled = typeof minDelay === "number" && typeof maxDelay === "number"
+    if (isEnabled) {
+      const handleTick = () => {
+        const nextTickAt = random(minDelay, maxDelay)
+        timeoutId.current = window.setTimeout(() => {
+          savedCallback.current()
+          handleTick()
+        }, nextTickAt)
+      }
+      handleTick()
+    }
+    return () => window.clearTimeout(timeoutId.current)
+  }, [minDelay, maxDelay])
+  const cancel = React.useCallback(function () {
+    window.clearTimeout(timeoutId.current)
+  }, [])
+  return cancel
+}
+```
+
+## Example usage
+
+```js
+function LaggyClock() {
+  // Update between every 1 and 4 seconds
+  const delay = [1000, 4000]
+  const [currentTime, setCurrentTime] = React.useState(Date.now)
+  useRandomInterval(() => setCurrentTime(Date.now()), ...delay)
+  return <>It is currently {new Date(currentTime).toString()}.</>
+}
+```

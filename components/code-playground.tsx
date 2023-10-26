@@ -12,7 +12,7 @@ export default function CodePlayground({ files }: CodePlaygroundProps) {
   return (
     <Sandpack
       files={files}
-      theme="dark"
+      theme="light"
       template="vanilla"
       options={{ showConsole: true, showConsoleButton: true }}
     />

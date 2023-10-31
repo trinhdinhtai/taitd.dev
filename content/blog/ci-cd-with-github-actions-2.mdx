@@ -1,0 +1,63 @@
+---
+title: "Triển khai CI/CD với Github Actions"
+description: "Trong bài viết này này, chúng ta sẽ cùng tìm hiểu cách sử dụng GitHub Actions để thiết lập quy trình CI/CD cho dự án của mình."
+date: "2023-10-26"
+image: https://res.cloudinary.com/daukjyo6s/image/upload/v1698300275/a0392cd2-a9b4-4c12-8c12-5250127d7df2_1280x1679_hdenos.jpg
+series:
+  order: 2
+  title: "CI/CD"
+authors:
+  - taitd
+---
+
+Ở bài viết trước trong Series thì mình đã giới thiệu về CI/CD, trong bài viết này này, chúng ta sẽ cùng tìm hiểu cách sử dụng GitHub Actions để thiết lập quy trình CI/CD cho dự án của mình.
+
+## Github Actions là gì ?
+
+Trước khi bắt tay vào thực hành, thì mình sẽ giới thiệu sơ qua về Github Actions nhé.
+
+Theo [GitHub Documentation](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions):
+
+> GitHub Actions là một CI/CD platform cho phép bạn tự động hóa quy trình build, test, và deployment. Bạn có thể tạo các workflow để thực hiện build và test tất cả các pull request (PR) tới git repository, hoặc triển khai PR đã được merge tới môi trường production.
+
+Okey lý thuyết thì là vậy, bây giờ mình sẽ cùng bắt tay vào thực hành nhé.
+
+Trong bài viết này,
+)
+
+## CD là gì
+
+**CD** có hai định nghĩa là **Continuous Delivery** (phân phối liên tục) và **Continuous Deployment** (triển khai liên tục). Hai khái niệm này liên quan đến nhau, đôi lúc chúng được sử dụng để thay thế cho nhau.
+
+**Continuous Delivery** là bước tiếp theo sau quá trình CI, nó sẽ triển khai tất cả thay đổi về code (đã được build và test) đến môi trường testing hoặc staging. Continuous Delivery cho phép developer tự động hóa phần testing bên cạnh việc sử dụng unit test, kiểm tra phần mềm qua nhiều thước đo trước khi triển khai cho khách hàng (production). Những bài test này bao gồm UI testing, load testing, integration testing, API testing... Nó tự động hoàn toàn quy trình release phần mềm.
+
+**Continuous Deployment** là kỹ thuật để triển khai code lên môi trường production một cách tự động.
+
+Về cơ bản thì môi trường staging là môi trường giống với production, nên đã làm Continous Delivery được thì cũng làm Continous Deployment được. Tuy nhiên, thực tế lại không dễ dàng như vậy. Lý do thứ nhất là chúng ta có thể deploy tự động lên staging, nhưng liệu chúng ta có dám deploy tự động với production, cho dù là mọi cấu hình đều giống nhau thì thực tế staging và production server vẫn là hai server riêng biệt, và vì thế không thể đảm bảo mọi thứ chạy đúng trên staging sẽ chạy đúng trên production, thế nên deploy lên production thường phải làm thủ công để chắc chắn là các bước build, test được thực hiện chính xác. Lý do thứ hai đơn giản hơn, đó là rất khó để test tự động hoàn toàn, và bởi vậy khó mà tự động deploy được.
+
+### Phân biệt giữa Continuous Delivery và Continuous Deployment
+
+Trong Continuous Delivery, sau khi mã nguồn đã được kiểm tra, kiểm thử và được phê duyệt, nó sẽ sẵn sàng để triển khai bất cứ lúc nào, nhưng việc triển khai thực sự vẫn cần sự can thiệp của con người để quyết định thời điểm cụ thể.
+
+Continuous Deployment là một bước tiến xa hơn so với Continuous Delivery và nó mục tiêu việc triển khai tự động hóa mà không cần can thiệp con người, tức là sau khi mã nguồn đã được kiểm tra và kiểm thử, nó sẽ tự động triển khai trực tiếp lên môi trường production mà không cần sự can thiệp của người quản trị, đảm bảo sản phẩm luôn ở phiên bản mới nhất.
+
+## Ưu điểm và nhược điểm của CI/CD là gì?
+
+Một số ưu điểm mà quy trình CI/CD mang lại cho Developer bao gồm:
+
+- Tránh được những lỗi không đáng có: chẳng hạn như lỗi compile (khi đẩy code lên) hoặc các lỗi phát sinh liên quan đến môi trường build sản phẩm. Ví dụ: khi làm thủ công, cùng 1 source code nhưng sẽ có sự khác biệt khi bạn A build trên máy bạn A, bạn B build trên máy bạn B.
+- Đảm bảo logic (vì quy trình CI/CD có phần automation test), khi Developer xây dựng tính năng mới sẽ không gây ảnh hưởng đến tính năng cũ.
+- Giúp tập trung vào công việc bởi quy trình CI/CD mang tính tự động cao nên Developer không cần phải thực hiện việc build và deploy phần mềm/ứng dụng trên máy cá nhân nữa.
+- Nâng cao chất lượng code thông qua quy trình, Developer có thể cài đặt những ràng buộc ngay từ đầu. Ví dụ: pull request khi được tạo ra thì không được quá lớn, không được vượt quá X thay đổi…, điều này góp phần giúp chất lượng pull request ngày càng tốt hơn.
+- Phát triển kỹ năng unit test cho Developer thông qua các chỉ số ràng buộc về code coverage (% code đã được cover) được cài đặt trong quy trình CI/CD. Nghĩa là khi phát triển tính năng mới, để không làm giảm chỉ số code coverage, Developer phải ý thức được tầm quan trọng của unit test và chủ động học hỏi, nâng cao các kỹ năng liên quan.
+- Tối ưu tốc độ phát triển của sản phẩm thông qua việc theo dõi thời gian build pipeline (các bước chạy test, build, chạy static code analytics (lint check)).
+
+Bên cạnh những ưu điểm giúp quy trình CI/CD đáng được cân nhắc để áp dụng trong tổ chức thì CI/CD vẫn có những hạn chế cần phải lưu ý như:
+
+- Trong một dự án nếu có quá nhiều Developer cùng tham gia phát triển sản phẩm, sẽ có thời điểm phát sinh nhiều pull request cần được merge vào branch. Lúc này, các thành viên phải chờ pull request của người trước được merge hoàn tất, sau đó thực hiện update (cập nhật) lại source code (trong trường hợp có thông báo conflict từ Git repository) và phải trải qua các bước test lại từ đầu. Hệ quả là làm gián đoạn thời gian phát triển sản phẩm.
+- Vì sử dụng dịch vụ CI/CD của bên service thứ 3 nên nếu service đó gặp vấn đề và bị crash, bị khai tử thì những dự án áp dụng CI/CD cũng bị ảnh hưởng khá nghiêm trọng.
+
+## Link tham khảo
+
+https://blog.bytebytego.com/p/ep71-cicd-pipeline-explained-in-simple
+https://levelup.gitconnected.com/basics-of-ci-cd-a98340c60b04

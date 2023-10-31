@@ -69,6 +69,7 @@ const components = {
   a: ({ className, ...props }) => (
     <a
       className={cn("font-medium underline underline-offset-4", className)}
+      target={props?.href?.startsWith("http") ? "_blank" : undefined}
       {...props}
     />
   ),

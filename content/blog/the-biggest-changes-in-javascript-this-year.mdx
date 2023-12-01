@@ -1,0 +1,148 @@
+---
+title: "Những tính năng mới trong ECMAScript 2023 (ES14)?"
+description: "Một vòng đời phát triển phần mềm (Sofware Development Lifecycle - SDLC) bao gồm những giai đoạn chính sau: phát triển (development), thử nghiệm (testing), triển khai (deployment) và bảo trì (maintenance). CI/CD tự động hóa các giai đoạn này để sản phẩm được release nhanh hơn."
+date: "2023-12-01"
+image: https://res.cloudinary.com/daukjyo6s/image/upload/v1701419457/What-s-new_gb6pnx.png
+authors:
+  - taitd
+---
+
+ECMAScript 2023 là phiên bản thứ 14 của Javascript, ra mắt vào tháng 6/2023, trong bài viết này, mình sẽ cùng điểm mặt một số tính năng nổi bật mà phiên bản này mang lại.
+
+## `Object.groupBy`
+
+Ví dụ chúng ta có một mảng sau:
+
+```js
+const inventory = [
+  { name: "asparagus", type: "vegetables", quantity: 5 },
+  { name: "bananas", type: "fruit", quantity: 0 },
+  { name: "goat", type: "meat", quantity: 23 },
+  { name: "cherries", type: "fruit", quantity: 5 },
+  { name: "fish", type: "meat", quantity: 22 },
+]
+```
+
+Giả sử yêu cầu bài toán là bạn cần phải tách mảng trên thành 2 mảng, mảng `restock` bao gồm những sản phẩm có `quantity <= 5`, mảng `ok` là phần còn lại, vậy bạn sẽ làm như thế nào ?
+
+Trước khi có ECMAScript 2023 thì `reduce` là một giải pháp:
+
+```js
+const { restock, ok } = inventory.reduce(
+  (result, item) => {
+    if (item.quantity <= 5) {
+      result.restock.push(item)
+    } else {
+      result.ok.push(item)
+    }
+    return result
+  },
+  { restock: [], ok: [] }
+)
+
+console.log("Restock:", restock)
+console.log("Ok:", ok)
+```
+
+Bây giờ, chúng ta có thể sử dụng `GroupBy` để cho ra kết quả tương tự:
+
+```js
+function myCallback({ quantity }) {
+  return quantity > 5 ? "ok" : "restock"
+}
+
+const { restock, ok } = Object.groupBy(inventory, myCallback)
+console.log("Restock:", restock)
+console.log("Ok:", ok)
+```
+
+Kết quả:
+
+```js
+Restock: [
+  { name: "asparagus", type: "vegetables", quantity: 5 },
+  {
+    name: "bananas",
+    type: "fruit",
+    quantity: 0,
+  },
+  {
+    name: "cherries",
+    type: "fruit",
+    quantity: 5,
+  },
+]
+
+ok: [
+  {
+    name: "goat",
+    type: "meat",
+    quantity: 23,
+  },
+  {
+    name: "fish",
+    type: "meat",
+    quantity: 22,
+  },
+]
+```
+
+## `Array.toSliced()`, `Array.toSorted()` và `Array.toReversed()`
+
+Khi chúng ta sử dụng các phương thức như `sort()`, `splice()` và `reverse()` chúng sẽ làm thay đổi mảng gốc, nhưng khi sử dụng `toSpliced()`, `toSorted()` và `toReversed()` thì nó sẽ trả về một mảng mới và không làm thay đổi mảng ban đầu.
+
+```js
+const numbers = [3, 4, 1, 5, 2]
+
+const splicedNumbers = numbers.toSpliced(1, 1)
+const sortedNumbers = numbers.toSorted()
+const reversedNumbers = numbers.toReversed()
+```
+
+## `findLast()` và `findLastIndex()`
+
+Giả sử cần phải tìm index cuối cùng của phần tử có giá trị `banana` trong mảng:
+
+```js
+const fruits = ["apple", "banana", "orange", "banana", "kiwi"]
+```
+
+Trước ES14 bạn cần phải đảo ngược mảng như sau:
+
+```js
+function findLastIndexByReversing(arr, target) {
+  const reversedArray = arr.slice().reverse()
+  const reversedIndex = reversedArray.indexOf(target)
+
+  if (reversedIndex !== -1) {
+    const lastIndex = arr.length - 1 - reversedIndex
+    return lastIndex
+  } else {
+    return -1
+  }
+}
+```
+
+Hoặc sử dụng một vòng `for`:
+
+```js
+unction findLastIndex(arr, target) {
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr[i] === target) {
+      return i;
+    }
+  }
+  return -1;
+}
+```
+
+Tuy nhiên, với ES14 thì bạn chỉ cần viết ngắn gọn như sau:
+
+```js
+const lastIndex = fruits.lastIndexOf("banana")
+//3
+```
+
+## Link tham khảo
+
+https://www.freecodecamp.org/news/the-biggest-changes-in-javascript-this-year

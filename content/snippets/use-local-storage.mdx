@@ -1,0 +1,53 @@
+---
+title: useLocalStorage
+description: Store, retrieve, and synchronize data from the browser’s localStorage API with useLocalStorage
+category: React Hooks
+lastUpdatedDate: "2023-12-02"
+---
+
+```ts
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react"
+
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, Dispatch<SetStateAction<T>>] {
+  const read = useCallback(() => {
+    const value = window.localStorage.getItem(key)
+
+    if (!value) {
+      return initialValue
+    }
+
+    try {
+      return JSON.parse(value) as T
+    } catch (error) {
+      return initialValue
+    }
+  }, [initialValue, key])
+
+  const [storedValue, setStoredValue] = useState<T>(read())
+
+  const write = useCallback((value: SetStateAction<T>) => {
+    const newValue = value instanceof Function ? value(storedValue) : value
+
+    window.localStorage.setItem(key, JSON.stringify(newValue))
+
+    setStoredValue(newValue)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    setStoredValue(read())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return [storedValue, write]
+}
+```

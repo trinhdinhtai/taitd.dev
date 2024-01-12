@@ -44,7 +44,7 @@ const Intro = () => {
           {"Hi, I'm Tài."}
         </span>
         <span className="text-xl font-semibold text-muted-foreground">
-          React developer
+          Software engineer, technical writer & open-source maintainer
         </span>
         <span className="text-muted-foreground">
           I enjoy building sites & apps. My focus is React (Next.js).

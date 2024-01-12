@@ -13,16 +13,16 @@ const PostCard = ({ post, index }: PostCardProps) => {
   return (
     <article className="group relative flex flex-col space-y-2 rounded-2xl border p-3">
       <div className="relative w-full">
-        {post.image && (
-          <Image
-            src={post.image}
-            alt={post.title}
-            width={1200}
-            height={630}
-            className="my-auto aspect-[2/1] h-auto rounded-xl border bg-muted object-cover transition-colors"
-            priority={index <= 1}
-          />
-        )}
+        <Image
+          src={post.image}
+          alt={post.title}
+          width={1200}
+          height={630}
+          className="my-auto aspect-[2/1] h-auto rounded-xl border bg-muted object-cover transition-colors"
+          priority={index <= 1}
+          placeholder="blur"
+          blurDataURL={post.image}
+        />
       </div>
 
       <div className="mt-2 flex h-full w-full flex-col gap-2">

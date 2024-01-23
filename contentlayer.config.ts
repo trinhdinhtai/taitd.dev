@@ -176,6 +176,16 @@ export default makeSource({
               return
             }
 
+            if (codeEl.data?.meta) {
+              // Extract event from meta and pass it down the tree.
+              const regex = /event="([^"]*)"/
+              const match = codeEl.data?.meta.match(regex)
+              if (match) {
+                node.__event__ = match ? match[1] : null
+                codeEl.data.meta = codeEl.data.meta.replace(regex, "")
+              }
+            }
+
             node.__rawString__ = codeEl.children?.[0].value
           }
         })
@@ -211,6 +221,8 @@ export default makeSource({
               return
             }
 
+            preElement.properties["__withMeta__"] =
+              node.children.at(0).tagName === "div"
             preElement.properties["__rawString__"] = node.__rawString__
           }
         })

@@ -1,6 +1,6 @@
 "use client"
 
-import { HTMLAttributes, useEffect, useRef, useState } from "react"
+import { HTMLAttributes, useEffect, useState } from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -9,9 +9,15 @@ import { Button } from "./ui/button"
 
 interface CopyButtonProps extends HTMLAttributes<HTMLButtonElement> {
   value: string
+  withMeta?: boolean
 }
 
-const CopyButton = ({ className, value, ...props }: CopyButtonProps) => {
+const CopyButton = ({
+  className,
+  value,
+  withMeta = false,
+  ...props
+}: CopyButtonProps) => {
   const [hasCopied, setHasCopied] = useState(false)
 
   const handleCopy = () => {
@@ -26,13 +32,13 @@ const CopyButton = ({ className, value, ...props }: CopyButtonProps) => {
   }, [hasCopied])
 
   return (
-    <div className="absolute right-4 top-4">
+    <div className={cn("absolute right-4 top-4", withMeta && "top-16")}>
       <Button
         {...props}
         size="icon"
         variant="ghost"
         className={cn(
-          "relative z-10 h-6 w-6 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50",
+          "relative z-10 h-6 w-6 border-zinc-400 bg-zinc-600 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50",
           className
         )}
         onClick={handleCopy}

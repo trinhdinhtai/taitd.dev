@@ -11,7 +11,7 @@ interface PostCardProps {
 
 const PostCard = ({ post, index }: PostCardProps) => {
   return (
-    <article className="group relative flex flex-col space-y-2 rounded-2xl border p-3">
+    <article className="group relative flex flex-col space-y-2 rounded-2xl border bg-background p-3">
       <div className="relative w-full">
         <Image
           src={post.image}

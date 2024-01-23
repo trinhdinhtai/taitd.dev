@@ -138,9 +138,11 @@ const components = {
   pre: ({
     className,
     __rawString__,
+    __withMeta__,
     ...props
   }: React.HTMLAttributes<HTMLPreElement> & {
     __rawString__?: string
+    __withMeta__?: boolean
   }) => (
     <>
       <pre
@@ -150,13 +152,30 @@ const components = {
         )}
         {...props}
       />
-      {__rawString__ && <CopyButton value={__rawString__} />}
+      {__rawString__ && (
+        <CopyButton value={__rawString__} withMeta={__withMeta__} />
+      )}
     </>
   ),
   code: ({ className, ...props }) => (
     <code
       className={cn(
-        "relative rounded border bg-muted px-[0.3rem] py-0.5 font-mono text-sm",
+        "relative rounded border bg-muted px-[0.3rem] py-0.5 font-mono text-inherit",
+        className
+      )}
+      {...props}
+    />
+  ),
+  Steps: ({ ...props }) => (
+    <div
+      className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]"
+      {...props}
+    />
+  ),
+  Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
+    <h3
+      className={cn(
+        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
         className
       )}
       {...props}

@@ -4,7 +4,7 @@
 
 body {
   background-image: url("/noise.png");
-  background-size: 200px 200px;
+  background-size: 20px 20px;
   background-position: 0 0;
 }
 
@@ -80,6 +80,18 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .step {
+    counter-increment: step;
+  }
+
+  .step:before {
+    @apply absolute inline-flex h-8 w-8 items-center justify-center rounded-full bg-background text-center -indent-px font-mono text-base font-medium;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
   }
 }
 

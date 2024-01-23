@@ -2,7 +2,7 @@
 title: "Kiểm tra một ngày là thứ mấy trong tuần với thuật toán Sakamoto"
 description: "fantastic, wonderful, significant, magnificent, outstanding,… - là những mỹ từ mà Trấn Thành sẽ phải thốt lên khi nhìn vào sự vi diệu của thuật toán Sakamoto 🤣, trong bài viết này mình sẽ giới thiệu về thuật toán Sakamoto để giải quyết bài toán chuyển đổi một ngày bất kỳ sang thứ chỉ bằng một vài dòng code, gét gô!"
 date: "2023-08-10"
-image: https://res.cloudinary.com/daukjyo6s/image/upload/v1698300275/a0392cd2-a9b4-4c12-8c12-5250127d7df2_1280x1679_hdenos.jpg
+image: https://res.cloudinary.com/daukjyo6s/image/upload/v1705984659/alpridephoto-nuz3rK5iiKg-unsplash_1_af8cou.jpg
 authors:
   - taitd
 ---
@@ -67,7 +67,18 @@ Theo quy luật trên, chúng ta sẽ xây dựng được một mảng biểu t
 
 Nếu muốn tính sự chênh lệch của ngày `d` bất kỳ trong tháng `m` so với ngày 1 tháng 1, chúng ta sẽ cộng `t[m - 1]` với ngày `d - 1` (là khoảng cách từ ngày d đến ngày 1 của tháng), sau đó lấy phần dư khi chia cho 7 là được (phép tính module)
 
-Tuy nhiên đấy mới là trong 1 năm, 1 năm không nhuận có 365 = 52 \* 7 + 1, tức là mỗi 1 năm trôi qua thì lại có 1 ngày dôi ra, vậy nếu ta có `y` năm thì có `y` ngày cần cộng thêm.
+Tuy nhiên đấy mới là trong 1 năm, 1 năm không nhuận có 365 = 52 \* 7 + 1, tức là mỗi 1 năm trôi qua thì lại có 1 ngày dôi ra. Ví dụ ngày 14 tháng 7 năm 2014 là Thứ Hai thì ngày 14 tháng 7 năm 2015 sẽ là Thứ Ba.
+
+Vậy nếu có `y` năm trôi qua thì số ngày cần cộng thêm sẽ là `y` ngày, giả sử không có năm nhuận thì hàm tính toán của chúng ta sẽ như sau:
+
+```ts
+function dayOfTheWeek(y: number, m: number, d: number): number {
+  let t: number[] = [0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5]
+  return (y + t[m - 1] + d + c) % 7
+}
+```
+
+Với `c` là hằng số quy định độ lệch của ngày làm mốc (ngày gốc) so với ngày Chủ Nhật.
 
 ### Case 2: Tính năm nhuận
 
@@ -83,18 +94,22 @@ Giả sử `x` là số ngày được cộng thêm thì chúng ta sẽ sử d�
 
 Ta được công thức cuối cùng như sau:
 
-`x = y/4 - y/100 + y/400`
+`x = y + y/4 - y/100 + y/400`
 
-Okey chúng ta đã thêm số ngày nhuận cần thiết rồi, nhưng vấn đề là ngày nhuận là ngày 29 tháng 2 chứ không phải là ngày 0 tháng 1, tức là chúng ta không cần đưa hai tháng đầu tiên (Tháng 1 và tháng 2) của năm vào tính toán vì ngày nhuận không ảnh hưởng gì đến nó, mà sẽ phải đẩy lùi về năm trước đó. Tức là chúng ta sẽ có công thức:
+Thế nhưng vẫn còn vấn đề, Nếu một năm là năm nhuận thì ngày nhuận là ngày 29 tháng 2 chứ không phải là ngày 0 tháng 1 bởi vậy nếu chúng ta cần tính toán cho ngày trong tháng 3 trở đi thì sẽ phải cộng thêm 1 ngày, còn 2 tháng đầu tiên (Tháng 1 và tháng 2) thì không cần đưa vào tính toán vì ngày nhuận không ảnh hưởng gì đến nó, mà sẽ phải đẩy lùi về năm trước đó. Tức là chúng ta sẽ có công thức:
 
-`y -= m < 3` - Nếu tháng nhỏ hơn 3 (Tháng 1 và Tháng 2) thì lùi năm hiện tại về năm trước đó.
+`y -= m < 3` - Nếu tháng nhỏ hơn 3 (Tháng 1 và Tháng 2) thì lùi năm hiện tại về năm trước đó, khi đó năm nhuận sẽ hết nhuận.
 
 Tuy nhiên công thức trên áp dụng cho cả những năm không phải năm nhuận, vì thế lúc này mảng `t[]` cần phải bù cho tháng 1 và tháng 2, ta trừ 1 vào các phần tử còn lại của mảng `t[]` ngoại từ `t[0]` và `t[1]`
 
 Vậy mảng `t = [0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5]` sẽ trở thành `t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]`, giống như mảng của code gốc, vi diệu chưa ?
+
+Lưu ý là ở ví dụ 1 mình có đề cập thêm hằng số `c`, nhưng thật tình cờ và thật bất ngờ, người ta chứng minh được c = 0 🤔
 
 Như vậy chúng ta đã giải quyết được bài toán trên chỉ bằng vài đường múa cơ bản =)), nhưng mà phải công nhận nghĩ được ra thuật toán này quả thật là có một tư duy thực sự đỉnh cao, + 1 respect cho tác giả Tomohiko Sakamoto 👌👌👌
 
 ## Link tham khảo
 
 https://www.geeksforgeeks.org/tomohiko-sakamotos-algorithm-finding-day-week/
+https://stackoverflow.com/questions/6385190/correctness-of-sakamotos-algorithm-to-find-the-day-of-week
+https://www.tutorialspoint.com/tomohiko-sakamoto-rsquo-s-algorithm-finding-the-day-of-the-week

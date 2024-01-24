@@ -68,7 +68,8 @@ const Intro = () => {
         </Link>
 
         <Link
-          href="/CV.pdf"
+          href="/resume.pdf"
+          aria-label="resume"
           download
           className={cn(buttonVariants({ variant: "outline" }), "group")}
         >

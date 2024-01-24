@@ -2,9 +2,11 @@ import Image from "next/image"
 import { useMDXComponent } from "next-contentlayer/hooks"
 
 import { cn } from "@/lib/utils"
+import AboutContact from "@/components/about-contact"
 import { Callout } from "@/components/callout"
 import CodePlayground from "@/components/code-playground"
 import ComponentPreview from "@/components/component-preview"
+import CoverImage from "@/components/cover-image"
 import Files from "@/components/files"
 import GridContainer from "@/components/grid-container"
 import LoadingSkeleton from "@/components/loading-skeleton"
@@ -188,6 +190,8 @@ const components = {
   ComponentPreview,
   Files,
   CodePlayground,
+  CoverImage,
+  AboutContact,
 }
 
 interface MdxProps {

@@ -18,7 +18,7 @@ const PostCard = ({ post, index }: PostCardProps) => {
           alt={post.title}
           width={1200}
           height={630}
-          className="my-auto aspect-[2/1] h-auto rounded-xl border bg-muted object-cover transition-colors"
+          className="animate-reveal my-auto aspect-[2/1] h-auto rounded-xl border bg-muted object-cover transition-colors"
           priority={index <= 1}
           placeholder="blur"
           blurDataURL={post.image}

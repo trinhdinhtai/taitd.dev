@@ -19,3 +19,18 @@ export function formatDate(input: string | number): string {
 export function absoluteUrl(path: string) {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`
 }
+
+export const sortByProperty = <T>(array: T[], prop: string) => {
+  return array.sort((a, b) => {
+    const itemA = a[prop].toUpperCase()
+    const itemB = b[prop].toUpperCase()
+
+    if (itemA < itemB) {
+      return -1
+    } else if (itemA > itemB) {
+      return 1
+    }
+
+    return 0
+  })
+}

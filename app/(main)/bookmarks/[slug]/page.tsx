@@ -1,5 +1,11 @@
-import { getCollection, getCollections } from "@/lib/raindrop"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { notFound } from "next/navigation"
+
+import {
+  getBookmarksByCollectionId,
+  getCollection,
+  getCollections,
+} from "@/lib/raindrop"
+import BookmarkList from "@/components/bookmark-list"
 import PageHeading from "@/components/page-heading"
 
 interface BookmarkCollectionPageProps {
@@ -13,18 +19,27 @@ async function fetchData(slug: string) {
   const currentCollection = collections.find(
     (collection: any) => collection.slug === slug
   )
+  if (!currentCollection) return
 
-  const collection = await getCollection(currentCollection._id)
-  if (!collection) return { collection: null }
+  const [collection, bookmarks] = await Promise.all([
+    getCollection(currentCollection._id),
+    getBookmarksByCollectionId(currentCollection._id),
+  ])
 
-  return { collection: collection.item }
+  if (!collection) return
+
+  return { collection: collection.item, bookmarks: bookmarks.items }
 }
 
 export default async function BookmarkCollectionPage({
   params,
 }: BookmarkCollectionPageProps) {
   const { slug } = params
-  const { collection } = await fetchData(slug)
+  const response = await fetchData(slug)
+
+  if (!response) return notFound()
+
+  const { collection, bookmarks } = response
 
   return (
     <>
@@ -32,6 +47,8 @@ export default async function BookmarkCollectionPage({
         title={collection.title}
         description={collection.description}
       />
+
+      <BookmarkList id={collection._id} bookmarks={bookmarks} />
     </>
   )
 }

@@ -37,3 +37,24 @@ export async function getCollection(id: string) {
     return null
   }
 }
+
+export async function getBookmarksByCollectionId(
+  collectionId: string,
+  pageIndex = 0
+) {
+  try {
+    const params = new URLSearchParams({
+      page: String(pageIndex),
+      perpage: "50",
+    })
+    const response = await fetch(
+      `${RAINDROP_API_URL}/raindrops/${collectionId}?${params}`,
+      options
+    )
+    const bookmarks = await response.json()
+    return bookmarks
+  } catch (error) {
+    console.info(error)
+    return null
+  }
+}

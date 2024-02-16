@@ -6,13 +6,13 @@ interface PageHeadingProps {
 const PageHeading = ({ title, description }: PageHeadingProps) => {
   return (
     <>
-      <div className="flex-1 space-y-4">
-        <h1 className="inline-block font-heading text-4xl tracking-tight lg:text-5xl">
+      <div className="flex-1 space-y-1 md:space-y-4">
+        <h1 className="inline-block font-heading text-2xl tracking-tight md:text-4xl lg:text-5xl">
           {title}
         </h1>
-        <p className="text-xl text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground md:text-xl">{description}</p>
       </div>
-      <hr className="my-8" />
+      <hr className="my-6 md:my-8" />
     </>
   )
 }

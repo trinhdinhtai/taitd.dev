@@ -20,7 +20,7 @@ export function absoluteUrl(path: string) {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`
 }
 
-export const sortByProperty = <T>(array: T[], prop: string) => {
+export const sortByProperty = (array: any[], prop: string) => {
   return array.sort((a, b) => {
     const itemA = a[prop].toUpperCase()
     const itemB = b[prop].toUpperCase()

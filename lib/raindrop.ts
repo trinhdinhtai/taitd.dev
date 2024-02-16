@@ -8,6 +8,7 @@ const options = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${process.env.NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN}`,
   },
+  next: { revalidate: 10 },
 }
 
 export async function getCollections() {

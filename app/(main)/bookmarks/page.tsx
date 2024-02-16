@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import Link from "next/link"
 
 import { getCollections } from "@/lib/raindrop"
 import { sortByProperty } from "@/lib/utils"
@@ -20,23 +21,26 @@ export default async function BookmarkPage() {
 
   return (
     <>
-      <p>Test Cache</p>
       <PageHeading
         title="Bookmarks"
         description="My collection of bookmarks."
       />
-      <ScrollArea className="flex flex-col lg:hidden">
-        <div>
+
+      <ScrollArea className="h-[530px] md:h-[500px] lg:hidden">
+        <div className="divide-y">
           {collections.map((collection) => (
-            <div
+            <Link
               key={collection._id}
-              className="rounded-lg bg-white p-4 shadow"
+              href={`/bookmarks/${collection.slug}`}
+              className="flex flex-col gap-1 py-3 text-sm hover:bg-gray-100"
             >
-              <h2 className="text-lg font-semibold">{collection.title}</h2>
-              <span className="text-muted-foreground">
-                {collection.count} bookmarks
-              </span>
-            </div>
+              <div>
+                <h2 className="text-lg font-semibold">{collection.title}</h2>
+                <span className="text-muted-foreground">
+                  {collection.count} bookmarks
+                </span>
+              </div>
+            </Link>
           ))}
         </div>
       </ScrollArea>

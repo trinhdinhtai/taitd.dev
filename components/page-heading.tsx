@@ -6,7 +6,7 @@ interface PageHeadingProps {
 const PageHeading = ({ title, description }: PageHeadingProps) => {
   return (
     <>
-      <div className="flex-1 space-y-1 md:space-y-4">
+      <div className="space-y-1 md:space-y-4">
         <h1 className="inline-block font-heading text-2xl tracking-tight md:text-4xl lg:text-5xl">
           {title}
         </h1>

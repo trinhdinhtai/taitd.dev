@@ -20,11 +20,11 @@ export default async function BookmarkPage() {
 
   return (
     <>
+      <p>Test Cache</p>
       <PageHeading
         title="Bookmarks"
         description="My collection of bookmarks."
       />
-
       <ScrollArea className="flex flex-col lg:hidden">
         <div>
           {collections.map((collection) => (

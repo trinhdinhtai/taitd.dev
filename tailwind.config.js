@@ -60,6 +60,10 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        thumbnail:
+          "0 0 0 0.5px #e2e8f0, 0 0 0 1px rgba(226, 232, 240, 0.5), 0 0 0 3px #f8fafc, 0 0 0 3.5px #f1f5f9, 0 10px 15px -3px rgb(59 130 246/5%), 0 4px 6px -4px rgb(59 130 246/5%)",
+      },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         mono: ["var(--font-code)", ...fontFamily.mono],

@@ -9,11 +9,14 @@ interface BookmarkListProps {
 export default function BookmarkList({ id, bookmarks }: BookmarkListProps) {
   return (
     <>
-      <div className="@lg:hidden flex flex-col gap-4">
+      <div className="grid sm:grid-cols-2 sm:gap-4">
         {bookmarks.map((bookmark, index) => {
           return (
-            <div key={`bookmark_${index}`} className={cn("grid gap-4")}>
-              <BookmarkCard />
+            <div
+              key={`bookmark_${index}`}
+              className={cn("grid place-content-start gap-4")}
+            >
+              <BookmarkCard bookmark={bookmark} />
             </div>
           )
         })}

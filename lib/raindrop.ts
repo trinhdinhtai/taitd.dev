@@ -8,7 +8,7 @@ const options = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${process.env.NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN}`,
   },
-  next: { revalidate: 10 },
+  next: { revalidate: 0 },
 }
 
 export async function getCollections() {
@@ -20,7 +20,20 @@ export async function getCollections() {
     )
     return filteredCollections
   } catch (error) {
-    console.info(error)
+    console.error(error)
+    return null
+  }
+}
+
+export async function getCollection(id: string) {
+  try {
+    const response = await fetch(
+      `${RAINDROP_API_URL}/collection/${id}`,
+      options
+    )
+    return await response.json()
+  } catch (error) {
+    console.error(error)
     return null
   }
 }

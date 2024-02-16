@@ -17,6 +17,11 @@ const moreContent: ContentNavItem[] = [
     href: "/uses",
     description: "My hardware, software, and other tools.",
   },
+  {
+    title: "Bookmarks",
+    href: "/bookmarks",
+    description: "My collection of bookmarks.",
+  },
 ]
 
 export const navbarLinks: NavItem[] = [

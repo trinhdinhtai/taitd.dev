@@ -5,6 +5,7 @@ import { z } from "zod"
 export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url().min(1),
+    NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -13,6 +14,8 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN:
+      process.env.NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN,
   },
   // For Next.js >= 13.4.4, you only need to destructure client variables:
   // experimental__runtimeEnv: {

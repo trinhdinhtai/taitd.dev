@@ -42,3 +42,21 @@ export type SeriesItem = {
 export type PostSeries = Series & { posts: SeriesItem[] }
 
 export type PostWithSeries = Omit<Post, "series"> & { series: PostSeries }
+
+export type Collection = {
+  _id: string
+  item: {
+    _id: string
+    title: string
+    description: string
+    slug: string
+  }
+}
+
+export type Bookmark = {
+  title: string
+  description: string
+  url: string
+  imageUrl: string
+  tags: string[]
+}

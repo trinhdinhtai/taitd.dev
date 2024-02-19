@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 
 async function fetchData() {
   const collections = await getCollections()
+  if (!collections) return { collections: [] }
+
   const sortedCollections = sortByProperty(collections, "title")
   return { collections: sortedCollections }
 }

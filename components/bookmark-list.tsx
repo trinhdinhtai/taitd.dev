@@ -1,14 +1,30 @@
-import { useCallback, useMemo } from "react"
+"use client"
 
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { Bookmark } from "@/types"
+import { Loader } from "lucide-react"
+import { useInView } from "react-intersection-observer"
+
+import { getBookmarksByCollectionId } from "@/lib/raindrop"
 import { cn } from "@/lib/utils"
 import BookmarkCard from "@/components/bookmark-card"
 
 interface BookmarkListProps {
   id: string
-  bookmarks: any[]
+  initialBookmarks: Bookmark[]
 }
 
-export default function BookmarkList({ id, bookmarks }: BookmarkListProps) {
+let pageIndex = 1
+
+export default function BookmarkList({
+  id,
+  initialBookmarks,
+}: BookmarkListProps) {
+  const { ref, inView } = useInView()
+
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>(initialBookmarks)
+  const [isLoading, setIsLoading] = useState(true)
+
   const getChunks = useCallback(() => {
     const firstChunk: any[] = []
     const lastChunk: any[] = []
@@ -23,6 +39,28 @@ export default function BookmarkList({ id, bookmarks }: BookmarkListProps) {
   }, [bookmarks])
 
   const chunks = useMemo(() => getChunks(), [getChunks])
+
+  useEffect(() => {
+    if (inView) {
+      setIsLoading(true)
+
+      const delay = 500
+
+      const timeoutId = setTimeout(async () => {
+        const newBookmarks = await getBookmarksByCollectionId({
+          collectionId: id,
+          pageIndex,
+        })
+
+        setBookmarks((prev) => [...prev, ...newBookmarks])
+        setIsLoading(false)
+
+        pageIndex++
+      }, delay)
+
+      return () => clearTimeout(timeoutId)
+    }
+  }, [inView, id])
 
   return (
     <>
@@ -52,6 +90,12 @@ export default function BookmarkList({ id, bookmarks }: BookmarkListProps) {
             </div>
           )
         })}
+      </div>
+
+      <div className="mt-4 flex w-full items-center justify-center">
+        <div ref={ref}>
+          {inView && isLoading && <Loader className="h-8 w-8 animate-spin" />}
+        </div>
       </div>
     </>
   )

@@ -1,4 +1,5 @@
 import { BOOKMARK_COLLECTION_IDS } from "@/constants/raindrop-collection"
+import { Bookmark, Collection } from "@/types"
 
 const RAINDROP_API_URL = "https://api.raindrop.io/rest/v1"
 
@@ -11,7 +12,7 @@ const options = {
   next: { revalidate: 0 },
 }
 
-export async function getCollections() {
+export async function getCollections(): Promise<Collection[] | null> {
   try {
     const response = await fetch(`${RAINDROP_API_URL}/collections`, options)
     const collections = await response.json()
@@ -25,7 +26,7 @@ export async function getCollections() {
   }
 }
 
-export async function getCollection(id: string) {
+export async function getCollection(id: string): Promise<Collection | null> {
   try {
     const response = await fetch(
       `${RAINDROP_API_URL}/collection/${id}`,
@@ -38,23 +39,26 @@ export async function getCollection(id: string) {
   }
 }
 
-export async function getBookmarksByCollectionId(
-  collectionId: string,
-  pageIndex = 0
-) {
+export async function getBookmarksByCollectionId({
+  collectionId,
+  pageIndex = 0,
+}: {
+  collectionId: string
+  pageIndex?: number
+}): Promise<Bookmark[]> {
   try {
     const params = new URLSearchParams({
       page: String(pageIndex),
-      perpage: "50",
+      perpage: "4",
     })
     const response = await fetch(
       `${RAINDROP_API_URL}/raindrops/${collectionId}?${params}`,
       options
     )
     const bookmarks = await response.json()
-    return bookmarks
+    return bookmarks.items
   } catch (error) {
     console.info(error)
-    return null
+    return []
   }
 }

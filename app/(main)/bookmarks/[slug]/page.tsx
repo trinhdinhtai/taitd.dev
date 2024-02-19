@@ -16,6 +16,8 @@ interface BookmarkCollectionPageProps {
 
 async function fetchData(slug: string) {
   const collections = await getCollections()
+  if (!collections) return
+
   const currentCollection = collections.find(
     (collection: any) => collection.slug === slug
   )
@@ -23,12 +25,14 @@ async function fetchData(slug: string) {
 
   const [collection, bookmarks] = await Promise.all([
     getCollection(currentCollection._id),
-    getBookmarksByCollectionId(currentCollection._id),
+    getBookmarksByCollectionId({
+      collectionId: currentCollection._id,
+    }),
   ])
 
-  if (!collection) return
+  if (!collection || !bookmarks) return
 
-  return { collection: collection.item, bookmarks: bookmarks.items }
+  return { collection: collection.item, bookmarks }
 }
 
 export default async function BookmarkCollectionPage({
@@ -48,7 +52,7 @@ export default async function BookmarkCollectionPage({
         description={collection.description}
       />
 
-      <BookmarkList id={collection._id} bookmarks={bookmarks} />
+      <BookmarkList id={collection._id} initialBookmarks={bookmarks} />
     </>
   )
 }

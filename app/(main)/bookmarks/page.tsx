@@ -23,16 +23,16 @@ export default async function BookmarkPage() {
     <>
       <PageHeading
         title="Bookmarks"
-        description="My collection of bookmarks."
+        description="Discoveries from the World Wide Web"
       />
 
-      <ScrollArea className="h-[530px] md:h-[500px] lg:hidden">
+      <ScrollArea>
         <div className="divide-y">
           {collections.map((collection) => (
             <Link
               key={collection._id}
               href={`/bookmarks/${collection.slug}`}
-              className="flex flex-col gap-1 py-3 text-sm hover:bg-gray-100"
+              className="flex flex-col gap-1 px-2 py-3 text-sm hover:bg-gray-200 dark:hover:bg-gray-800"
             >
               <div>
                 <h2 className="text-lg font-semibold">{collection.title}</h2>

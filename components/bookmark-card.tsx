@@ -10,7 +10,7 @@ export default function BookmarkCard({ bookmark }: BookmarkCardProps) {
       href={bookmark.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="shadow-thumbnail flex aspect-auto min-w-0 cursor-pointer flex-col gap-4 overflow-hidden rounded-xl bg-white p-4 transition-colors duration-300 hover:bg-gray-100"
+      className="flex aspect-auto min-w-0 cursor-pointer flex-col gap-4 overflow-hidden rounded-xl border bg-background p-4 transition-colors duration-300 hover:bg-gray-200 dark:hover:bg-gray-800"
     >
       <span className="aspect-[1200/630] overflow-hidden rounded-lg">
         <Image

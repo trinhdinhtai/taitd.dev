@@ -9,8 +9,6 @@ import { useInView } from "react-intersection-observer"
 import { getBookmarksByCollectionId } from "@/lib/raindrop"
 import BookmarkCard from "@/components/bookmark-card"
 
-let pageIndex = 1
-
 interface LoadMoreProps {
   id: string
 }
@@ -19,6 +17,7 @@ export default function LoadMore({ id }: LoadMoreProps) {
   const { ref, inView } = useInView()
 
   const [data, setData] = useState<Bookmark[]>([])
+  const [pageIndex, setPageIndex] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [isReachingEnd, setIsReachingEnd] = useState(false)
 
@@ -39,14 +38,14 @@ export default function LoadMore({ id }: LoadMoreProps) {
         if (PAGE_SIZE > newBookmarks.length) setIsReachingEnd(true)
 
         setData((prev) => [...prev, ...newBookmarks])
-        pageIndex++
+        setPageIndex(pageIndex + 1)
         setIsLoading(false)
       }, delay)
 
       // Clear the timeout if the component is unmounted or inView becomes false
       return () => clearTimeout(timeoutId)
     }
-  }, [inView, id, isReachingEnd])
+  }, [inView, id, isReachingEnd, pageIndex])
 
   return (
     <>

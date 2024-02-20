@@ -1,3 +1,4 @@
+import { PAGE_SIZE } from "@/constants/raindrop-collection"
 import { Bookmark } from "@/types"
 
 import BookmarkCard from "@/components/bookmark-card"
@@ -12,6 +13,7 @@ export default function BookmarkList({
   id,
   initialBookmarks,
 }: BookmarkListProps) {
+  const isLoadMoreEnabled = PAGE_SIZE <= initialBookmarks.length
   return (
     <>
       <div className="grid gap-4 sm:grid-cols-2">
@@ -20,7 +22,7 @@ export default function BookmarkList({
         ))}
       </div>
 
-      <LoadMore id={id} />
+      {isLoadMoreEnabled && <LoadMore id={id} />}
     </>
   )
 }

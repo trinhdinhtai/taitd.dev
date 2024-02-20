@@ -54,6 +54,7 @@ export type Collection = {
 }
 
 export type Bookmark = {
+  _id: string
   title: string
   description: string
   url: string

@@ -4,6 +4,7 @@ import localFont from "next/font/local"
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
+import Script from "next/script"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -101,6 +102,14 @@ export default function RootLayout({
           <ScrollToTopButton />
           <TailwindIndicator />
         </ThemeProvider>
+
+        {process.env.NODE_ENV === "production" && (
+          <script
+            defer
+            src="https://analytics.us.umami.is/script.js"
+            data-website-id="918e78b6-7a58-445d-9c09-1c0e53d6fe18"
+          ></script>
+        )}
       </body>
     </html>
   )

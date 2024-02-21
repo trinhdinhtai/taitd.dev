@@ -1,15 +1,25 @@
 import { getGithubStats } from "@/lib/github"
+import { getCodingHours } from "@/lib/wakatime"
 import PageHeading from "@/components/page-heading"
 import StartCard from "@/components/stat-card"
 
 export default async function StatsPage() {
-  const githubStats = await getGithubStats()
+  const [githubStats, codingHours] = await Promise.all([
+    getGithubStats(),
+    getCodingHours(),
+  ])
 
-  if (!githubStats) return null
+  if (!githubStats || !codingHours) return null
 
   const { user, repos, starsCount } = githubStats
 
   const statCards = [
+    {
+      title: "Github Repositories",
+      value: repos,
+      description: "Public repositories",
+      link: `${user.html_url}?tab=repositories`,
+    },
     {
       title: "Github Stars",
       value: starsCount,
@@ -21,6 +31,13 @@ export default async function StatsPage() {
       value: user.followers,
       description: "People following me",
       link: user.html_url,
+    },
+
+    {
+      title: "Coding Hours",
+      value: codingHours,
+      description: "Total hours spent coding",
+      link: "https://wakatime.com/",
     },
   ]
 

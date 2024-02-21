@@ -5,7 +5,7 @@ interface StatCardProps {
 export default function StartCard({ card }: StatCardProps) {
   return (
     <a
-      className="flex flex-col rounded-lg bg-background p-4"
+      className="flex flex-col rounded-lg bg-background p-4 shadow dark:border"
       href={card.link}
       target="_blank"
       rel="noreferrer"

@@ -2,20 +2,11 @@ import { GitHubUser } from "@/types"
 
 const GITHUB_API_URL = "https://api.github.com/users/trinhdinhtai"
 
-const options: RequestInit = {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer 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`,
-  },
-  next: { revalidate: 0 },
-}
-
 async function getGithubStats() {
   try {
     const [userResponse, myReposResponse] = await Promise.all([
-      fetch(GITHUB_API_URL, options),
-      fetch(`${GITHUB_API_URL}/repos?per_page=100`, options),
+      fetch(GITHUB_API_URL),
+      fetch(`${GITHUB_API_URL}/repos?per_page=100`),
     ])
 
     const user = (await userResponse.json()) as GitHubUser

@@ -4,7 +4,6 @@ import localFont from "next/font/local"
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
-import Script from "next/script"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"

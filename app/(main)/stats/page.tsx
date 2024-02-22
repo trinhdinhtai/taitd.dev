@@ -1,10 +1,8 @@
-"use client"
-
-import { fadeContainer } from "@/constants/framer-motion-variants"
+import GitHubCalendar from "react-github-calendar"
 
 import { getGithubStats } from "@/lib/github"
 import { getCodingHours } from "@/lib/wakatime"
-import AnimatedDiv from "@/components/framer-motion/animated-div"
+import GithubContributor from "@/components/github-contributor"
 import PageHeading from "@/components/page-heading"
 import StartCard from "@/components/stat-card"
 
@@ -51,14 +49,13 @@ export default async function StatsPage() {
         description="Insights into my digital life"
       />
 
-      <AnimatedDiv
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3"
-        variants={fadeContainer}
-      >
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {statCards.map((card) => (
           <StartCard key={card.title} card={card} />
         ))}
-      </AnimatedDiv>
+      </div>
+
+      <GithubContributor />
     </>
   )
 }

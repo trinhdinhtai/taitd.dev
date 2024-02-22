@@ -1,4 +1,6 @@
+import { ReactNode } from "react"
 import { Post } from "@/.contentlayer/generated"
+import { Variants } from "framer-motion"
 
 export type SiteConfig = {
   name: string
@@ -73,4 +75,11 @@ export type GitHubUser = {
   following: number
   created_at: string
   updated_at: string
+}
+
+export type AnimatedTAGProps = {
+  variants: Variants
+  className?: string
+  children: ReactNode
+  infinity?: boolean
 }

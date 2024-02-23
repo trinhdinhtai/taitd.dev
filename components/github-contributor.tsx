@@ -12,9 +12,15 @@ export default function GithubContributor() {
         GitHub Contributor
       </div>
 
+      <div className="my-4 text-muted-foreground">
+        The following is my GitHub contribution graph which shows my coding
+        activity and productivity on the platform.
+      </div>
+
       <GitHubCalendar
         style={{
           width: "100% !important",
+          marginTop: "40px",
         }}
         username="trinhdinhtai"
         colorScheme={theme === "dark" ? "dark" : "light"}

@@ -18,11 +18,12 @@ export default function GithubContributor() {
       </div>
 
       <GitHubCalendar
+        username="trinhdinhtai"
+        year={new Date().getFullYear()}
         style={{
           width: "100% !important",
           marginTop: "40px",
         }}
-        username="trinhdinhtai"
         colorScheme={theme === "dark" ? "dark" : "light"}
       />
     </div>

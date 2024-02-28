@@ -9,6 +9,8 @@ export const env = createEnv({
     NEXT_PUBLIC_RAINDROP_ACCESS_TOKEN: z.string().min(1),
     GITHUB_ACCESS_TOKEN: z.string().min(1),
     NEXT_PUBLIC_WAKATIME_ACCESS_TOKEN: z.string().min(1),
+    UMAMI_API_KEY: z.string().min(1),
+    UMAMI_API_CLIENT_ENDPOINT: z.string().url().min(1),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -23,6 +25,8 @@ export const env = createEnv({
     GITHUB_ACCESS_TOKEN: process.env.GITHUB_ACCESS_TOKEN,
     NEXT_PUBLIC_WAKATIME_ACCESS_TOKEN:
       process.env.NEXT_PUBLIC_WAKATIME_ACCESS_TOKEN,
+    UMAMI_API_KEY: process.env.UMAMI_API_KEY,
+    UMAMI_API_CLIENT_ENDPOINT: process.env.UMAMI_API_CLIENT_ENDPOINT,
   },
   // For Next.js >= 13.4.4, you only need to destructure client variables:
   // experimental__runtimeEnv: {

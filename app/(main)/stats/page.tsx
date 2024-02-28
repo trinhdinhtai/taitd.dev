@@ -1,15 +1,15 @@
-import GitHubCalendar from "react-github-calendar"
-
 import { getGithubStats } from "@/lib/github"
+import getAnalytics from "@/lib/umami"
 import { getCodingHours } from "@/lib/wakatime"
 import GithubContributor from "@/components/github-contributor"
 import PageHeading from "@/components/page-heading"
 import StartCard from "@/components/stat-card"
 
 export default async function StatsPage() {
-  const [githubStats, codingHours] = await Promise.all([
+  const [githubStats, codingHours, pageStats] = await Promise.all([
     getGithubStats(),
     getCodingHours(),
+    getAnalytics(),
   ])
 
   const { user, repos, starsCount } = githubStats || {}
@@ -33,12 +33,17 @@ export default async function StatsPage() {
       description: "People following me",
       link: user?.html_url,
     },
-
     {
       title: "Coding Hours",
       value: codingHours,
       description: "Total hours spent coding",
       link: "https://wakatime.com/",
+    },
+    {
+      title: "Blog Views",
+      value: pageStats?.pageviews.value,
+      description: "Total blog views",
+      link: "https://us.umami.is/share/1hfu7snOAr7VkPJj/taitd.io.vn",
     },
   ]
 

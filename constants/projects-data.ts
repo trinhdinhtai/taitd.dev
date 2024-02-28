@@ -2,24 +2,19 @@ import { Project } from "@/types"
 
 export const projectsData: Project[] = [
   {
-    title: "CorpComment",
+    title: "Personal portfolio",
     description:
-      "I worked as a full-stack developer on this startup project for 2 years. Users can give public feedback to companies.",
-    tags: ["React", "Next.js", "MongoDB", "Tailwind", "Prisma"],
-    imageUrl: "/images/projects/corpcomment.png",
+      "My personal portfolio website, built with Next.js, Tailwind CSS, and TypeScript. It's a place where I can showcase my work and share my thoughts.",
+    tags: ["React", "Next.js", "TailwindCSS", "ShadcnUI", "Prisma"],
+    imageUrl: "/images/projects/blog.png",
+    githubUrl: "https://github.com/trinhdinhtai/next-blog",
   },
   {
-    title: "rmtDev",
+    title: "Background snippets",
     description:
-      "Job board for remote developer jobs. I was the front-end developer. It has features like filtering, sorting and pagination.",
-    tags: ["React", "TypeScript", "Next.js", "Tailwind", "Redux"],
-    imageUrl: "/images/projects/rmtdev.png",
-  },
-  {
-    title: "Word Analytics",
-    description:
-      "A public web app for quick analytics on text. It shows word count, character count and social media post limits.",
-    tags: ["React", "Next.js", "SQL", "Tailwind", "Framer"],
-    imageUrl: "/images/projects/wordanalytics.png",
+      "Collections of ready-to-use, simply copy and paste into your next project. All snippets crafted with Tailwind CSS and Vanilla CSS for easy integration.",
+    tags: ["React", "Next.js", "TailwindCSS", "ShadcnUI"],
+    imageUrl: "/images/projects/bg-snippets.png",
+    githubUrl: "https://github.com/trinhdinhtai/next-bg-snippets",
   },
 ]

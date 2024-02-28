@@ -80,6 +80,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const isProduction = process.env.NODE_ENV === "production"
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -102,7 +104,7 @@ export default function RootLayout({
           <TailwindIndicator />
         </ThemeProvider>
 
-        {process.env.NODE_ENV === "production" && (
+        {isProduction && (
           <script
             defer
             src="https://analytics.us.umami.is/script.js"

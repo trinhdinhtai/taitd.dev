@@ -32,6 +32,7 @@ export type Project = {
   description: string
   tags: string[]
   imageUrl: string
+  githubUrl: string
 }
 
 export type SeriesItem = {

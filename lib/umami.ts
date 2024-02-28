@@ -1,22 +1,15 @@
-const UMAMI_API_URL = "https://u.taitd/api/auth/login"
+import { getClient } from "@umami/api-client"
 
-const options = {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer sRkr6Oz842FhCj8M6nEHxcz3IqrrEh64`,
-  },
-  next: { revalidate: 0 },
-}
+const client = getClient()
 
-export async function getAnalytics() {
-  try {
-    const response = await fetch("https://api.umami.is/v1/websites", options)
+const WEBSITE_ID = "918e78b6-7a58-445d-9c09-1c0e53d6fe18"
 
-    const test = await response.json()
-    return test
-  } catch (error) {
-    console.error(error)
-    return null
-  }
+export default async function getAnalytics() {
+  // @ts-ignore
+  const { data } = await client.getWebsiteStats(WEBSITE_ID, {
+    startAt: 0,
+    endAt: Date.now(),
+  })
+
+  return data
 }

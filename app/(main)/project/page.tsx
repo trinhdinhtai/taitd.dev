@@ -1,4 +1,3 @@
-import { Fragment } from "react"
 import { Metadata } from "next"
 import { projectsData } from "@/constants/projects-data"
 
@@ -17,11 +16,11 @@ const ProjectPage = () => {
         description="I've been making various types of projects some of them were basics and some of them were complicated."
       />
 
-      {projectsData.map((project, index) => (
-        <Fragment key={index}>
-          <ProjectCard project={project} />
-        </Fragment>
-      ))}
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+        {projectsData.map((project, index) => (
+          <ProjectCard key={index} project={project} />
+        ))}
+      </div>
     </>
   )
 }

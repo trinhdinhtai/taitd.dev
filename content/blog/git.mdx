@@ -1,0 +1,99 @@
+---
+title: Git nhập môn - 15 lệnh Git cơ bản
+description: As a developer who creates content, I want to have a blog & digital garden where I can share my thoughts and ideas with the world. Now, there's not really a "perfect solution" for this currently. With included analytics, SEO, email subscriptions, modern tooling, simple design, etc. We either have to build one from scratch, use a design template and code the features, or use a CMS/no-code tool.
+image: /images/blog/blog-post-3.jpg
+date: "2023-05-16"
+tags:
+  - Git
+series:
+  order: 1
+  title: "Git"
+authors:
+  - taitd
+---
+
+## 1. Git clone: `git clone <remote_repo>`
+
+Lệnh này sẽ clone một repo từ github/gitlab/bitbuket về máy của bạn
+
+Anh em nào vừa mới join vào một dự án thì lệnh này là lệnh đầu tiên không thể thiếu
+
+## 2. Git init: `git init`
+
+Câu lệnh giúp bạn init source code thành một repo và git sẽ quản lý source code này
+
+## 3. Git fetch: `git fetch`
+
+Dùng để get các file/branch được thêm hoặc thay đổi ở remote repo về local repo
+
+## 4. Git merge: `git merge`
+
+Dùng để merge một branch vào branch hiện tại
+
+## 5. Git pull: `git pull`
+
+Sự kết hợp của git fetch và git merge
+
+Thường anh em sẽ sử dụng git fetch để check xem có những file/branch nào đã thêm/thay đổi trước khi pull
+
+## 6. Git branch: `git branch <tên_nhánh>`
+
+Tạo, xóa, liệt kê, đổi tên branch
+
+## 7. Git checkout: `git checkout <tên_nhánh>`
+
+Switch sang một branch khác
+
+Với git branch, bạn chỉ tạo ra một nhánh mới nhưng sẽ không tự động switch sang nhánh đó, dùng `git checkout -b <tên nhánh>` để tạo và checkout sang nhánh mới
+
+## 8. Git status: `git status`
+
+Kiểm tra trạng thái của source code xem có file nào add/modify/delete
+
+## 9. Git add: `git add`
+
+Đưa file vào stage
+
+Sử dụng git add . để add toàn bộ file đã được add/modify/delete
+
+## 10. Git log: `git log`
+
+Liệt kê toàn bộ commit bao gồm hash commit, người commit, ngày commit và message commit
+
+Dùng git log --oneline để chỉ hiển thị hash commit và message commit
+
+## 11. Git revert: git revert
+
+Tạo ra một commit mới với commit mà bạn muốn revert
+
+Hữu ích khi bạn đã commit file đó nhưng file đó bị lỗi, thiếu hoặc muốn thay đổi tính năng và bạn cần back lại commit đó
+
+## 12. Git reset: `git reset <hash_commit>`
+
+Hữu ích giống như git revert nhưng với git reset, bạn sẽ không tạo ra một commit mới nào cả mà sẽ loại bỏ các commit mới và back lại commit mà bạn muốn reset
+
+```
+git reset <hash_commit>: reset commit và giữ file ở index (working space)
+
+git reset --soft <hash_commit>: reset commit và giữ file ở stage
+
+git reset --hard <hash_commit>: reset commit và xóa luôn các file đã được add/modify/delete
+```
+
+## 13. Git rebase: `git rebase`
+
+Giống với git merge, git rebase cũng giúp merge branch lại với nhau, nhưng thay vì tạo ra một commit mới và thứ tự các commit được chèn vào nhau dựa trên thời gian commit thì với git rebase, các commit sẽ được đưa lên trên đầu flow của branch
+
+Git rebase có rất nhiều tính năng hữu ích như đổi message commit thành message khác, gộp commit
+
+## 14. Git stash: `git stash`
+
+Nếu gặp phải trường hợp bạn đang develop ở nhánh hiện tại nhưng cần checkout sang nhánh khác thì bạn sẽ không checkout được nếu đang có file thay đổi ở nhánh hiện tại
+
+Để checkout được sang nhánh khác bạn buộc phải commit chúng, nhưng bạn chưa muốn commit vì tính năng chưa phát triển xong
+
+Lúc này bạn hãy dùng git stash, nó sẽ cất giữ file của bạn và bạn có thể thoải mái checkout sang nhánh khác, và khi quay lại nhánh cũ, bạn có thể apply lại và develop tiếp
+
+## 15. Git tag: `git tag <version>`
+
+Đối với các dự án release theo từng version thì sẽ dùng tag để quản lý từng version cũng như changelog của từng version đó

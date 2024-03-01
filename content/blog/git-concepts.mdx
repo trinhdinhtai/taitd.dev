@@ -1,0 +1,206 @@
+---
+title: Những tình huống thường gặp khi làm việc với Git
+description: Trong bài viết trước, mình đã giới thiệu tới mọi người về một số câu lệnh Git thường dùng, ở bài viết này, mình sẽ giới thiệu một số tình huống thường gặp khi làm việc với Git nhé, gét gô!
+image: /images/blog/blog-post-3.jpg
+date: "2024-02-22"
+tags:
+  - Git
+series:
+  order: 2
+  title: "Git"
+authors:
+  - taitd
+---
+
+Trong bài viết trước, mình đã giới thiệu tới mọi người về một số câu lệnh Git thường dùng, ở bài viết này, mình sẽ giới thiệu một số tình huống thường gặp khi làm việc với Git nhé, gét gô!
+
+## 1. Xử lý conflict
+
+Tokuda và Thảo là hai dev cùng làm việc trên project `japan-antivirus`, một ngày đẹp trời ông leader vỗ vai Thảo và Tokuda:
+
+> "Tokuda, chú sửa chức năng chỉnh sửa nhân viên nhé, thêm trường ABC vào thông tin nhân viên cho anh"
+
+> "Ê Thảo, em sửa giúp anh chức năng view thông tin nhân viên, thêm check quyền vào nhé!"
+
+Thế là Tokuda và Thảo checkout code từ branch `dev`, Tokuda làm việc trên branch `feature/add-user-fields`, còn Thảo làm việc trên branch `feature/add-check-user-authority`, tuy nhiên thì cả Tokuda và Thảo đều sửa vào line 69 của file `user.ts`
+
+Do Tokuda pro hơn nên đã hoàn thành task sớm, branch `feature/add-user-fields` của Tokuda nhanh chóng được merge vào `dev`, mọi chuyện vẫn ổn cho đến khi Thảo tạo merge request `feature/add-check-user-authority` vào `dev`.
+
+Đập vào mắt Thảo là error `CONFLICT (content): Merge conflict in user.ts`, lúc này thay vì chửi thề thì Thảo cần phải thực hiện các bước sau:
+
+### 1.1. Xác định đoạn code bị conflict:
+
+Sử dụng `git status` để tìm các file bị conflict
+
+Trong file `user.ts`, Thảo thấy nội dung như sau:
+
+```shell
+<<<<<<< HEAD (Current Change)
+code of Tokuda
+=======
+code of Thảo
+
+>>>>>>> feature/add-check-user-authority (Incoming Change)
+```
+
+### 1.2. Giải quyết conflict
+
+Trao đổi với Tokuda, xem cần giữ đoạn code của Thảo, hay đoạn code của Tokuda, hay là kết hợp cả 2, sau đó loại bỏ dấu `<<<<<<<`, `=======`, và `>>>>>>>`
+
+Sử dụng lệnh `git add user.ts` và `git commit` để hoàn tất quá trình merge
+
+### 1.3. Kiểm tra lại và push lên remote
+
+Dùng `git status` để check lại xem còn conflict chưa được xử lý không.
+
+Nếu còn, quay về bước 1, nếu không, sử dụng `git push` để đẩy những thay đổi đã merge lên remote
+
+> Chú ý: Để hạn chế conflict code bạn cần thường xuyên pull code và commit code
+
+## 2. Xem lịch sử commit và lịch sử hoạt động trên git
+
+Sử dụng `git log` để xem lịch sử commit như hash commit, người commit, thời gian commit, message của commit
+
+```shell
+commit 5841451a6c7fdca8f1989903b41df2c0a6d6b1a2 (HEAD -> dev, origin/dev)
+Merge: c51185c0d 4bee07ebd
+Author: taitd-gms <117064867+tokuda69@users.noreply.github.com>
+Date:   Fri Mar 1 13:11:03 2023 +0700
+
+    Merge branch 'feature/add-user-fields' into dev
+```
+
+`git reflog` như một activity history, giúp lưu lại các hoạt động đã thao tác trên git, ví dụ như Tokuda vừa checkout qua nhánh master, hay là Thảo vừa reset một commit,... `git reflog` rất hữu ích cho những sai lầm trong quá trình sử dụng git (mình có ví dụ một sai lầm ở tình huống 4)
+
+```shell
+a8b203598 HEAD@{14}: pull --ff --recurse-submodules --progress origin: Fast-forward
+868709494 HEAD@{15}: commit (merge): Merge branch 'staging' into feature/add-user-fields
+b8da84ed4 HEAD@{16}: reset: moving to b8da84ed4719f09d462c9a5d2dc4723ab4d2362c
+694f23568 HEAD@{17}: commit (merge): Merge branch 'staging' into feature/add-user-fields
+b8da84ed4 HEAD@{18}: reset: moving to HEAD
+b8da84ed4 HEAD@{19}: merge staging: Merge made by the 'ort' strategy.
+dcf422a6e HEAD@{20}: checkout: moving from dev to feature/add-user-fields
+441773340 HEAD@{21}: reset: moving to HEAD
+441773340 HEAD@{22}: merge staging: Merge made by the 'ort' strategy.
+```
+
+## 3. Xóa commit
+
+Sau một ngày dài miệt mài múa code, cuối cùng thì Thảo cũng đã hoàn thành task, Thảo commit code và đi ngủ.
+
+Hôm sau Thảo mở lại code và thấy code của mình trông phản cảm vl, Thảo cần sửa lại cho vở sạch chữ đẹp.
+Trường hợp chỉ cần chỉnh sửa code thôi thì Thảo có thể sử dụng `git reset`, còn hết cứu thì Thảo có thể sử dụng `git revert` 🤣
+
+`git reset` có vài option như `mixed` (mặc định nếu không truyền option), `--soft` và `--hard`
+
+```shell
+git reset <commit>: #giữ lại các thay đổi đã commit trong staging
+git reset --soft <commit>: #giữ lại các thay đổi trong working directory
+git reset --hard <commit>: #loại bỏ tất cả thay đổi, cả trong working directory và staging
+```
+
+## 4. Khôi phục commit
+
+Như ở tình huống 3, Thảo muốn reset commit để chỉnh sửa code thôi nhưng Thảo lại "nhỡ tay" `--hard` khiến cho code bị bay màu hết, Thảo lúng túng cầu cứu anh Leader, anh Leader đã hướng dẫn Thảo lấy lại code với các thao tác như sau:
+
+Sử dụng git reflog để lấy hash commit:
+
+```shell
+627f5d1 (HEAD -> master, conflict-2) HEAD@{0}: reset: moving to 627f5d161bff441840d5b34a77abe16561f505f8
+ec02ce2 HEAD@{1}: reset: moving to HEAD@{1}
+```
+
+Sử dụng `git reset --hard` để khôi phục commit:
+
+```shell
+git reset --hard ec02ce2
+```
+
+Tèo vui mừng hò reo cảm ơn anh Leader ríu rít
+
+### 6: Gộp nhiều commit lại thành 1 commit
+
+Tí được giao một nhiệm vụ là quản lý users bao gồm CRUD. Tí nghe lời dặn của anh Leader là "code phải commit code liên tục nha em"
+
+Tí tạo file userRouter, Tí commit
+
+Tí tạo tiếp file userController, Tí commit tiếp
+
+Tí tạo file userService, Tí lại tiếp tục commit
+
+Tí làm xong task và hí ha hí hửng đưa qua anh Leader để review code, anh Leader nhìn vào Pull Request thì bèn nói rằng: "Em gộp lại các commit thành 1 cho anh nhé, commit liên tục là cần thiết nhưng cần phải commit hợp lý, tránh dư thừa hoặc trùng lặp quá nhiều"
+
+Tí loay hoay và suy nghĩ trong đầu: "Vậy gộp như làm thế nào bây giờ?"
+
+Thôi chuyện gì cũng tới tay anh Leader, anh Leader tiếp tục hướng dẫn Tí gộp commit, thao tác như sau:
+
+Sử dụng git rebase
+
+```shell
+git rebase -i HEAD^n #n là số commit muốn gộp
+```
+
+Git sẽ mở một cửa sổ tương tác, chọn các commit cần gộp chuyển pick thành squash và lưu lại
+Git tiếp tục mở một cửa sổ tương tác, chọn message hoặc nhập message commit tùy ý và lưu lại. Done
+Tình huống 6: chỉnh sửa message commit
+Một lần Tí commit nhầm message và Tí chỉnh sửa lại được message đó. Tí vui lắm, Tí liền chia sẻ lên diễn đàn X, tác giả (là mình) tình cờ thấy bài chia sẻ đó của Tí nên copy paste vào đây. Cách xử lý của Tí như sau:
+
+Đối với message mới nhất: sử dụng `git commit --amend -m "new_message"` (chỉ đổi được message của commit mới nhất thôi)
+
+Đối với nhiều message cùng lúc, cũ mới đều được:
+
+Sử dụng `git rebase -i HEAD~n (n là số commit muốn đổi message)`
+Git sẽ mở một cửa sổ tương tác, bạn đổi pick sang reword cho những commit muốn đổi, lưu lại
+Git tiếp tục mở một cửa sổ tương tác, bạn đổi message mới và lưu lại, bao nhiêu commit muốn đổi thì có bấy nhiêu cửa sổ tương tác mở ra để đổi message
+
+## VII. Tình huống 7: đổi tên branch
+
+Lại một lần khác, Tí đặt nhầm tên nhánh và Tí chỉnh sửa lại được tên branch đó. Tí vui lắm, Tí liền chia sẻ lên diễn đàn X, tác giả (là mình) lại tình cờ thấy bài chia sẻ đó của Tí nên copy paste vào đây. Cách xử lý của Tí như sau:
+
+Nếu đặt sai tên nhánh, vui lòng nhập lệnh sau: git branch -m new_branch
+
+Tình huống 8: không thể checkout qua nhánh khác
+Tí và Tèo là hai bạn thực tập sinh của công ty A Bờ Cờ, Tí vào trước Tèo 2 ngày
+
+Một ngày nọ, Tèo đang code ở nhánh auth nhưng cũng hóng hớt checkout qua nhánh user của Tí để xem Tí code tới đâu rồi vì nhánh của Tèo có phụ thuộc vào nhánh của Tí
+
+Tèo nhập lệnh git checkout user, BÙM, không checkout qua được và lỗi này xuất hiện error: Your local changes to the following files would be overwritten by checkout: auth.js Please commit your changes or stash them before you switch branches. Aborting
+
+Tèo khó hiểu, Tèo bèn quay sang hỏi Tí vì Tí làm trước Tèo 2 ngày nên nghĩ rằng Tí sẽ biết cách xử lý
+
+Tí nhìn vào lỗi và phán rằng: "Chắc lỗi gì rồi, thử xóa hết code xem sao". Anh Leader kế bên giật bắn người, thế là đành quay qua giải quyết cho 2 đứa chưa trải sự đời này
+
+Anh Leader nói: "Tèo không thể checkout qua nhánh khác là do Tèo đang code dở tay ở nhánh hiện tại, để Tèo có thể checkout qua nhánh khác thì cần phải commit code trước"
+
+Tèo đáp rằng: "Em chưa muốn commit code vì chưa code xong ạ"
+
+Anh Leader nói tiếp: "OK em. vậy dùng cho anh git stash nhé"
+
+git stash giúp cất giữ code tạm thời và sau đó khi quay lại dev tiếp thì sử dụng git stash pop
+
+Tình huống 9: khôi phục trạng thái trước khi merge
+Ai cũng sẽ có sai lầm và anh Leader cũng vậy
+
+Anh Leader có giao cho Tí một task và sau khi Tí làm xong thì anh Leader merge vào nhánh dev
+
+Sau khi merge thì anh Leader phát hiện code không hoạt động như ý muốn. Thế là anh Leader dùng lệnh: git reset --hard ORIG_HEAD để xóa các commit vừa merge và nói Tí chỉnh sửa lại code
+
+Tình huống 10: merge một commit bất kỳ vào nhánh khác
+Tèo được giao làm task là quản lý product
+
+Tèo hoàn thành tính năng create product, Tèo commit
+
+Tèo hoàn thành tính năng view product, Tèo commit
+
+Tèo hoàn thành tính năng update product, Tèo commit
+
+Tèo đang làm tính năng delete product, Tèo chưa commit ...
+
+Lúc này khách hàng alo cho anh Leader: "Chú release tính năng create product và view product gấp cho anh nhé"
+
+Anh Leader quá quen với việc khách hàng yêu cầu bất ngờ rồi, anh Leader liền dùng lệnh `git cherry-pick <commit>` để merge 2 commit đó vào nhánh main để release cho khách hàng
+
+git cherry-pick là một lệnh git hữu ích dùng cho trường hợp muốn merge commit bất kỳ vào nhánh khác thay vì toàn bộ branch (git cherry-pick thường bị conflict, dùng lệnh git add . và git commit -m “message” là xử lý được)
+
+Kết bài
+Như vậy, chúng ta đã khám phá 10 tình huống thường gặp trong Git. Hy vọng rằng bài viết đã mang lại giá trị cho bạn và giúp bạn hiểu sâu hơn về git. Ngoài ra, mình có bài viết Tổng hợp 15 lệnh git hữu ích dành cho dự án của bạn, các bạn có thể đọc để biết thêm git. Cảm ơn các bạn đã đọc

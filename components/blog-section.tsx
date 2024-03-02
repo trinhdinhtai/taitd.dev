@@ -10,6 +10,8 @@ const BlogSection = () => {
     .sort((a, b) => {
       return compareDesc(new Date(a.date), new Date(b.date))
     })
+    .slice(0, 4)
+
   return (
     <div>
       <SectionHeading>Recent Posts</SectionHeading>

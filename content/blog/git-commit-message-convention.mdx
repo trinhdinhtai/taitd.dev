@@ -1,0 +1,74 @@
+---
+title: "Git commit message - Phải bạn không ? Cùng sửa nhé"
+description: Viết git commit message rõ ràng là điều rất cần thiết để duy trì chất lượng project. Trong bài viết này mình sẽ cùng tìm hiểu về các quy tắc để viết một git commit message rõ ràng, ngắn gọn, cung cấp đầy đủ thông tin về những thay đổi đã thực hiện.
+image: /images/blog/blog-post-3.jpg
+date: "2024-02-21"
+tags:
+  - Git
+series:
+  order: 3
+  title: "Git"
+authors:
+  - taitd
+---
+
+## Phải bạn không? Cùng sửa nhé 😉
+
+![3.png](https://images.viblo.asia/6b5a8e14-3379-4f89-bd40-f24d05d828c9.png)
+
+## Cấu trúc chung của 1 commit message
+
+> `<type>: <description>`
+>
+> `[body]`
+
+Trong đó:
+
+- `type` và `description` là phần **BẮT BUỘC**
+- `body` là phần **TÙY CHỌN**, có thể có hoặc không
+
+Ví dụ:
+
+> feat: add new feature to dashboard
+>
+> This feature adds a new widget to the dashboard that displays real-time data about user activity.
+
+### `<type>`
+
+- **feat**: Một tính năng mới (feature)
+- **fix**: Sửa lỗi (fix bug)
+- **docs**: Cập nhật tài liệu (sửa documents)
+- **style**: Cập nhật format code, vd như thêm/xoá khoảng trắng, xoá dòng trống thừa,...
+- **refactor**: Đổi tên hàm, tên biến dễ hiểu hơn, tách hàm con, xóa code thừa, ...
+- **perf**: Cải tiến hiệu năng
+- **test**: Thêm test case còn thiếu, sửa unit test, ...
+- **build**: Những thay đổi ảnh hưởng đến quá trình build hoặc dependencies
+- **chore**: Cập nhật dependencies nhưng không liên quan đến fixbug hoặc thêm tính năng mới, không làm thay đổi src
+- **ci**: Thay đổi file cấu hình hoặc script CI
+- **revert**: quay về commit trước đó
+
+### `<description>`
+
+- **Mô tả ngắn gọn** về nội dung commit
+- **Không dài quá 50 ký tự** để có thể dễ dàng đọc trên GitHub, cũng như các git tool khác
+- Sử dụng **câu mệnh lệnh**, ở **thì hiện tại**. Ví dụ: **“change ...“ thay vì “changed ...“**
+- **Không viết hoa chữ cái đầu tiên**
+- **Không sử dụng dấu chấm ở cuối câu**
+
+### `[body]`
+
+- Là phần **TÙY CHỌN**, sử dụng để **mô tả chi tiết hơn** về commit nếu cần
+- Cách phần `<type>: <description>` ở bên trên bởi **1 dòng trắng (blank line)**
+- Nên dùng để giải thích câu hỏi **What (để làm gì)**, hoặc **Why (tại sao cần), chứ KHÔNG PHẢI How (làm như thế nào)**
+
+## Kết quả ✅
+
+![1.png](https://images.viblo.asia/4cbd52be-b6f3-4d3b-bf06-c37a294c3694.png)
+
+## Tài liệu tham khảo
+
+[https://www.conventionalcommits.org/en/v1.0.0/](https://www.conventionalcommits.org/en/v1.0.0/)
+
+## Tổng kết
+
+Hi vọng kiến thức này hữu ích với bạn. Happy coding 👋

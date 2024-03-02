@@ -118,7 +118,7 @@ git reset --hard ec02ce2
 
 Tèo vui mừng hò reo cảm ơn anh Leader ríu rít
 
-### 6: Gộp nhiều commit lại thành 1 commit
+## 5: Gộp nhiều commit lại thành 1 commit
 
 Tí được giao một nhiệm vụ là quản lý users bao gồm CRUD. Tí nghe lời dặn của anh Leader là "code phải commit code liên tục nha em"
 
@@ -142,7 +142,9 @@ git rebase -i HEAD^n #n là số commit muốn gộp
 
 Git sẽ mở một cửa sổ tương tác, chọn các commit cần gộp chuyển pick thành squash và lưu lại
 Git tiếp tục mở một cửa sổ tương tác, chọn message hoặc nhập message commit tùy ý và lưu lại. Done
-Tình huống 6: chỉnh sửa message commit
+
+## 6. Chỉnh sửa message commit
+
 Một lần Tí commit nhầm message và Tí chỉnh sửa lại được message đó. Tí vui lắm, Tí liền chia sẻ lên diễn đàn X, tác giả (là mình) tình cờ thấy bài chia sẻ đó của Tí nên copy paste vào đây. Cách xử lý của Tí như sau:
 
 Đối với message mới nhất: sử dụng `git commit --amend -m "new_message"` (chỉ đổi được message của commit mới nhất thôi)
@@ -153,13 +155,14 @@ Sử dụng `git rebase -i HEAD~n (n là số commit muốn đổi message)`
 Git sẽ mở một cửa sổ tương tác, bạn đổi pick sang reword cho những commit muốn đổi, lưu lại
 Git tiếp tục mở một cửa sổ tương tác, bạn đổi message mới và lưu lại, bao nhiêu commit muốn đổi thì có bấy nhiêu cửa sổ tương tác mở ra để đổi message
 
-## VII. Tình huống 7: đổi tên branch
+## 7. Đổi tên branch
 
 Lại một lần khác, Tí đặt nhầm tên nhánh và Tí chỉnh sửa lại được tên branch đó. Tí vui lắm, Tí liền chia sẻ lên diễn đàn X, tác giả (là mình) lại tình cờ thấy bài chia sẻ đó của Tí nên copy paste vào đây. Cách xử lý của Tí như sau:
 
-Nếu đặt sai tên nhánh, vui lòng nhập lệnh sau: git branch -m new_branch
+Nếu đặt sai tên nhánh, vui lòng nhập lệnh sau: `git branch -m new_branch`
 
-Tình huống 8: không thể checkout qua nhánh khác
+## 8: Không thể checkout qua nhánh khác
+
 Tí và Tèo là hai bạn thực tập sinh của công ty A Bờ Cờ, Tí vào trước Tèo 2 ngày
 
 Một ngày nọ, Tèo đang code ở nhánh auth nhưng cũng hóng hớt checkout qua nhánh user của Tí để xem Tí code tới đâu rồi vì nhánh của Tèo có phụ thuộc vào nhánh của Tí
@@ -176,16 +179,18 @@ Tèo đáp rằng: "Em chưa muốn commit code vì chưa code xong ạ"
 
 Anh Leader nói tiếp: "OK em. vậy dùng cho anh git stash nhé"
 
-git stash giúp cất giữ code tạm thời và sau đó khi quay lại dev tiếp thì sử dụng git stash pop
+`git stash` giúp cất giữ code tạm thời và sau đó khi quay lại dev tiếp thì sử dụng `git stash pop`
 
-Tình huống 9: khôi phục trạng thái trước khi merge
+## 9. Khôi phục trạng thái trước khi merge
+
 Ai cũng sẽ có sai lầm và anh Leader cũng vậy
 
 Anh Leader có giao cho Tí một task và sau khi Tí làm xong thì anh Leader merge vào nhánh dev
 
-Sau khi merge thì anh Leader phát hiện code không hoạt động như ý muốn. Thế là anh Leader dùng lệnh: git reset --hard ORIG_HEAD để xóa các commit vừa merge và nói Tí chỉnh sửa lại code
+Sau khi merge thì anh Leader phát hiện code không hoạt động như ý muốn. Thế là anh Leader dùng lệnh: `git reset --hard ORIG_HEAD` để xóa các commit vừa merge và nói Tí chỉnh sửa lại code
 
-Tình huống 10: merge một commit bất kỳ vào nhánh khác
+## 10. Merge một commit bất kỳ vào nhánh khác
+
 Tèo được giao làm task là quản lý product
 
 Tèo hoàn thành tính năng create product, Tèo commit
@@ -200,7 +205,8 @@ Lúc này khách hàng alo cho anh Leader: "Chú release tính năng create prod
 
 Anh Leader quá quen với việc khách hàng yêu cầu bất ngờ rồi, anh Leader liền dùng lệnh `git cherry-pick <commit>` để merge 2 commit đó vào nhánh main để release cho khách hàng
 
-git cherry-pick là một lệnh git hữu ích dùng cho trường hợp muốn merge commit bất kỳ vào nhánh khác thay vì toàn bộ branch (git cherry-pick thường bị conflict, dùng lệnh git add . và git commit -m “message” là xử lý được)
+`git cherry-pick` là một lệnh git hữu ích dùng cho trường hợp muốn merge commit bất kỳ vào nhánh khác thay vì toàn bộ branch (trong trường hợp `git cherry-pick` bị conflict, dùng lệnh `git add .` và `git commit -m "message"` để xử lý)
 
-Kết bài
+## 11. Tổng kết
+
 Như vậy, chúng ta đã khám phá 10 tình huống thường gặp trong Git. Hy vọng rằng bài viết đã mang lại giá trị cho bạn và giúp bạn hiểu sâu hơn về git. Ngoài ra, mình có bài viết Tổng hợp 15 lệnh git hữu ích dành cho dự án của bạn, các bạn có thể đọc để biết thêm git. Cảm ơn các bạn đã đọc

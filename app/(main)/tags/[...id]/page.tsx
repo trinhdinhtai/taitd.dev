@@ -41,8 +41,10 @@ const TagsPage = async ({ params }: TagsPageProps) => {
     <>
       <PageHeading
         title={`Tag: ${params?.id?.join("/")}`}
-        description="A blog built using Contentlayer. Posts are written in MDX."
+        description="sdsdsd"
       />
+
+      {/* Posts sort by created date */}
 
       {posts?.length ? (
         <div className="grid gap-10 sm:grid-cols-2">

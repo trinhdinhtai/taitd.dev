@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server"
 
-export async function GET(req: Request) {
+import { getGithubStats } from "@/lib/github"
+
+export async function GET() {
   try {
-    return NextResponse.json("Hello World")
+    const { user, repos, starsCount } = (await getGithubStats()) || {}
+    return NextResponse.json({ user, repos, starsCount })
   } catch (error) {
     return new NextResponse("Internal Error", { status: 500 })
   }

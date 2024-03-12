@@ -16,6 +16,7 @@ import {
 
 import { ContributionsDay } from "@/types/github"
 import { ContributionCountByDayOfWeek } from "@/lib/github"
+import ContributionCountByDayOfWeekToolTip from "@/components/stats/contribution-count-by-day-of-week-tooltip"
 import ContributionsTooltip from "@/components/stats/contributions-tooltip"
 
 export default function GithubActivityGraph() {
@@ -104,7 +105,10 @@ export default function GithubActivityGraph() {
             />
             <XAxis dataKey="day" />
             <YAxis />
-
+            <Tooltip
+              cursor={{ fill: isDarkMode ? "#ffffff20" : "#00000020" }}
+              content={<ContributionCountByDayOfWeekToolTip />}
+            />
             <Bar dataKey="count" fill="#26a641" />
           </BarChart>
         ) : (

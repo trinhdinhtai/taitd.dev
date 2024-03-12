@@ -1,7 +1,11 @@
 import { GitHubUser } from "@/types"
-import { addDays, formatISO, subDays } from "date-fns"
+import { formatISO, subDays } from "date-fns"
 
-import { ContributionsCollection, ContributionsDay } from "@/types/github"
+import {
+  ContributionCalendar,
+  ContributionsCollection,
+  ContributionsDay,
+} from "@/types/github"
 
 const GITHUB_API_URL = "https://api.github.com/users/trinhdinhtai"
 
@@ -30,14 +34,24 @@ async function getGithubStats() {
 const headers = new Headers({
   Authorization: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
 })
+export interface ContributionCountByDay {
+  [day: string]: number
+}
+
+export interface ContributionCountByDayOfWeek {
+  day: string
+  count: number
+}
 
 export type Contributions = {
   contributionsByLast30Days: ContributionsDay[]
+  contributionCountByDayOfWeek: ContributionCountByDayOfWeek[]
 }
 
 async function getGithubActivities() {
   const contributions: Contributions = {
     contributionsByLast30Days: [],
+    contributionCountByDayOfWeek: [],
   }
 
   const now = new Date()
@@ -88,7 +102,55 @@ async function getGithubActivities() {
     })
   })
 
+  contributions.contributionCountByDayOfWeek = calculateMostProductiveDayOfWeek(
+    contributionsCollection.contributionCalendar
+  )
+
   return contributions
+}
+
+// Function to calculate the productive data by days
+function calculateMostProductiveDayOfWeek(
+  contributionCalendar: ContributionCalendar
+): { day: string; count: number }[] {
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ]
+  const contributionCountByDayOfWeek: ContributionCountByDay = {
+    Sunday: 0,
+    Monday: 0,
+    Tuesday: 0,
+    Wednesday: 0,
+    Thursday: 0,
+    Friday: 0,
+    Saturday: 0,
+  }
+
+  for (const week of contributionCalendar.weeks) {
+    for (const day of week.contributionDays) {
+      const date = new Date(day.date)
+      const dayOfWeek = daysOfWeek[date.getUTCDay()]
+      contributionCountByDayOfWeek[dayOfWeek] += day.contributionCount
+    }
+  }
+
+  const sortedData = Object.entries(contributionCountByDayOfWeek)
+    .sort((a, b) => daysOfWeek.indexOf(a[0]) - daysOfWeek.indexOf(b[0]))
+    .map(([day, count]) => ({ day, count }))
+
+  const sunday = sortedData.shift()
+
+  if (sunday) {
+    sortedData.push(sunday)
+  }
+
+  return sortedData
 }
 
 export { getGithubStats, getGithubActivities }

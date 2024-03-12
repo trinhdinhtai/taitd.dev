@@ -1,3 +1,7 @@
+export interface ContributionCalendar {
+  weeks: ContributionWeeks[]
+}
+
 export interface ContributionWeeks {
   contributionDays: ContributionsDay[]
 }
@@ -8,7 +12,5 @@ export interface ContributionsDay {
 }
 
 export interface ContributionsCollection {
-  contributionCalendar: {
-    weeks: ContributionWeeks[]
-  }
+  contributionCalendar: ContributionCalendar
 }

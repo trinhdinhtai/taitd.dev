@@ -42,7 +42,7 @@ export default function GithubActivityGraph() {
             width={730}
             height={250}
             data={contributionsByLast30Days}
-            margin={{ top: 15, left: -30 }}
+            margin={{ top: 25, left: -30 }}
           >
             <defs>
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">

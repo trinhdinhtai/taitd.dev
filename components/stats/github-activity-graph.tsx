@@ -15,6 +15,7 @@ import {
 } from "recharts"
 
 import { ContributionsDay } from "@/types/github"
+import { ContributionCountByDayOfWeek } from "@/lib/github"
 import ContributionsTooltip from "@/components/stats/contributions-tooltip"
 
 export default function GithubActivityGraph() {
@@ -29,6 +30,9 @@ export default function GithubActivityGraph() {
 
   const contributionsByLast30Days =
     contributions?.contributionsByLast30Days as ContributionsDay[]
+
+  const contributionCountByDayOfWeek =
+    contributions?.contributionCountByDayOfWeek as ContributionCountByDayOfWeek[]
 
   return (
     <div className="mt-12">
@@ -77,6 +81,32 @@ export default function GithubActivityGraph() {
               fill="url(#colorUv)"
             />
           </AreaChart>
+        ) : (
+          <></>
+        )}
+      </ResponsiveContainer>
+
+      <div className="font-heading text-xl font-bold capitalize text-neutral-900 dark:text-neutral-200 sm:text-2xl">
+        Productivity by day of week
+      </div>
+
+      <ResponsiveContainer width="100%" height={300}>
+        {contributionCountByDayOfWeek ? (
+          <BarChart
+            width={730}
+            height={250}
+            data={contributionCountByDayOfWeek}
+            margin={{ top: 25, left: -30 }}
+          >
+            <CartesianGrid
+              strokeDasharray="2 3"
+              stroke={isDarkMode ? "#ffffff20" : "#00000020"}
+            />
+            <XAxis dataKey="day" />
+            <YAxis />
+
+            <Bar dataKey="count" fill="#26a641" />
+          </BarChart>
         ) : (
           <></>
         )}

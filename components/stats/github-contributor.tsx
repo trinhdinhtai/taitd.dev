@@ -7,12 +7,12 @@ export default function GithubContributor() {
   const { theme } = useTheme()
 
   return (
-    <div className="my-6">
+    <div className="mt-12">
       <div className="font-heading text-3xl font-bold capitalize text-neutral-900 dark:text-neutral-200 sm:text-4xl">
         GitHub Contributor
       </div>
 
-      <div className="my-4 text-muted-foreground">
+      <div className="mb-4 text-muted-foreground">
         The following is my GitHub contribution graph which shows my coding
         activity and productivity on the platform.
       </div>

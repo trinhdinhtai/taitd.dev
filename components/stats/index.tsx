@@ -52,7 +52,6 @@ export default function Stats() {
       link: "https://us.umami.is/share/1hfu7snOAr7VkPJj/taitd.io.vn",
     },
   ]
-  console.log("Stats ~ umamiData:", umamiData)
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">

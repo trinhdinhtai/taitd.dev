@@ -14,7 +14,7 @@ import { PostSeries, SeriesItem } from "@/types"
 import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 import { getTableOfContents } from "@/lib/toc"
-import Breadcrumb from "@/components/breadcrumb"
+import BreadcrumbNavigation from "@/components/layout/breadcrumb-navigation"
 import LikeButton from "@/components/like-button"
 import PostMetrics from "@/components/post-metrics"
 import PostSeriesBox from "@/components/post-series"
@@ -122,7 +122,7 @@ const PostPage = async ({ params }: PostPageProps) => {
     <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_250px]">
       {/* Blog content */}
       <div className="w-full min-w-0">
-        <Breadcrumb title={post.title} />
+        <BreadcrumbNavigation pageTitle={post.title} />
 
         <div>
           <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">

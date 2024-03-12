@@ -31,7 +31,7 @@ const headers = new Headers({
   Authorization: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
 })
 
-type Contributions = {
+export type Contributions = {
   contributionsByLast30Days: ContributionsDay[]
 }
 

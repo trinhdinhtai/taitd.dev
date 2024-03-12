@@ -1,4 +1,7 @@
 import { GitHubUser } from "@/types"
+import { addDays, formatISO, subDays } from "date-fns"
+
+import { ContributionsCollection, ContributionsDay } from "@/types/github"
 
 const GITHUB_API_URL = "https://api.github.com/users/trinhdinhtai"
 
@@ -24,4 +27,68 @@ async function getGithubStats() {
   }
 }
 
-export { getGithubStats }
+const headers = new Headers({
+  Authorization: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
+})
+
+type Contributions = {
+  contributionsByLast30Days: ContributionsDay[]
+}
+
+async function getGithubActivities() {
+  const contributions: Contributions = {
+    contributionsByLast30Days: [],
+  }
+
+  const now = new Date()
+  const from = formatISO(subDays(now, 30))
+  const to = formatISO(now)
+  const q = {
+    query: `
+    query userInfo($LOGIN: String!, $FROM: DateTime!, $TO: DateTime!) {
+              user(login: $LOGIN) {
+                name
+                contributionsCollection(from: $FROM, to: $TO) {
+                  contributionCalendar {
+                    weeks {
+                      contributionDays {
+                        contributionCount
+                        date
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          `,
+    variables: {
+      LOGIN: "trinhdinhtai",
+      FROM: from,
+      TO: to,
+    },
+  }
+
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    body: JSON.stringify(q),
+    headers,
+  })
+  const apiResponse = await response.json()
+  const contributionsCollection: ContributionsCollection =
+    apiResponse.data.user.contributionsCollection
+
+  const contributionWeeks = contributionsCollection.contributionCalendar.weeks
+
+  contributionWeeks.forEach((week) => {
+    week.contributionDays.forEach(({ date, contributionCount }) => {
+      contributions.contributionsByLast30Days.push({
+        date,
+        contributionCount,
+      })
+    })
+  })
+
+  return contributions
+}
+
+export { getGithubStats, getGithubActivities }

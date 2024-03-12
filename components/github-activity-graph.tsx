@@ -1,5 +1,6 @@
 "use client"
 
+import { useQuery } from "@tanstack/react-query"
 import { useTheme } from "next-themes"
 import {
   Area,
@@ -20,6 +21,11 @@ import {
 
 export default function GithubActivityGraph() {
   const { theme } = useTheme()
+  const { data: contributions } = useQuery({
+    queryKey: ["githubActivityData"],
+    queryFn: () =>
+      fetch("/api/stats/github/activity").then((res) => res.json()),
+  })
 
   return (
     <div className="mt-12">

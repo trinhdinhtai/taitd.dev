@@ -86,6 +86,7 @@ async function getGithubActivities() {
     method: "POST",
     body: JSON.stringify(q),
     headers,
+    next: { revalidate: 0 },
   })
   const apiResponse = await response.json()
   const contributionsCollection: ContributionsCollection =

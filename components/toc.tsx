@@ -47,17 +47,18 @@ interface TreeProps {
 
 function Tree({ tree, level = 1, activeItem }: TreeProps) {
   return tree?.items?.length && level < 3 ? (
-    <ul className={cn("m-0 list-none", { "pl-4": level !== 1 })}>
+    <ul className={cn("m-0 list-none")}>
       {tree.items.map((item) => {
         return (
-          <li key={item.url} className={cn("mt-0 pt-2")}>
+          <li key={item.url} className={cn("mt-0")}>
             <a
               href={item.url}
               className={cn(
-                "inline-block no-underline transition-all hover:text-primary hover:underline",
+                "inline-block border-l-2 py-1.5 pl-4 no-underline transition-all hover:text-primary hover:underline",
                 item.url === `#${activeItem}`
-                  ? "text-primary"
-                  : "text-sm text-muted-foreground"
+                  ? "border-primary text-primary"
+                  : "text-sm text-muted-foreground",
+                { "pl-8": level !== 1 }
               )}
             >
               {item.title}

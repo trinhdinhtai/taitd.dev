@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import { allAuthors, allPosts } from "@/.contentlayer/generated"
 
 import { absoluteUrl, formatDate } from "@/lib/utils"
-import Mdx from "@/components/mdx-components"
+import Mdx from "@/components/mdx/mdx-components"
 
 import "@/styles/mdx.css"
 

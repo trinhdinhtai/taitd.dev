@@ -6,12 +6,12 @@ import AboutContact from "@/components/about-contact"
 import { Callout } from "@/components/callout"
 import CodePlayground from "@/components/code-playground"
 import ComponentPreview from "@/components/component-preview"
+import CopyButton from "@/components/copy-button"
 import CoverImage from "@/components/cover-image"
 import Files from "@/components/files"
 import GridContainer from "@/components/grid-container"
 import LoadingSkeleton from "@/components/loading-skeleton"
-
-import CopyButton from "./copy-button"
+import Youtube from "@/components/mdx/youtube"
 
 const components = {
   h1: ({ className, ...props }) => (
@@ -192,6 +192,7 @@ const components = {
   CodePlayground,
   CoverImage,
   AboutContact,
+  Youtube,
 }
 
 interface MdxProps {

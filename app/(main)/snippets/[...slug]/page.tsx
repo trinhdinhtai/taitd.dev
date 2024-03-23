@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { allSnippets } from "@/.contentlayer/generated"
 
 import { formatDate } from "@/lib/utils"
-import Mdx from "@/components/mdx-components"
+import Mdx from "@/components/mdx/mdx-components"
 
 import "@/styles/mdx.css"
 

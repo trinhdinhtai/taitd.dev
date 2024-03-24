@@ -1,0 +1,37 @@
+---
+title: "Next.js tốt, nhưng..."
+description: "Cho dù trong những năm qua, Next.js luôn là một trong những framework Javascript phổ biến nhất, nhưng framework nào thì cũng có những vấn đề của nó, Nextjs cũng vậy, trong bài viết này mình sẽ đưa ra quan điểm cá nhân về những thứ mình chưa thích ở Nextjs."
+date: "2024-03-18"
+image: https://res.cloudinary.com/daukjyo6s/image/upload/v1706598055/twitter-card_sznp94.png
+authors:
+  - taitd
+series:
+  order: 2
+  title: "Next.js"
+---
+
+Cho dù trong những năm qua, Next.js luôn là một trong những framework Javascript phổ biến nhất, nhưng framework nào thì cũng có những vấn đề của nó, Nextjs cũng vậy, trong bài viết này mình sẽ đưa ra quan điểm cá nhân về những thứ mình chưa thích ở Nextjs.
+
+## 1. Caching mặc định
+
+Với phiên bản 13, Nextjs **sẽ lưu cache tự động cho các request API một cách ngầm định**. Ví dụ bạn cần fetch data để lấy về dữ liệu về thời tiết, bạn sẽ nhận data cũ trong lần request tiếp theo, điều này không những gây ra sự khó chịu, mà khiến cho phần lớn developer bị bối rối khi lần đầu sử dụng nó.
+
+<Youtube id="VBlSe8tvg4U" />
+
+Mặc dù đã có một video giải thích rất chi tiết về Data Caching trong Next.js App Router ở trên. Nhưng câu hỏi đặt ra là tại sao cần phải giải thích về mọt thứ nếu như nó đủ trực quan và không đi ngược lại với đám đông ? Rõ ràng là không có user nào muốn nhìn thấy dữ liệu hiển thị trên màn hình là dữ liệu của ngày hôm qua cả.
+
+Một vấn đề nữa của caching là có rất nhiều thứ mơ hồ xung quanh chúng. Ví dụ khi bạn muốn làm mới trang thủ công, bạn có thể gọi `router.refresh()` hoặc `router.revalidatePath()`, nhưng đâu là sự khác biệt ?
+
+Dưới đây là theo mô tả từ document của Next.js
+
+> `revalidatePath` vs. `router.refresh`:
+>
+> Gọi `router.refresh` sẽ clear Router cache, và re-render route segments trên the server mà không làm mất **Data Cache** hoặc **Full Route Cache**
+>
+> Không giống `router.refresh`, `revalidatePath` sẽ **Data Cache** và **Full Route Cache** vì đây là API phía máy khách.
+
+## 2. Không có phản hồi UX khi tải trang.
+
+Trong Nextjs, sẽ có một hiện tượng thường xuyên gặp phải, ngay ở localhost, đấy là khi bạn nhấp vào một link, không có gì xảy ra và sau một lúc, bạn mới được điều hướng đến trang mà bạn vừa click. Thậm chí nó còn tệ hơn cả PHP cũ khi trình duyệt hiển thị loading trong thanh URL, sau đó trang chuyển sang màu trắng và người dùng sẽ biết được là "aha, hoá ra là trình duyệt đang tải một trang mới". Với Next.js, có cảm giác như "không có gì xảy ra" và rồi đột nhiên trang được hiển thị "thần kỳ vc, cuối cùng nó cũng hoạt động được".
+
+Next.js đã "giải quyết" vấn đề này bằng cách cho phép bạn thêm `loading.tsx` ở page level để tạo loading UI. Thế nhưng vấn đề ở đây là tệp `loading` này cũng cần được "loading", nghe khá lú phải không 😑 Rõ ràng mục đích về mặt UX của loader là cung cấp phản hồi tức thời cho người dùng cơ mà nhỉ ?

@@ -34,7 +34,10 @@ export function Callout({
   const { icon: Icon, styles, title } = calloutVariants[variant]
   return (
     <div
-      className={cn("not-prose my-4 rounded-md border md:p-4 lg:p-6", styles)}
+      className={cn(
+        "not-prose my-3 mt-4 rounded-md border md:p-3 lg:p-4",
+        styles
+      )}
       {...props}
     >
       <p className="flex items-center gap-2 pb-4">

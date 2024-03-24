@@ -52,6 +52,7 @@
     "react-intersection-observer": "^9.8.0",
     "react-use": "^17.4.0",
     "react-vertical-timeline-component": "^3.6.0",
+    "reading-time": "^1.5.0",
     "recharts": "^2.12.2",
     "rehype": "^13.0.1",
     "rehype-autolink-headings": "^7.0.0",

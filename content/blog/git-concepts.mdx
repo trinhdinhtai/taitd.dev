@@ -55,7 +55,9 @@ Dùng `git status` để check lại xem còn conflict chưa được xử lý k
 
 Nếu còn, quay về bước 1, nếu không, sử dụng `git push` để đẩy những thay đổi đã merge lên remote
 
-> Chú ý: Để hạn chế conflict code bạn cần thường xuyên pull code và commit code
+<Callout>
+  Để hạn chế conflict code bạn cần thường xuyên pull code và commit code
+</Callout>
 
 ## 2. Xem lịch sử commit và lịch sử hoạt động trên git
 
@@ -116,23 +118,23 @@ Sử dụng `git reset --hard` để khôi phục commit:
 git reset --hard ec02ce2
 ```
 
-Tèo vui mừng hò reo cảm ơn anh Leader ríu rít
+Thảo vui mừng hò reo cảm ơn anh Leader ríu rít
 
 ## 5: Gộp nhiều commit lại thành 1 commit
 
-Tí được giao một nhiệm vụ là quản lý users bao gồm CRUD. Tí nghe lời dặn của anh Leader là "code phải commit code liên tục nha em"
+Tokuda được giao một nhiệm vụ là quản lý users bao gồm CRUD. Tokuda nghe lời dặn của anh Leader là "code phải commit code liên tục nha em"
 
-Tí tạo file userRouter, Tí commit
+Tokuda tạo file userRouter, Tokuda commit
 
-Tí tạo tiếp file userController, Tí commit tiếp
+Tokuda tạo tiếp file userController, Tokuda commit tiếp
 
-Tí tạo file userService, Tí lại tiếp tục commit
+Tokuda tạo file userService, Tokuda lại tiếp tục commit
 
-Tí làm xong task và hí ha hí hửng đưa qua anh Leader để review code, anh Leader nhìn vào Pull Request thì bèn nói rằng: "Em gộp lại các commit thành 1 cho anh nhé, commit liên tục là cần thiết nhưng cần phải commit hợp lý, tránh dư thừa hoặc trùng lặp quá nhiều"
+Tokuda làm xong task và hí ha hí hửng đưa qua anh Leader để review code, anh Leader nhìn vào Pull Request thì bèn nói rằng: "Em gộp lại các commit thành 1 cho anh nhé, commit liên tục là cần thiết nhưng cần phải commit hợp lý, tránh dư thừa hoặc trùng lặp quá nhiều"
 
-Tí loay hoay và suy nghĩ trong đầu: "Vậy gộp như làm thế nào bây giờ?"
+Tokuda loay hoay và suy nghĩ trong đầu: "Vậy gộp như làm thế nào bây giờ?"
 
-Thôi chuyện gì cũng tới tay anh Leader, anh Leader tiếp tục hướng dẫn Tí gộp commit, thao tác như sau:
+Thôi chuyện gì cũng tới tay anh Leader, anh Leader tiếp tục hướng dẫn Tokuda gộp commit, thao tác như sau:
 
 Sử dụng git rebase
 
@@ -145,7 +147,7 @@ Git tiếp tục mở một cửa sổ tương tác, chọn message hoặc nhậ
 
 ## 6. Chỉnh sửa message commit
 
-Một lần Tí commit nhầm message và Tí chỉnh sửa lại được message đó. Tí vui lắm, Tí liền chia sẻ lên diễn đàn X, tác giả (là mình) tình cờ thấy bài chia sẻ đó của Tí nên copy paste vào đây. Cách xử lý của Tí như sau:
+Một lần Tokuda commit nhầm message và Tokuda chỉnh sửa lại được message đó. Tokuda vui lắm, Tokuda liền chia sẻ lên diễn đàn X, tác giả (là mình) tình cờ thấy bài chia sẻ đó của Tokuda nên copy paste vào đây. Cách xử lý của Tokuda như sau:
 
 Đối với message mới nhất: sử dụng `git commit --amend -m "new_message"` (chỉ đổi được message của commit mới nhất thôi)
 
@@ -157,25 +159,25 @@ Git tiếp tục mở một cửa sổ tương tác, bạn đổi message mới 
 
 ## 7. Đổi tên branch
 
-Lại một lần khác, Tí đặt nhầm tên nhánh và Tí chỉnh sửa lại được tên branch đó. Tí vui lắm, Tí liền chia sẻ lên diễn đàn X, tác giả (là mình) lại tình cờ thấy bài chia sẻ đó của Tí nên copy paste vào đây. Cách xử lý của Tí như sau:
+Lại một lần khác, Tokuda đặt nhầm tên nhánh và Tokuda chỉnh sửa lại được tên branch đó. Tokuda vui lắm, Tokuda liền chia sẻ lên diễn đàn X, tác giả (là mình) lại tình cờ thấy bài chia sẻ đó của Tokuda nên copy paste vào đây. Cách xử lý của Tokuda như sau:
 
 Nếu đặt sai tên nhánh, vui lòng nhập lệnh sau: `git branch -m new_branch`
 
 ## 8: Không thể checkout qua nhánh khác
 
-Tí và Tèo là hai bạn thực tập sinh của công ty A Bờ Cờ, Tí vào trước Tèo 2 ngày
+Tokuda và Thảo là hai bạn thực tập sinh của công ty A Bờ Cờ, Tokuda vào trước Thảo 2 ngày
 
-Một ngày nọ, Tèo đang code ở nhánh auth nhưng cũng hóng hớt checkout qua nhánh user của Tí để xem Tí code tới đâu rồi vì nhánh của Tèo có phụ thuộc vào nhánh của Tí
+Một ngày nọ, Thảo đang code ở nhánh auth nhưng cũng hóng hớt checkout qua nhánh user của Tokuda để xem Tokuda code tới đâu rồi vì nhánh của Thảo có phụ thuộc vào nhánh của Tokuda
 
-Tèo nhập lệnh git checkout user, BÙM, không checkout qua được và lỗi này xuất hiện error: Your local changes to the following files would be overwritten by checkout: auth.js Please commit your changes or stash them before you switch branches. Aborting
+Thảo nhập lệnh git checkout user, BÙM, không checkout qua được và lỗi này xuất hiện error: Your local changes to the following files would be overwritten by checkout: auth.js Please commit your changes or stash them before you switch branches. Aborting
 
-Tèo khó hiểu, Tèo bèn quay sang hỏi Tí vì Tí làm trước Tèo 2 ngày nên nghĩ rằng Tí sẽ biết cách xử lý
+Thảo khó hiểu, Thảo bèn quay sang hỏi Tokuda vì Tokuda làm trước Thảo 2 ngày nên nghĩ rằng Tokuda sẽ biết cách xử lý
 
-Tí nhìn vào lỗi và phán rằng: "Chắc lỗi gì rồi, thử xóa hết code xem sao". Anh Leader kế bên giật bắn người, thế là đành quay qua giải quyết cho 2 đứa chưa trải sự đời này
+Tokuda nhìn vào lỗi và phán rằng: "Chắc lỗi gì rồi, thử xóa hết code xem sao". Anh Leader kế bên giật bắn người, thế là đành quay qua giải quyết cho 2 đứa chưa trải sự đời này
 
-Anh Leader nói: "Tèo không thể checkout qua nhánh khác là do Tèo đang code dở tay ở nhánh hiện tại, để Tèo có thể checkout qua nhánh khác thì cần phải commit code trước"
+Anh Leader nói: "Thảo không thể checkout qua nhánh khác là do Thảo đang code dở tay ở nhánh hiện tại, để Thảo có thể checkout qua nhánh khác thì cần phải commit code trước"
 
-Tèo đáp rằng: "Em chưa muốn commit code vì chưa code xong ạ"
+Thảo đáp rằng: "Em chưa muốn commit code vì chưa code xong ạ"
 
 Anh Leader nói tiếp: "OK em. vậy dùng cho anh git stash nhé"
 
@@ -185,21 +187,21 @@ Anh Leader nói tiếp: "OK em. vậy dùng cho anh git stash nhé"
 
 Ai cũng sẽ có sai lầm và anh Leader cũng vậy
 
-Anh Leader có giao cho Tí một task và sau khi Tí làm xong thì anh Leader merge vào nhánh dev
+Anh Leader có giao cho Tokuda một task và sau khi Tokuda làm xong thì anh Leader merge vào nhánh dev
 
-Sau khi merge thì anh Leader phát hiện code không hoạt động như ý muốn. Thế là anh Leader dùng lệnh: `git reset --hard ORIG_HEAD` để xóa các commit vừa merge và nói Tí chỉnh sửa lại code
+Sau khi merge thì anh Leader phát hiện code không hoạt động như ý muốn. Thế là anh Leader dùng lệnh: `git reset --hard ORIG_HEAD` để xóa các commit vừa merge và nói Tokuda chỉnh sửa lại code
 
 ## 10. Merge một commit bất kỳ vào nhánh khác
 
-Tèo được giao làm task là quản lý product
+Thảo được giao làm task là quản lý product
 
-Tèo hoàn thành tính năng create product, Tèo commit
+Thảo hoàn thành tính năng create product, Thảo commit
 
-Tèo hoàn thành tính năng view product, Tèo commit
+Thảo hoàn thành tính năng view product, Thảo commit
 
-Tèo hoàn thành tính năng update product, Tèo commit
+Thảo hoàn thành tính năng update product, Thảo commit
 
-Tèo đang làm tính năng delete product, Tèo chưa commit ...
+Thảo đang làm tính năng delete product, Thảo chưa commit ...
 
 Lúc này khách hàng alo cho anh Leader: "Chú release tính năng create product và view product gấp cho anh nhé"
 

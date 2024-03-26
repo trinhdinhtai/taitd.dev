@@ -6,11 +6,11 @@ import AboutContact from "@/components/about-contact"
 import { Callout } from "@/components/callout"
 import CodePlayground from "@/components/code-playground"
 import ComponentPreview from "@/components/component-preview"
-import CopyButton from "@/components/copy-button"
 import CoverImage from "@/components/cover-image"
 import Files from "@/components/files"
 import GridContainer from "@/components/grid-container"
 import LoadingSkeleton from "@/components/loading-skeleton"
+import CodeBlock from "@/components/mdx/codeblock"
 import Youtube from "@/components/mdx/youtube"
 
 const components = {
@@ -137,28 +137,7 @@ const components = {
       {...props}
     />
   ),
-  pre: ({
-    className,
-    __rawString__,
-    __withMeta__,
-    ...props
-  }: React.HTMLAttributes<HTMLPreElement> & {
-    __rawString__?: string
-    __withMeta__?: boolean
-  }) => (
-    <>
-      <pre
-        className={cn(
-          "mb-4 mt-6 overflow-x-auto rounded-lg border !bg-black py-4",
-          className
-        )}
-        {...props}
-      />
-      {__rawString__ && (
-        <CopyButton value={__rawString__} withMeta={__withMeta__} />
-      )}
-    </>
-  ),
+  pre: CodeBlock,
   code: ({ className, ...props }) => (
     <code
       className={cn(

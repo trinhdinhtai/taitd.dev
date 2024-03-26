@@ -7,7 +7,7 @@ import { Callout } from "@/components/callout"
 import CodePlayground from "@/components/code-playground"
 import ComponentPreview from "@/components/component-preview"
 import CoverImage from "@/components/cover-image"
-import Files from "@/components/files"
+import FolderTree from "@/components/folder-tree"
 import GridContainer from "@/components/grid-container"
 import LoadingSkeleton from "@/components/loading-skeleton"
 import CodeBlock from "@/components/mdx/codeblock"
@@ -167,7 +167,7 @@ const components = {
   GridContainer,
   LoadingSkeleton,
   ComponentPreview,
-  Files,
+  FolderTree,
   CodePlayground,
   CoverImage,
   AboutContact,

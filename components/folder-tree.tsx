@@ -3,28 +3,38 @@ import cx from "clsx"
 
 import { Icons } from "./icons"
 
-type Node = {
+interface Node {
   name: string
   isHighlighted?: boolean
   children?: Node[]
 }
 
-export default function Files(props: { data: Node[]; title?: string }) {
+interface FolderTreeProps {
+  data: Node[]
+  title?: string
+}
+
+export default function FolderTree({ title, data }: Readonly<FolderTreeProps>) {
   return (
-    <div className="shadow-surface-elevation-low mt-6 overflow-hidden rounded-lg bg-secondary/60 font-mono dark:bg-secondary/30">
-      {props.title ? (
+    <div className="shadow-surface-elevation-low mt-6 overflow-hidden rounded-lg border bg-background font-mono dark:bg-[#0A0A0A]">
+      {title && (
         <div className="mb-0.5 rounded-md bg-rose-100/10 px-3 py-1 text-xs text-rose-100/70 shadow-sm">
-          {props.title}
+          {title}
         </div>
-      ) : null}
+      )}
       <div className="py-3 text-[13px] leading-6 [counter-reset:line]">
-        <Inner {...props} lvl={0} />
+        <Inner level={0} data={data} />
       </div>
     </div>
   )
 }
 
-const Inner = ({ data, lvl }: { data: Node[]; lvl: number }) => {
+interface InnerProps {
+  data: Node[]
+  level: number
+}
+
+const Inner = ({ data, level }: InnerProps) => {
   return (
     <>
       {data.map((node) => {
@@ -44,10 +54,10 @@ const Inner = ({ data, lvl }: { data: Node[]; lvl: number }) => {
                 className={cx(
                   node.isHighlighted ? "text-primary" : "text-muted-foreground",
                   {
-                    "pl-[20px]": lvl === 1,
-                    "pl-[40px]": lvl === 2,
-                    "pl-[60px]": lvl === 3,
-                    "pl-[80px]": lvl === 4,
+                    "pl-[20px]": level === 1,
+                    "pl-[40px]": level === 2,
+                    "pl-[60px]": level === 3,
+                    "pl-[80px]": level === 4,
                   }
                 )}
               >
@@ -66,9 +76,7 @@ const Inner = ({ data, lvl }: { data: Node[]; lvl: number }) => {
               </div>
             </div>
 
-            {node.children ? (
-              <Inner data={node.children} lvl={lvl + 1} />
-            ) : null}
+            {node.children && <Inner data={node.children} level={level + 1} />}
           </React.Fragment>
         )
       })}

@@ -8,6 +8,7 @@ import { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner"
+import { QueryProvider } from "@/components/providers/query-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { ScrollToTopButton } from "@/components/scroll-to-top-button"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -83,35 +84,37 @@ export default function RootLayout({
   const isProduction = process.env.NODE_ENV === "production"
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen font-sans antialiased",
-          fontSans.variable,
-          fontCode.variable,
-          fontHeading.variable
-        )}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+    <QueryProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            "min-h-screen font-sans antialiased",
+            fontSans.variable,
+            fontCode.variable,
+            fontHeading.variable
+          )}
         >
-          {children}
-          <Toaster position="bottom-right" className="!font-sans" />
-          <ScrollToTopButton />
-          <TailwindIndicator />
-        </ThemeProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <Toaster position="bottom-right" className="!font-sans" />
+            <ScrollToTopButton />
+            <TailwindIndicator />
+          </ThemeProvider>
 
-        {isProduction && (
-          <script
-            defer
-            src="https://analytics.us.umami.is/script.js"
-            data-website-id="918e78b6-7a58-445d-9c09-1c0e53d6fe18"
-          ></script>
-        )}
-      </body>
-    </html>
+          {isProduction && (
+            <script
+              defer
+              src="https://analytics.us.umami.is/script.js"
+              data-website-id="918e78b6-7a58-445d-9c09-1c0e53d6fe18"
+            ></script>
+          )}
+        </body>
+      </html>
+    </QueryProvider>
   )
 }

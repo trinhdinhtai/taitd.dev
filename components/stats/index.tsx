@@ -19,6 +19,7 @@ export default function Stats() {
     queryKey: ["umamiData"],
     queryFn: () => fetch("/api/stats/views").then((res) => res.json()),
   })
+  console.log("Stats ~ wakatimeData:", wakatimeData)
 
   const statCards = [
     {
@@ -40,8 +41,28 @@ export default function Stats() {
       link: githubData?.user?.html_url,
     },
     {
-      title: "Coding Hours",
+      title: "Total Coding Hours",
       value: wakatimeData?.codingHours,
+      description: "Total hours spent coding",
+      link: "https://wakatime.com/",
+    },
+    {
+      title: "Coding Hours In Last Week",
+      value: wakatimeData?.weekly?.data?.total,
+      description: "Total hours spent coding",
+      link: "https://wakatime.com/",
+    },
+    {
+      title: "Daily Average Coding Hours",
+      value: wakatimeData?.weekly?.data?.dailyAverage,
+      description: "Total hours spent coding",
+      link: "https://wakatime.com/",
+    },
+    {
+      title: "Best Day Coding Time",
+      value: wakatimeData?.weekly?.data?.bestDay
+        ? `${wakatimeData?.weekly?.data?.bestDay.date} | ${wakatimeData?.weekly?.data?.bestDay.total}`
+        : undefined,
       description: "Total hours spent coding",
       link: "https://wakatime.com/",
     },

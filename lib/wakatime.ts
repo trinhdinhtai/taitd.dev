@@ -1,5 +1,4 @@
-const WAKATIME_API_URL =
-  "https://wakatime.com/api/v1/users/current/all_time_since_today"
+const WAKATIME_API_ENDPOINT = "https://wakatime.com/api/v1/users/current"
 
 const options = {
   method: "GET",
@@ -14,7 +13,10 @@ const options = {
 
 export async function getCodingHours(): Promise<string | null> {
   try {
-    const response = await fetch(WAKATIME_API_URL, options)
+    const response = await fetch(
+      `${WAKATIME_API_ENDPOINT}/all_time_since_today`,
+      options
+    )
     const wakatime = await response.json()
 
     const codingHours = (
@@ -24,5 +26,47 @@ export async function getCodingHours(): Promise<string | null> {
   } catch (error) {
     console.error(error)
     return null
+  }
+}
+
+export async function getWeeklyCodingHours(): Promise<CodingTimeResponse> {
+  try {
+    const response = await fetch(
+      `${WAKATIME_API_ENDPOINT}/stats/last_7_days`,
+      options
+    )
+    const responseJson = await response.json()
+
+    const status = response.status
+    if (status >= 400) return { status, data: undefined }
+
+    const data = responseJson?.data
+
+    const dailyAverage = (
+      (data?.daily_average_including_other_language as number) / 3600
+    ).toFixed(2)
+    const total = (
+      (data?.total_seconds_including_other_language as number) / 3600
+    ).toFixed(2)
+
+    console.log(data.best_day)
+    const bestDay = {
+      date: data?.best_day?.date,
+      total: ((data?.best_day?.total_seconds as number) / 3600).toFixed(2),
+    }
+    const languages = data?.languages
+    console.log("getWeeklyCodingHours ~ languages:", languages)
+
+    return {
+      status,
+      data: {
+        dailyAverage,
+        total,
+        bestDay,
+      },
+    }
+  } catch (error) {
+    console.error(error)
+    return { status: 500, data: undefined }
   }
 }

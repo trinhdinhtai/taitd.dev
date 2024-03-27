@@ -4,9 +4,10 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
-  provider = "postgresql"
-  url = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -22,4 +23,13 @@ model Session {
   id        String   @id
   createdAt DateTime @default(now())
   likes     Int      @default(0)
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  title       String
+  description String
+  imageUrl    String
+  githubUrl   String
 }

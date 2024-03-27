@@ -26,11 +26,28 @@ model Session {
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now())
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
   title       String
   description String
   imageUrl    String
   githubUrl   String
-  isFeature   Boolean  @default(false)
+  isFeature   Boolean      @default(false)
+  projectTag  ProjectTag[]
+}
+
+model ProjectTag {
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+  tagId     String
+  tag       Tag     @relation(fields: [tagId], references: [id])
+
+  @@id([projectId, tagId])
+}
+
+model Tag {
+  id         String       @id @default(cuid())
+  createdAt  DateTime     @default(now())
+  name       String       @unique
+  projectTag ProjectTag[]
 }

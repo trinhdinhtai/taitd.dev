@@ -11,7 +11,8 @@ export const metadata: Metadata = {
 }
 
 export default async function ProjectPage() {
-  const projects = await prisma.project.findMany()
+  const projects = await prisma.project.findMany({})
+
   return (
     <>
       <PageHeading

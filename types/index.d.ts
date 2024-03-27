@@ -27,14 +27,6 @@ export interface ContentNavItem extends NavItem {
   href: string
 }
 
-export type Project = {
-  title: string
-  description: string
-  tags: string[]
-  imageUrl: string
-  githubUrl: string
-}
-
 export type SeriesItem = {
   title: string
   slug: Post["slug"]

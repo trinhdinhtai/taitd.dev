@@ -1,14 +1,21 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
+import { Project } from "@prisma/client"
 
-export default function Projects() {
-  const { data: projects } = useQuery({
-    queryKey: ["projectsData"],
-    queryFn: () => fetch("/api/projects").then((res) => res.json()),
-  })
+import ProjectCard from "@/components/project-card"
 
+interface ProjectsProps {
+  projects: Project[]
+}
+
+export default function Projects({ projects }: ProjectsProps) {
   console.log(projects)
 
-  return <div>Projects</div>
+  return (
+    <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+      {projects.map((project) => (
+        <ProjectCard key={project.id} project={project} />
+      ))}
+    </div>
+  )
 }

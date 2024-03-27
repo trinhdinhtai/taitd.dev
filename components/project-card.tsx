@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Project } from "@/types"
+import { Project } from "@prisma/client"
 import { PinIcon } from "lucide-react"
 
 interface ProjectCardProps {
@@ -10,7 +10,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { title, description, tags, imageUrl, githubUrl } = project
+  const { title, description, imageUrl, githubUrl } = project
   return (
     <div className="group relative flex cursor-pointer flex-col justify-center rounded-lg border bg-background p-4 dark:bg-gray-900">
       <div className="absolute right-0 top-0 z-[2] flex items-center gap-1 rounded-bl-lg rounded-tr-lg bg-lime-300 px-2 py-1 text-[13px] font-medium text-emerald-950">
@@ -41,7 +41,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           {description}
         </p>
 
-        <div className="mt-auto flex flex-wrap items-center gap-1">
+        {/* <div className="mt-auto flex flex-wrap items-center gap-1">
           {tags.map((tag, index) => {
             return (
               <span
@@ -52,7 +52,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               </span>
             )
           })}
-        </div>
+        </div> */}
       </div>
     </div>
   )

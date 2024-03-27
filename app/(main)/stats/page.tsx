@@ -1,6 +1,5 @@
 import PageHeading from "@/components/page-heading"
 import Stats from "@/components/stats"
-import GithubContributor from "@/components/stats/github-contributor"
 
 export default function StatsPage() {
   return (
@@ -11,7 +10,6 @@ export default function StatsPage() {
       />
 
       <Stats />
-      <GithubContributor />
     </>
   )
 }

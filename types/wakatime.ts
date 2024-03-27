@@ -1,9 +1,9 @@
-interface Language {
+export interface Percentage {
   name: string
   percent: number
 }
 
-interface CodingTimeResponse {
+export interface CodingTimeResponse {
   status: number
   data?: {
     dailyAverage: string
@@ -12,6 +12,7 @@ interface CodingTimeResponse {
       date: string
       total: string
     }
-    languages: Language[]
+    languages: Percentage[]
+    operatingSystems: Percentage[]
   }
 }

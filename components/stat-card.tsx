@@ -4,7 +4,7 @@ interface StatCardProps {
   card: { title: string; link?: string; value?: string | number }
 }
 
-export default function StartCard({ card }: StatCardProps) {
+export default function StatCard({ card }: StatCardProps) {
   const { title, value, link } = card
 
   return (

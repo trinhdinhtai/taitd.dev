@@ -49,12 +49,12 @@ export async function getWeeklyCodingHours(): Promise<CodingTimeResponse> {
       (data?.total_seconds_including_other_language as number) / 3600
     ).toFixed(2)
 
-    console.log(data.best_day)
     const bestDay = {
       date: data?.best_day?.date,
       total: ((data?.best_day?.total_seconds as number) / 3600).toFixed(2),
     }
     const languages = data?.languages
+    const operatingSystems = data?.operating_systems
 
     return {
       status,
@@ -63,6 +63,7 @@ export async function getWeeklyCodingHours(): Promise<CodingTimeResponse> {
         total,
         bestDay,
         languages,
+        operatingSystems,
       },
     }
   } catch (error) {

@@ -2,7 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query"
 
-import StartCard from "@/components/stat-card"
+import { Percentage } from "@/types/wakatime"
+import StatCard from "@/components/stat-card"
+import CodingProgress from "@/components/stats/coding-progress"
+import GithubContributor from "@/components/stats/github-contributor"
 
 export default function Stats() {
   const { data: githubData } = useQuery({
@@ -19,7 +22,6 @@ export default function Stats() {
     queryKey: ["umamiData"],
     queryFn: () => fetch("/api/stats/views").then((res) => res.json()),
   })
-  console.log("Stats ~ wakatimeData:", wakatimeData)
 
   const statCards = [
     {
@@ -75,10 +77,19 @@ export default function Stats() {
   ]
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-      {statCards.map((card) => (
-        <StartCard key={card.title} card={card} />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        {statCards.map((card) => (
+          <StatCard key={card.title} card={card} />
+        ))}
+      </div>
+      <GithubContributor />
+      <CodingProgress
+        languages={wakatimeData?.weekly?.data?.languages as Percentage[]}
+        operatingSystems={
+          wakatimeData?.weekly?.data?.operatingSystems as Percentage[]
+        }
+      />
+    </>
   )
 }

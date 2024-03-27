@@ -8,7 +8,8 @@
     "preview": "next build && next start",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "db:setup": "node scripts/seed.ts"
   },
   "dependencies": {
     "@codesandbox/sandpack-react": "^2.9.0",

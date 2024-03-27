@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Project } from "@/types"
+import { PinIcon } from "lucide-react"
 
 interface ProjectCardProps {
   project: Project
@@ -11,7 +12,11 @@ interface ProjectCardProps {
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const { title, description, tags, imageUrl, githubUrl } = project
   return (
-    <div className="group relative flex flex-col justify-center rounded-lg bg-background p-4 dark:bg-gray-900">
+    <div className="group relative flex cursor-pointer flex-col justify-center rounded-lg border bg-background p-4 dark:bg-gray-900">
+      <div className="absolute right-0 top-0 z-[2] flex items-center gap-1 rounded-bl-lg rounded-tr-lg bg-lime-300 px-2 py-1 text-[13px] font-medium text-emerald-950">
+        <PinIcon size={15} />
+        <span>Featured</span>
+      </div>
       <Link
         href={githubUrl}
         target="_blank"

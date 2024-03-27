@@ -3,6 +3,7 @@ import { projectsData } from "@/constants/projects-data"
 
 import PageHeading from "@/components/page-heading"
 import ProjectCard from "@/components/project-card"
+import Projects from "@/components/projects"
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -15,6 +16,8 @@ const ProjectPage = () => {
         title="Projects"
         description="I've been making various types of projects some of them were basics and some of them were complicated."
       />
+
+      <Projects />
 
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
         {projectsData.map((project, index) => (

@@ -12,6 +12,7 @@ async function main() {
             "My personal portfolio website, built with Next.js, Tailwind CSS, and TypeScript. It's a place where I can showcase my work and share my thoughts.",
           imageUrl: "/images/projects/blog.png",
           githubUrl: "https://github.com/trinhdinhtai/next-blog",
+          isFeature: true,
         },
       ],
     })

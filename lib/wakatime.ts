@@ -55,7 +55,6 @@ export async function getWeeklyCodingHours(): Promise<CodingTimeResponse> {
       total: ((data?.best_day?.total_seconds as number) / 3600).toFixed(2),
     }
     const languages = data?.languages
-    console.log("getWeeklyCodingHours ~ languages:", languages)
 
     return {
       status,
@@ -63,6 +62,7 @@ export async function getWeeklyCodingHours(): Promise<CodingTimeResponse> {
         dailyAverage,
         total,
         bestDay,
+        languages,
       },
     }
   } catch (error) {

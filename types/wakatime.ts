@@ -1,3 +1,8 @@
+interface Language {
+  name: string
+  percent: number
+}
+
 interface CodingTimeResponse {
   status: number
   data?: {
@@ -7,5 +12,6 @@ interface CodingTimeResponse {
       date: string
       total: string
     }
+    languages: Language[]
   }
 }

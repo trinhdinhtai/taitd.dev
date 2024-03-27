@@ -1,3 +1,5 @@
+import { CodingTimeResponse } from "@/types/wakatime"
+
 const WAKATIME_API_ENDPOINT = "https://wakatime.com/api/v1/users/current"
 
 const options = {

@@ -1,12 +1,12 @@
 "use client"
 
-import { Project, Tag } from "@prisma/client"
+import { Project, Stack } from "@prisma/client"
 
 import ProjectCard from "@/components/project-card"
 
 interface ProjectsProps {
   projects: (Project & {
-    projectTag: { projectId: string; tagId: string; tag: Tag }[]
+    projectStack: { projectId: string; stackId: string; stack: Stack }[]
   })[]
 }
 

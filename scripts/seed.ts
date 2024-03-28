@@ -4,7 +4,7 @@ const database = new PrismaClient()
 
 async function main() {
   try {
-    await database.tag.createMany({
+    await database.stack.createMany({
       data: [{ name: "Next.js" }, { name: "React" }, { name: "Git" }],
     })
     await database.project.createMany({

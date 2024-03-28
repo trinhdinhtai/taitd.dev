@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 export default async function ProjectPage() {
   const projects = await prisma.project.findMany({
     include: {
-      projectTag: {
+      projectStack: {
         include: {
-          tag: true,
+          stack: true,
         },
       },
     },

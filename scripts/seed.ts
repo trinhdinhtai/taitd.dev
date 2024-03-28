@@ -17,6 +17,14 @@ async function main() {
           githubUrl: "https://github.com/trinhdinhtai/next-blog",
           isFeature: true,
         },
+        {
+          title: "Background snippets",
+          description:
+            "Collections of ready-to-use, simply copy and paste into your next project. All snippets crafted with Tailwind CSS and Vanilla CSS for easy integration.",
+          imageUrl: "/images/projects/bg-snippets.png",
+          githubUrl: "https://github.com/trinhdinhtai/next-bg-snippets",
+          isFeature: true,
+        },
       ],
     })
 

@@ -1,9 +1,7 @@
 import { Metadata } from "next"
-import { projectsData } from "@/constants/projects-data"
 
 import { prisma } from "@/lib/prisma"
 import PageHeading from "@/components/page-heading"
-import ProjectCard from "@/components/project-card"
 import Projects from "@/components/projects"
 
 export const metadata: Metadata = {

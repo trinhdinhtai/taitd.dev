@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-image: url("/noise.png");
-  background-size: 200px 200px;
-  background-position: 0 0;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;

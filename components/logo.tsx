@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site"
 
 const Logo = () => {
   return (
-    <Link href="/" className="relative flex items-center space-x-2">
+    <Link href="/" className="relative flex items-center">
       <Image
         width={90}
         height={90}

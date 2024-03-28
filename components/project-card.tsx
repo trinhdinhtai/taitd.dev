@@ -20,11 +20,12 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { title, description, imageUrl, isFeature, projectStack } = project
+  const { title, description, slug, imageUrl, isFeature, projectStack } =
+    project
 
   return (
     <Link
-      href={`/project/${title}`}
+      href={`/project/${slug}`}
       className="group relative flex h-full cursor-pointer flex-col rounded-lg border bg-background p-4 dark:bg-gray-900"
     >
       {isFeature && (

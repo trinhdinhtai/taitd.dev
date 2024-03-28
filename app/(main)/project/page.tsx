@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Projects",
 }
 
-export const revalidate = 0
+export const revalidate = 60
 
 export default async function ProjectPage() {
   const projects = await prisma.project.findMany({

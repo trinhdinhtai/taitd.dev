@@ -27,13 +27,14 @@ model Session {
 
 model Project {
   id           String         @id @default(cuid())
-  createdAt    DateTime       @default(now())
   title        String
+  slug         String         @unique
   description  String
   imageUrl     String
   githubUrl    String
   isFeature    Boolean        @default(false)
   projectStack ProjectStack[]
+  createdAt    DateTime       @default(now())
 }
 
 model ProjectStack {

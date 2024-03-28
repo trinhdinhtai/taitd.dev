@@ -12,7 +12,7 @@ export default function ProjectLoading() {
     <>
       <PageHeading
         title="Projects"
-        description="I've been making various types of projects some of them were basics and some of them were complicated."
+        description="Several projects that I have worked on, both private and open source."
       />
 
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">

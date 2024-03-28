@@ -23,7 +23,7 @@ export default async function ProjectPage() {
     <>
       <PageHeading
         title="Projects"
-        description="I've been making various types of projects some of them were basics and some of them were complicated."
+        description="Several projects that I have worked on, both private and open source."
       />
 
       <Projects projects={projects} />

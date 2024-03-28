@@ -2,21 +2,27 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Project } from "@prisma/client"
+import { Project, Tag } from "@prisma/client"
 import { PinIcon } from "lucide-react"
 
 interface ProjectCardProps {
-  project: Project
+  project: Project & {
+    projectTag: { projectId: string; tagId: string; tag: Tag }[]
+  }
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { title, description, imageUrl, githubUrl } = project
+  const { title, description, imageUrl, githubUrl, isFeature, projectTag } =
+    project
   return (
     <div className="group relative flex cursor-pointer flex-col justify-center rounded-lg border bg-background p-4 dark:bg-gray-900">
-      <div className="absolute right-0 top-0 z-[2] flex items-center gap-1 rounded-bl-lg rounded-tr-lg bg-lime-300 px-2 py-1 text-[13px] font-medium text-emerald-950">
-        <PinIcon size={15} />
-        <span>Featured</span>
-      </div>
+      {isFeature && (
+        <div className="absolute right-0 top-0 z-[2] flex items-center gap-1 rounded-bl-lg rounded-tr-lg bg-lime-300 px-2 py-1 text-[13px] font-medium text-emerald-950">
+          <PinIcon size={15} />
+          <span>Featured</span>
+        </div>
+      )}
+
       <Link
         href={githubUrl}
         target="_blank"
@@ -41,18 +47,18 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           {description}
         </p>
 
-        {/* <div className="mt-auto flex flex-wrap items-center gap-1">
-          {tags.map((tag, index) => {
+        <div className="mt-auto flex flex-wrap items-center gap-1">
+          {projectTag.map(({ tag }) => {
             return (
               <span
-                key={`${tag}-${index}`}
+                key={tag.id}
                 className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-300"
               >
-                {tag}
+                {tag.name}
               </span>
             )
           })}
-        </div> */}
+        </div>
       </div>
     </div>
   )

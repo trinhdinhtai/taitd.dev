@@ -61,9 +61,9 @@ export default function Stats() {
       link: "https://wakatime.com/",
     },
     {
-      title: "Best Day Coding Time",
+      title: "Best Day Coding Hours",
       value: wakatimeData?.weekly?.data?.bestDay
-        ? `${wakatimeData?.weekly?.data?.bestDay.date} | ${wakatimeData?.weekly?.data?.bestDay.total}`
+        ? `${wakatimeData?.weekly?.data?.bestDay.total}`
         : undefined,
       description: "Total hours spent coding",
       link: "https://wakatime.com/",

@@ -2,8 +2,16 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { STACKS } from "@/constants/stack"
 import { Project, Stack } from "@prisma/client"
 import { ArrowRight, PinIcon } from "lucide-react"
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 interface ProjectCardProps {
   project: Project & {
@@ -41,7 +49,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         </div>
       </div>
 
-      <div className="mt-4 flex flex-col gap-3">
+      <div className="mt-4 flex flex-1 flex-col gap-3">
         <h1 className="font-bold text-neutral-900 dark:text-neutral-200">
           {title}
         </h1>
@@ -49,15 +57,15 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           {description}
         </p>
 
-        <div className="mt-auto flex flex-wrap items-center gap-1">
+        <div className="mt-auto flex flex-wrap items-center gap-3">
           {projectStack.map(({ stack }) => {
             return (
-              <span
-                key={stack.id}
-                className="rounded bg-gray-100 px-2 py-1 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-300"
-              >
-                {stack.name}
-              </span>
+              <TooltipProvider key={stack.id}>
+                <Tooltip>
+                  <TooltipTrigger>{STACKS[stack.name]}</TooltipTrigger>
+                  <TooltipContent>{stack.name}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             )
           })}
         </div>

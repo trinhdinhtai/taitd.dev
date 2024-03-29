@@ -31,7 +31,8 @@ model Project {
   slug         String         @unique
   description  String
   imageUrl     String
-  githubUrl    String
+  githubUrl    String?
+  demoUrl      String?
   content      String?        @db.Text  
   isFeature    Boolean        @default(false)
   projectStack ProjectStack[]

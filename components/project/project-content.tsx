@@ -31,7 +31,7 @@ export default function ProjectContent({
     <div className="space-y-8">
       <div className="flex flex-col justify-between gap-5 sm:flex-row lg:items-center">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="mb-1 text-[15px] font-medium text-neutral-700 dark:text-neutral-300">
+          <span className="text-[15px] font-medium text-neutral-700 dark:text-neutral-300">
             Tech Stack :
           </span>
 
@@ -53,13 +53,12 @@ export default function ProjectContent({
         </div>
       </div>
 
-      <div className="overflow-hidden">
+      <div className="relative aspect-[16/9] overflow-hidden">
         <Image
           src={imageUrl}
-          width={1200}
-          height={600}
           alt={title}
-          className="scale-100 rounded-lg border blur-0 grayscale-0 duration-700 ease-in-out hover:scale-105"
+          fill
+          className="scale-100 rounded-lg border object-cover blur-0 grayscale-0 duration-700 ease-in-out hover:scale-105"
         />
       </div>
 

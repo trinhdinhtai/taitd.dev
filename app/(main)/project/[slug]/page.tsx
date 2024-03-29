@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 
 import { prisma } from "@/lib/prisma"
 import PageHeading from "@/components/page-heading"
+import ProjectContent from "@/components/project-content"
 
 export const revalidate = 0
 
@@ -21,6 +22,13 @@ export default async function ProjectPage({
         equals: slug,
       },
     },
+    include: {
+      projectStack: {
+        include: {
+          stack: true,
+        },
+      },
+    },
   })
 
   if (!project) return notFound()
@@ -28,6 +36,7 @@ export default async function ProjectPage({
   return (
     <div>
       <PageHeading title={project.title} description={project.description} />
+      <ProjectContent project={project} />
     </div>
   )
 }

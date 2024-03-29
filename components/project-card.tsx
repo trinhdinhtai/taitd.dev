@@ -12,11 +12,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { EntireProject } from "@/types/project"
 
 interface ProjectCardProps {
-  project: Project & {
-    projectStack: { projectId: string; stackId: string; stack: Stack }[]
-  }
+  project:EntireProject
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {

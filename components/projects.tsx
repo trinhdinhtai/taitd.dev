@@ -1,13 +1,10 @@
 "use client"
 
-import { Project, Stack } from "@prisma/client"
-
+import { EntireProject } from "@/types/project"
 import ProjectCard from "@/components/project-card"
 
 interface ProjectsProps {
-  projects: (Project & {
-    projectStack: { projectId: string; stackId: string; stack: Stack }[]
-  })[]
+  projects: EntireProject[]
 }
 
 export default function Projects({ projects }: Readonly<ProjectsProps>) {

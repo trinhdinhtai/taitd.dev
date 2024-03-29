@@ -32,6 +32,7 @@ model Project {
   description  String
   imageUrl     String
   githubUrl    String
+  content      String?        @db.Text  
   isFeature    Boolean        @default(false)
   projectStack ProjectStack[]
   createdAt    DateTime       @default(now())

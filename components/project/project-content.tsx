@@ -1,6 +1,8 @@
+import Image from "next/image"
 import { Github, Share } from "lucide-react"
 
 import { EntireProject } from "@/types/project"
+import ReactMarkdownComponent from "@/components/mdx/react-markdown"
 import ProjectLink from "@/components/project/project-link"
 import ProjectStacks from "@/components/project/project-stacks"
 
@@ -11,7 +13,7 @@ interface ProjectContentProps {
 export default function ProjectContent({
   project,
 }: Readonly<ProjectContentProps>) {
-  const { projectStack, githubUrl, demoUrl } = project
+  const { projectStack, githubUrl, demoUrl, imageUrl, title, content } = project
 
   const projectLinks = [
     {
@@ -50,6 +52,22 @@ export default function ProjectContent({
           )}
         </div>
       </div>
+
+      <div className="overflow-hidden">
+        <Image
+          src={imageUrl}
+          width={1200}
+          height={600}
+          alt={title}
+          className="scale-100 rounded-lg border blur-0 grayscale-0 duration-700 ease-in-out hover:scale-105"
+        />
+      </div>
+
+      {content && (
+        <div className="mt-5 space-y-6 leading-[1.8] dark:text-neutral-300">
+          <ReactMarkdownComponent>{content}</ReactMarkdownComponent>
+        </div>
+      )}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { EntireProject } from "@/types/project"
-import ProjectCard from "@/components/project-card"
+import ProjectCard from "@/components/project/project-card"
 
 interface ProjectsProps {
   projects: EntireProject[]

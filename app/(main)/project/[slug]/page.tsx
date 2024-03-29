@@ -2,9 +2,9 @@ import { notFound } from "next/navigation"
 
 import { prisma } from "@/lib/prisma"
 import PageHeading from "@/components/page-heading"
-import ProjectContent from "@/components/project-content"
+import ProjectContent from "@/components/project/project-content"
 
-export const revalidate = 0
+export const revalidate = 60
 
 interface ProjectPageProps {
   params: {

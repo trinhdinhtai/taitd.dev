@@ -13,7 +13,7 @@ import LoadingSkeleton from "@/components/loading-skeleton"
 import CodeBlock from "@/components/mdx/codeblock"
 import Youtube from "@/components/mdx/youtube"
 
-const components = {
+export const components = {
   h1: ({ className, ...props }) => (
     <h1
       className={cn(

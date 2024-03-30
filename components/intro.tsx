@@ -41,7 +41,7 @@ const Intro = () => {
         animate={{ opacity: 1, y: 0 }}
       >
         <span className="text-2xl font-bold leading-[1.5] sm:text-4xl lg:text-6xl">
-          {"Hi, I'm Tài."}
+          {"Hello World, I'm Tài"}
         </span>
         <span className="text-xl font-semibold text-muted-foreground">
           Software engineer, technical writer & open-source maintainer

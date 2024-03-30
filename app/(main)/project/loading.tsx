@@ -10,10 +10,12 @@ export const metadata: Metadata = {
 export default function ProjectLoading() {
   return (
     <>
-      <PageHeading
-        title="Projects"
-        description="Several projects that I have worked on, both private and open source."
-      />
+      <div className="space-y-1">
+        <Skeleton className="h-[36px] w-[300px] md:h-10" />
+        <Skeleton className="h-7 w-[200px]" />
+      </div>
+
+      <hr className="my-6 md:my-4" />
 
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
         {Array.from({ length: 4 }).map((_, index) => (

@@ -1,6 +1,7 @@
 "use client"
 
 import { HTMLAttributes } from "react"
+import { slideInWithFadeOut } from "@/constants/framer-motion-variants"
 import { Slot } from "@radix-ui/react-slot"
 import { motion, Variants } from "framer-motion"
 
@@ -11,15 +12,6 @@ interface PageHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   description: string
   asChild?: boolean
   hasMotion?: boolean
-}
-
-const defaultVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.35, delay: 0.1, ease: "backOut" },
-  },
 }
 
 const PageHeading = ({
@@ -37,7 +29,7 @@ const PageHeading = ({
       initial="hidden"
       animate="visible"
       exit="hidden"
-      variants={defaultVariants}
+      variants={slideInWithFadeOut}
       className={cn(
         "text-2xl font-medium leading-relaxed dark:text-white",
         className

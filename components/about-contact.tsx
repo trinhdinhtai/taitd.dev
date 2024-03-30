@@ -6,14 +6,6 @@ import { Icons } from "@/components/app-icons"
 export default function AboutContact() {
   return (
     <div className="flex flex-col-reverse gap-12 sm:flex-row sm:items-center">
-      <Image
-        src="contact.svg"
-        alt="contact"
-        width={300}
-        height={300}
-        className="text-black"
-      />
-
       <div className="flex flex-col gap-3">
         <p>
           {`Please do not hesitate to contact me if you have any queries or are interested in working with me!`}

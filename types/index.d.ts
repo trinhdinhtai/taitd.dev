@@ -76,3 +76,10 @@ export type AnimatedTAGProps = {
   children: ReactNode
   infinity?: boolean
 }
+
+interface UseData {
+  name: string
+  description: string
+  Icon: (props: React.ComponentProps<"svg">) => JSX.Element
+  link: string
+}

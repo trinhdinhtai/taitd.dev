@@ -33,7 +33,7 @@ model Project {
   imageUrl     String
   githubUrl    String?
   demoUrl      String?
-  content      String?        @db.Text  
+  content      String?        @db.Text
   isFeature    Boolean        @default(false)
   projectStack ProjectStack[]
   createdAt    DateTime       @default(now())
@@ -54,4 +54,14 @@ model Stack {
   createdAt    DateTime       @default(now())
   name         String         @unique
   projectStack ProjectStack[]
+}
+
+model Certificate {
+  id                  String   @id @default(cuid())
+  url                 String   @unique
+  title               String
+  organizationName    String
+  organizationLogoUrl String
+  issueDate           DateTime
+  createdAt           DateTime @default(now())
 }

@@ -1,11 +1,48 @@
-interface PageHeadingProps {
+"use client"
+
+import { HTMLAttributes } from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { motion, Variants } from "framer-motion"
+
+import { cn } from "@/lib/utils"
+
+interface PageHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   title: string
   description: string
+  asChild?: boolean
+  hasMotion?: boolean
 }
 
-const PageHeading = ({ title, description }: PageHeadingProps) => {
+const defaultVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, delay: 0.1, ease: "backOut" },
+  },
+}
+
+const PageHeading = ({
+  title,
+  description,
+  asChild,
+  className,
+  hasMotion = true,
+}: PageHeadingProps) => {
+  const BaseComp = asChild ? Slot : "h1"
+  const Comp = hasMotion ? motion(BaseComp) : BaseComp
+
   return (
-    <>
+    <Comp
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      variants={defaultVariants}
+      className={cn(
+        "text-2xl font-medium leading-relaxed dark:text-white",
+        className
+      )}
+    >
       <div className="space-y-1">
         <h1 className="inline-block font-heading text-2xl tracking-tight md:text-3xl lg:text-4xl">
           {title}
@@ -15,7 +52,7 @@ const PageHeading = ({ title, description }: PageHeadingProps) => {
         </p>
       </div>
       <hr className="my-6 md:my-4" />
-    </>
+    </Comp>
   )
 }
 

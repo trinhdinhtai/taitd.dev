@@ -70,13 +70,6 @@ export type GitHubUser = {
   updated_at: string
 }
 
-export type AnimatedTAGProps = {
-  variants: Variants
-  className?: string
-  children: ReactNode
-  infinity?: boolean
-}
-
 interface UseData {
   name: string
   description: string

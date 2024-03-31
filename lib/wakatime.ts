@@ -55,7 +55,23 @@ export async function getWeeklyCodingHours(): Promise<CodingTimeResponse> {
       date: data?.best_day?.date,
       total: ((data?.best_day?.total_seconds as number) / 3600).toFixed(2),
     }
-    const languages = data?.languages
+
+    const languages = data?.languages?.reduce(
+      (result: any[], language: any) => {
+        if (language.percent > 1) {
+          result.push(language)
+        } else {
+          const other = result.find((lang: any) => lang.name === "Other")
+          if (other) {
+            other.percent += language.percent
+          } else {
+            result.push({ name: "Other", percent: language.percent })
+          }
+        }
+        return result
+      },
+      []
+    )
     const operatingSystems = data?.operating_systems
 
     return {

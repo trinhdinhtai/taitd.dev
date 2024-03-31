@@ -28,4 +28,16 @@ const slideInWithFadeOut: Variants = {
   },
 }
 
-export { popUp, fadeContainer, slideInWithFadeOut }
+const popUpFromBottomForText: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 60,
+    },
+  },
+}
+
+export { popUp, fadeContainer, slideInWithFadeOut, popUpFromBottomForText }

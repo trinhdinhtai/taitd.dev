@@ -29,11 +29,21 @@ const fontHeading = localFont({
   variable: "--font-heading",
 })
 
+const options = {
+  title: "Trinh Dinh Tai | Software Developer",
+  description:
+    "Trinh Dinh Tai is a Software Developer and Technical Writer who is passionate about building solutions and contributing to open source communities",
+  url: "https://taitd.io.vn",
+  ogImage:
+    "https://res.cloudinary.com/dffmwnljn/image/upload/v1684730897/IMG_0239_pg7qza.jpg",
+}
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
+  metadataBase: new URL(options.url),
   description: siteConfig.description,
   keywords: [
     "Next.js",
@@ -60,6 +70,7 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: options.ogImage,
   },
   twitter: {
     card: "summary_large_image",

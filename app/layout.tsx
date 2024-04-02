@@ -35,7 +35,7 @@ const options = {
     "Trinh Dinh Tai is a Software Developer and Technical Writer who is passionate about building solutions and contributing to open source communities",
   url: "https://taitd.io.vn",
   ogImage:
-    "https://res.cloudinary.com/dffmwnljn/image/upload/v1684730897/IMG_0239_pg7qza.jpg",
+    "https://res.cloudinary.com/daukjyo6s/image/upload/v1712067670/TAITD_vqdboi.png",
 }
 
 export const metadata: Metadata = {

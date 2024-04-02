@@ -1,36 +1,57 @@
+import Image from "next/image"
+
+import { formatDate } from "@/lib/utils"
+
 interface ExperienceItemProps {
   experience: {
     title: string
-    location: string
-    date: string
+    name: string
+    startDate: string
+    endDate?: string
     description: string
+    url: string
+    logo: string
   }
 }
 
 export default function ExperienceItem({ experience }: ExperienceItemProps) {
-  const { title, location, date, description } = experience
+  const { title, name, startDate, endDate, description, url, logo } = experience
+
   return (
-    <div className="md:space-x-4] relative mx-12 grid pb-12 before:absolute before:left-[-35px] before:block before:h-full before:border-l-2 before:border-primary/20 before:content-[''] md:grid-cols-5 md:gap-10">
-      <div className="relative pb-12 md:col-span-2">
-        <div className="sticky top-0">
-          <span className="absolute -left-[48px] rounded-full text-5xl text-muted-foreground">
-            &bull;
-          </span>
+    <div className="relative flex max-w-2xl items-start gap-x-4 before:absolute before:bottom-0 before:left-9 before:top-[5rem] before:h-[calc(100%-70px)] before:w-[1px] before:bg-zinc-200 dark:before:bg-zinc-800 lg:gap-x-6">
+      <a
+        href={url}
+        rel="noreferrer noopener"
+        target="_blank"
+        className="dark:bg-primary-bg bg-secondary-bg relative grid min-h-[80px] min-w-[80px] place-items-center overflow-clip rounded-md border border-zinc-200 p-2 dark:border-zinc-800"
+      >
+        <Image
+          src={logo}
+          className="object-cover duration-300"
+          alt={title}
+          width={50}
+          height={50}
+        />
+      </a>
 
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-            {title}
-          </h3>
-          <h4 className="text-xl font-semibold text-gray-700 dark:text-gray-300">
-            {location}
-          </h4>
-          <time className="m-0 p-0 text-sm text-gray-600/80 dark:text-white/80">
-            {date}
-          </time>
-        </div>
-      </div>
+      <div className="flex flex-col items-start">
+        <h3 className="text-xl font-semibold">{name}</h3>
+        <p>{title}</p>
 
-      <div className="relative flex flex-col gap-2 pb-4 text-gray-600 dark:text-gray-300 md:col-span-3">
-        {description}
+        <time className="mt-2 text-sm uppercase tracking-widest text-zinc-500">
+          {formatDate(startDate)} -{" "}
+          {endDate ? (
+            formatDate(endDate)
+          ) : (
+            <span className="dark:text-primary-color text-tertiary-color">
+              Present
+            </span>
+          )}
+        </time>
+
+        <p className="my-4 tracking-tight text-zinc-600 dark:text-zinc-400">
+          {description}
+        </p>
       </div>
     </div>
   )

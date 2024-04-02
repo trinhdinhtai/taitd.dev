@@ -8,13 +8,13 @@ import ExperienceItem from "@/components/experience-item"
 const ExperienceSection = () => {
   return (
     <div>
-      <SectionHeading>My experience</SectionHeading>
+      <SectionHeading>Work experience</SectionHeading>
 
-      <ol className="relative mt-16">
+      <div className="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-2">
         {experiencesData.map((experience, i) => (
           <ExperienceItem key={i} experience={experience} />
         ))}
-      </ol>
+      </div>
     </div>
   )
 }

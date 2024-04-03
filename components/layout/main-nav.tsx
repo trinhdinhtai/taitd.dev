@@ -21,7 +21,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import SearchCommand from "@/components/search-command"
+import SearchCommand from "@/components/command-menu"
 import { ModeToggle } from "@/components/theme-toggle"
 
 import { Icons } from "../icons"

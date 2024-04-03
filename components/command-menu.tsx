@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { DialogProps } from "@radix-ui/react-alert-dialog"
+import { CommandIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 
 import { navbarLinks } from "@/config/navbarLinks"
@@ -20,7 +21,7 @@ import {
   CommandSeparator,
 } from "./ui/command"
 
-const SearchCommand = ({ ...props }: DialogProps) => {
+export default function CommandMenu({ ...props }: DialogProps) {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const { setTheme } = useTheme()
@@ -45,18 +46,13 @@ const SearchCommand = ({ ...props }: DialogProps) => {
   return (
     <>
       <Button
-        variant="outline"
-        className={cn(
-          "relative w-full items-center justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64"
-        )}
+        variant="ghost"
+        size="sm"
+        className="h-8 w-8 px-0"
         onClick={() => setOpen(true)}
         {...props}
       >
-        <span className="hidden lg:inline-flex">Search my blog...</span>
-        <span className="inline-flex lg:hidden">Search...</span>
-        <kbd className="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-          <span className="text-xs">⌘</span>K
-        </kbd>
+        <CommandIcon className="h-5 w-5" />
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
@@ -120,5 +116,3 @@ const MenuCommandItem = ({ value, onSelect }: MenuCommandProps) => (
     <span>{value}</span>
   </CommandItem>
 )
-
-export default SearchCommand

@@ -32,6 +32,11 @@ const moreContent: ContentNavItem[] = [
     href: "/certificates",
     description: "My certificates and achievements.",
   },
+  {
+    title: "Photos",
+    href: "/photos",
+    description: "My photos from various events and places.",
+  },
 ]
 
 export const navbarLinks: NavItem[] = [

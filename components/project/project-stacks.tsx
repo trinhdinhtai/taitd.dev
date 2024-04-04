@@ -16,7 +16,7 @@ export default function ProjectStacks({ projectStack }: Readonly<StackProps>) {
   return (
     <div className="flex items-center gap-3">
       {projectStack.map(({ stack }) => (
-        <TooltipProvider key={stack.id}>
+        <TooltipProvider key={stack.id} delayDuration={200}>
           <Tooltip>
             <TooltipTrigger>{STACKS[stack.name]}</TooltipTrigger>
             <TooltipContent>{stack.name}</TooltipContent>

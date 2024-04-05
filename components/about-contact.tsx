@@ -26,7 +26,7 @@ export default function AboutContact() {
             target="_blank"
             href="https://github.com/trinhdinhtai"
           >
-            <Icons.GitHub className="h-5 w-5" />
+            <Icons.GitHub className="size-5" />
             <span>Github</span>
           </a>
 
@@ -35,7 +35,7 @@ export default function AboutContact() {
             target="_blank"
             href="https://twitter.com/taitd_dev"
           >
-            <Icons.Twitter className="h-5 w-5" />
+            <Icons.Twitter className="size-5" />
             <span>Twitter</span>
           </a>
 
@@ -44,7 +44,7 @@ export default function AboutContact() {
             target="_blank"
             href="https://www.facebook.com/taitd153"
           >
-            <Icons.Facebook className="h-5 w-5" />
+            <Icons.Facebook className="size-5" />
             <span>Facebook</span>
           </a>
         </div>

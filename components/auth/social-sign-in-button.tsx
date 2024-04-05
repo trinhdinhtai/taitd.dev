@@ -27,7 +27,7 @@ export default function SocialSignInButton() {
         variant="outline"
         onClick={() => handleClick("google")}
       >
-        <FcGoogle className="h-5 w-5" />
+        <FcGoogle className="size-5" />
       </Button>
 
       <Button
@@ -36,7 +36,7 @@ export default function SocialSignInButton() {
         variant="outline"
         onClick={() => handleClick("github")}
       >
-        <FaGithub className="h-5 w-5" />
+        <FaGithub className="size-5" />
       </Button>
     </div>
   )

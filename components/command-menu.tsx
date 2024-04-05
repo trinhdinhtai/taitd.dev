@@ -52,7 +52,7 @@ export default function CommandMenu({ ...props }: DialogProps) {
         onClick={() => setOpen(true)}
         {...props}
       >
-        <CommandIcon className="h-5 w-5" />
+        <CommandIcon className="size-5" />
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>

@@ -58,7 +58,7 @@ export default function LoadMore({ id }: LoadMoreProps) {
       <section className="mt-4 flex w-full items-center justify-center">
         <div ref={ref}>
           {isInfiniteScrollEnabled ? (
-            <Loader className="h-6 w-6 animate-spin" />
+            <Loader className="size-6 animate-spin" />
           ) : (
             <span>{`That's all for now. Come back later for more.`}</span>
           )}

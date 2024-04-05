@@ -37,7 +37,7 @@ export default async function handler(
           }),
 
           // get the number of times the current user has liked this post
-          prisma.session.findUnique({
+          prisma.postFavorite.findUnique({
             where: { id: sessionId },
           }),
         ])
@@ -72,7 +72,7 @@ export default async function handler(
           }),
 
           // increment the number of times this user has liked this post
-          prisma.session.upsert({
+          prisma.postFavorite.upsert({
             where: { id: sessionId },
             create: {
               id: sessionId,

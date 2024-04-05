@@ -19,7 +19,7 @@ model Post {
   views     Int      @default(0)
 }
 
-model Session {
+model PostFavorite {
   id        String   @id
   createdAt DateTime @default(now())
   likes     Int      @default(0)

@@ -37,6 +37,11 @@ const moreContent: ContentNavItem[] = [
     href: "/photos",
     description: "My photos from various events and places.",
   },
+  {
+    title: "Guestbook",
+    href: "/guestbook",
+    description: "A place for you to leave your comments and feedback.",
+  },
 ]
 
 export const navbarLinks: NavItem[] = [

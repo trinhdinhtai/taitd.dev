@@ -110,3 +110,11 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Guestbook {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}

@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import SocialSignInButton from "@/components/auth/social-sign-in-button"
 
 export default function SignInModal() {
   const { open, setOpen } = useSignInModal()
@@ -25,26 +26,7 @@ export default function SignInModal() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="my-6 flex flex-col gap-4">
-          <Button
-            type="button"
-            className="h-10 rounded-xl font-bold"
-            onClick={() => {}}
-          >
-            <SiGithub className="mr-3" />
-            Continue with GitHub
-          </Button>
-
-          <Button
-            variant="ghost"
-            type="button"
-            className="h-10 rounded-xl font-bold"
-            onClick={() => {}}
-          >
-            <SiGoogle className="mr-3" />
-            Continue with Google
-          </Button>
-        </div>
+        <SocialSignInButton />
       </DialogContent>
     </Dialog>
   )

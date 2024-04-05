@@ -1,5 +1,5 @@
+import SignInButton from "@/components/auth/sign-in-button"
 import PageHeading from "@/components/page-heading"
-import SignInButton from "@/components/sign-in-button"
 
 export default function GuestbookPage() {
   return (

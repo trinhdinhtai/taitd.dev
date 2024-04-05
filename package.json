@@ -12,6 +12,7 @@
     "db:setup": "node scripts/seed.ts"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^1.5.2",
     "@codesandbox/sandpack-react": "^2.9.0",
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.1",

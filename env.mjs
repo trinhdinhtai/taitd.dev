@@ -11,6 +11,11 @@ export const env = createEnv({
     NEXT_PUBLIC_WAKATIME_ACCESS_TOKEN: z.string().min(1),
     UMAMI_API_KEY: z.string().min(1),
     UMAMI_API_CLIENT_ENDPOINT: z.string().url().min(1),
+    AUTH_SECRET: z.string().min(1),
+    GITHUB_CLIENT_ID: z.string().min(1),
+    GITHUB_CLIENT_SECRET: z.string().min(1),
+    GOOGLE_CLIENT_ID: z.string().min(1),
+    GOOGLE_CLIENT_SECRET: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -27,6 +32,11 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_WAKATIME_ACCESS_TOKEN,
     UMAMI_API_KEY: process.env.UMAMI_API_KEY,
     UMAMI_API_CLIENT_ENDPOINT: process.env.UMAMI_API_CLIENT_ENDPOINT,
+    AUTH_SECRET: process.env.AUTH_SECRET,
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   },
   // For Next.js >= 13.4.4, you only need to destructure client variables:
   // experimental__runtimeEnv: {

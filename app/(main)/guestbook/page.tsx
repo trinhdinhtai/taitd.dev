@@ -1,7 +1,11 @@
+import { getCurrentUser } from "@/lib/auth"
 import SignInButton from "@/components/auth/sign-in-button"
+import MessageForm from "@/components/message-form"
 import PageHeading from "@/components/page-heading"
 
-export default function GuestbookPage() {
+export default async function GuestbookPage() {
+  const user = await getCurrentUser()
+
   return (
     <>
       <PageHeading
@@ -9,7 +13,7 @@ export default function GuestbookPage() {
         description="A place for you to leave your comments and feedback."
       />
 
-      <SignInButton />
+      {user ? <MessageForm user={user} /> : <SignInButton />}
     </>
   )
 }

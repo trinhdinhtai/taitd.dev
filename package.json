@@ -45,6 +45,7 @@
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.279.0",
     "next": "14.1.4",
+    "next-auth": "5.0.0-beta.15",
     "next-contentlayer": "^0.3.2",
     "next-themes": "^0.2.1",
     "postcss": "8.4.23",

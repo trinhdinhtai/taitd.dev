@@ -1,10 +1,12 @@
 import { getCurrentUser } from "@/lib/auth"
+import { getMessages } from "@/lib/db/queries/guestbook"
 import SignInButton from "@/components/auth/sign-in-button"
 import MessageForm from "@/components/message-form"
+import Messages from "@/components/messages"
 import PageHeading from "@/components/page-heading"
 
 export default async function GuestbookPage() {
-  const user = await getCurrentUser()
+  const [user, messages] = await Promise.all([getCurrentUser(), getMessages()])
 
   return (
     <>
@@ -14,6 +16,7 @@ export default async function GuestbookPage() {
       />
 
       {user ? <MessageForm user={user} /> : <SignInButton />}
+      <Messages user={user} messages={messages} />
     </>
   )
 }

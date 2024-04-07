@@ -21,6 +21,14 @@ export const config = {
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    async session({ token, session }) {
+      if (token.sub && session.user) {
+        session.user.id = token.sub
+      }
+      return session
+    },
+  },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
 } satisfies NextAuthConfig

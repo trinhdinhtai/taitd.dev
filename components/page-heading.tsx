@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 
 interface PageHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   title: string
-  description: string
+  description?: string
   asChild?: boolean
   hasMotion?: boolean
 }

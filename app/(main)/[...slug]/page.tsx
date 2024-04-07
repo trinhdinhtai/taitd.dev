@@ -6,6 +6,7 @@ import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 import { absoluteUrl } from "@/lib/utils"
 import Mdx from "@/components/mdx/mdx-components"
+import PageHeading from "@/components/page-heading"
 
 interface PageProps {
   params: {
@@ -77,15 +78,7 @@ export default async function PagePage({ params }: PageProps) {
 
   return (
     <article>
-      <div className="space-y-4">
-        <h1 className="inline-block font-heading text-4xl lg:text-5xl">
-          {page.title}
-        </h1>
-        {page.description && (
-          <p className="text-xl text-muted-foreground">{page.description}</p>
-        )}
-      </div>
-      <hr className="my-4" />
+      <PageHeading title={page.title} description={page?.description} />
       <Mdx code={page.body.code} />
     </article>
   )

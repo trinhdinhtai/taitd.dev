@@ -12,4 +12,8 @@ export const siteConfig: SiteConfig = {
     twitter: "https://twitter.com/taitddev",
     github: "https://github.com/trinhdinhtai/next-blog",
   },
+  author: {
+    name: "Trịnh Đình Tài",
+    email: "taitd153.dev@gmail.com",
+  },
 }

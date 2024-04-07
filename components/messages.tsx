@@ -12,7 +12,7 @@ export default function Messages({ user, messages }: MessageProps) {
   return (
     <div className="mt-10 flex flex-col gap-4">
       {messages.map(({ id, message, user, createdAt }) => (
-        <div key={id} className="rounded-lg border p-4">
+        <div key={id} className="p-4">
           <div className="mb-3 flex gap-3">
             <Avatar>
               <AvatarImage

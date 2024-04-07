@@ -13,6 +13,10 @@ export type SiteConfig = {
     twitter: string
     github: string
   }
+  author: {
+    name: string
+    email: string
+  }
 }
 
 export type NavItem = {

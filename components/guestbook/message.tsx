@@ -3,7 +3,6 @@
 import { Guestbook, User } from "@prisma/client"
 
 import { siteConfig } from "@/config/site"
-import { getCurrentUser } from "@/lib/auth"
 import { useCurrentUser } from "@/hooks/use-current-user"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -52,7 +51,7 @@ export default function Message({ message }: MessageProps) {
         <div className="group flex min-h-8 items-center gap-4">
           <div className="break-words">{body}</div>
           {currentUser?.id === user.id && (
-            <DeleteMessageButton messageId={message.id} />
+            <DeleteMessageButton messageId={id} />
           )}
         </div>
       </div>

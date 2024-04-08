@@ -2,15 +2,17 @@
 
 import { useRef } from "react"
 import { createMessage } from "@/actions/guestbook"
+import { SendHorizonal } from "lucide-react"
 import { User } from "next-auth"
 import { signOut } from "next-auth/react"
 import { useFormStatus } from "react-dom"
 import { toast } from "sonner"
 
+import { useCurrentUser } from "@/hooks/use-current-user"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Textarea } from "@/components/ui/textarea"
 
 interface MessageFormProps {
   user: User
@@ -34,35 +36,54 @@ export default function MessageForm({ user }: MessageFormProps) {
   }
 
   return (
-    <form action={createMessageHandler} ref={formRef}>
-      <div className="mb-2 flex gap-3">
-        <Avatar>
-          <AvatarImage
-            src={user.image as string}
-            width={40}
-            height={40}
-            alt={user.name as string}
-            className="size-10"
-          />
-          <AvatarFallback className="bg-transparent">
-            <Skeleton className="size-10 rounded-full" />
-          </AvatarFallback>
-        </Avatar>
-        <Textarea
-          aria-label="Your message"
-          placeholder="Your message ..."
-          name="message"
-          required
-        />
+    <div className="space-y-4">
+      <div className="flex gap-2">
+        <p>
+          You are currently logged in as{" "}
+          <span className="font-semibold">{user.name}</span>
+          <Button
+            variant="link"
+            onClick={() => signOut()}
+            className="px-2 text-base underline"
+          >
+            logout
+          </Button>
+        </p>
       </div>
-      <div className="flex justify-end gap-2">
-        <Button variant="outline" onClick={() => signOut()} type="button">
-          Logout
-        </Button>
-        <Button type="submit" disabled={pending}>
-          Submit
-        </Button>
-      </div>
-    </form>
+      <form action={createMessageHandler} ref={formRef}>
+        <div className="mb-2 flex gap-3">
+          <Avatar>
+            <AvatarImage
+              src={user.image as string}
+              width={40}
+              height={40}
+              alt={user.name as string}
+              className="size-10"
+            />
+            <AvatarFallback className="bg-transparent">
+              <Skeleton className="size-10 rounded-full" />
+            </AvatarFallback>
+          </Avatar>
+          <div className="relative w-full">
+            <Input
+              aria-label="Your message"
+              placeholder="Your message ..."
+              name="message"
+              required
+              className="h-12 pr-20"
+            />
+            <Button
+              size="sm"
+              className="absolute right-2 top-1/2 -translate-y-1/2 gap-1"
+              type="submit"
+              disabled={pending}
+            >
+              Send
+              <SendHorizonal className="size-4" />
+            </Button>
+          </div>
+        </div>
+      </form>
+    </div>
   )
 }

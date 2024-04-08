@@ -1,8 +1,6 @@
 import { ExtendedUser } from "@/nextauth"
 import { Guestbook, User } from "@prisma/client"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Skeleton } from "@/components/ui/skeleton"
 import Message from "@/components/guestbook/message"
 
 interface MessageProps {

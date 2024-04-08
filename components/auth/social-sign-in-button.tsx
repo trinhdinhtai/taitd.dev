@@ -23,20 +23,22 @@ export default function SocialSignInButton() {
     <div className="flex flex-col items-center gap-2">
       <Button
         size="lg"
-        className="w-full"
+        className="flex w-full gap-2"
         variant="outline"
         onClick={() => handleClick("google")}
       >
         <FcGoogle className="size-5" />
+        Continue with Google
       </Button>
 
       <Button
         size="lg"
-        className="w-full"
+        className="flex w-full gap-2"
         variant="outline"
         onClick={() => handleClick("github")}
       >
         <FaGithub className="size-5" />
+        Continue with Github
       </Button>
     </div>
   )

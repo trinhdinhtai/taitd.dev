@@ -7,7 +7,7 @@ import { getErrorMessage } from "@/lib/error"
 import { prisma } from "@/lib/prisma"
 import { createMessageSchema } from "@/lib/zod/schemas/message"
 
-export const createMessage = async (formData: FormData) =>
+const createMessage = async (formData: FormData) =>
   privateAction(async (user) => {
     const { id } = user
 
@@ -51,3 +51,39 @@ export const createMessage = async (formData: FormData) =>
       message: "Message created.",
     }
   })
+
+const deleteMessage = async (id: string) =>
+  privateAction(async (user) => {
+    const { id: userId } = user
+
+    const message = await prisma.guestbook.findUnique({
+      where: { id, userId },
+      select: { userId: true },
+    })
+
+    if (!message) {
+      return {
+        message: "Message not found.",
+        error: true,
+      }
+    }
+
+    try {
+      await prisma.guestbook.delete({
+        where: { id },
+      })
+    } catch (error) {
+      return {
+        message: getErrorMessage(error),
+        error: true,
+      }
+    }
+
+    revalidatePath("/guestbook")
+
+    return {
+      message: "Message deleted.",
+    }
+  })
+
+export { createMessage, deleteMessage }

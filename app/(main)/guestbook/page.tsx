@@ -1,8 +1,8 @@
 import { getCurrentUser } from "@/lib/auth"
 import { getMessages } from "@/lib/db/queries/guestbook"
 import SignInButton from "@/components/auth/sign-in-button"
-import MessageForm from "@/components/message-form"
-import Messages from "@/components/messages"
+import MessageForm from "@/components/guestbook/message-form"
+import Messages from "@/components/guestbook/messages"
 import PageHeading from "@/components/page-heading"
 
 export default async function GuestbookPage() {

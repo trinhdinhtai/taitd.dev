@@ -1,26 +1,19 @@
+import authConfig from "@/auth.config"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import type { NextAuthConfig } from "next-auth"
 import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
-import Google from "next-auth/providers/google"
 
 import { env } from "@/env.mjs"
 import { prisma } from "@/lib/prisma"
 
 export const config = {
-  theme: {
-    logo: "https://next-auth.js.org/img/logo/logo-sm.png",
+  adapter: PrismaAdapter(prisma),
+  session: { strategy: "jwt" },
+  basePath: "/api/auth",
+  secret: env.AUTH_SECRET,
+  pages: {
+    error: "/auth/error",
   },
-  providers: [
-    Google({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    }),
-    GitHub({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
-    }),
-  ],
   callbacks: {
     async session({ token, session }) {
       if (token.sub && session.user) {
@@ -29,8 +22,7 @@ export const config = {
       return session
     },
   },
-  adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
+  ...authConfig,
 } satisfies NextAuthConfig
 
 export const {

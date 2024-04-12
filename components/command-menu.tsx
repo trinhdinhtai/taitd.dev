@@ -7,7 +7,6 @@ import { CommandIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 
 import { navbarLinks } from "@/config/navbarLinks"
-import { cn } from "@/lib/utils"
 
 import { Icons } from "./icons"
 import { Button } from "./ui/button"
@@ -48,11 +47,11 @@ export default function CommandMenu({ ...props }: DialogProps) {
       <Button
         variant="ghost"
         size="sm"
-        className="h-8 w-8 px-0"
+        className="size-8 px-0"
         onClick={() => setOpen(true)}
         {...props}
       >
-        <CommandIcon className="size-5" />
+        <CommandIcon className="size-5" strokeWidth="1.5" />
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>

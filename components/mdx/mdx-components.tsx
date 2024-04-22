@@ -93,7 +93,7 @@ export const components = {
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        "my-6 border-l-4 pl-6 italic [&>*]:text-gray-800",
+        "my-6 border-l-4 pl-6 italic [&>*]:text-gray-800 dark:[&>*]:text-gray-300",
         className
       )}
       {...props}

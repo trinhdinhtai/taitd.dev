@@ -22,7 +22,7 @@ export default function CodeBlock({
     <>
       <pre
         className={cn(
-          "mb-4 mt-6 overflow-x-auto rounded-b-lg border border-t-0 border-gray-600 !bg-[#0A0A0A] py-4",
+          "mb-4 mt-6 overflow-x-auto rounded-lg border bg-white py-4 dark:!bg-[#0A0A0A]",
           className
         )}
         {...props}

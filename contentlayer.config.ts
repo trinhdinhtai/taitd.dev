@@ -199,7 +199,11 @@ export default makeSource({
         // @ts-ignore
         rehypePrettyCode,
         {
-          theme: "github-dark",
+          theme: {
+            dark: "github-dark-dimmed",
+            light: "github-light",
+          },
+          keepBackground: true,
           onVisitLine(node: any) {
             if (node.children.length === 0) {
               node.children = [{ type: "text", value: " " }]

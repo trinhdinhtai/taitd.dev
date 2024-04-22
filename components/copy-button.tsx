@@ -36,18 +36,15 @@ const CopyButton = ({
       <Button
         {...props}
         size="icon"
-        variant="ghost"
-        className={cn(
-          "relative z-10 size-6 border-zinc-400 bg-zinc-600 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50",
-          className
-        )}
+        variant="outline"
+        className={cn("relative z-10 size-7", className)}
         onClick={handleCopy}
       >
         <span className="sr-only">Copy</span>
         {hasCopied ? (
-          <Icons.check className="h-3 w-3" />
+          <Icons.check className="size-4" />
         ) : (
-          <Icons.copy className="h-3 w-3" />
+          <Icons.copy className="size-4" />
         )}
       </Button>
     </div>

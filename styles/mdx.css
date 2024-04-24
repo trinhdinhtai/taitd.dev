@@ -11,7 +11,7 @@ html.dark code[data-theme*=" "] span {
 }
 
 [data-rehype-pretty-code-figure] {
-  @apply relative text-sm;
+  @apply relative my-6 rounded-lg border;
 }
 
 [data-rehype-pretty-code-figure] code {

@@ -18,11 +18,12 @@ export default function CodeBlock({
   __withMeta__,
   ...props
 }: Readonly<CodeBlockProps>) {
+  console.log("__rawString__:", __rawString__)
   return (
     <>
       <pre
         className={cn(
-          "mb-4 mt-6 overflow-x-auto rounded-lg border bg-white py-4 dark:!bg-[#0A0A0A]",
+          "overflow-x-auto rounded-lg bg-white py-4 dark:!bg-[#0A0A0A]",
           className
         )}
         {...props}

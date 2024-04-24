@@ -10,6 +10,7 @@ import CoverImage from "@/components/cover-image"
 import FolderTree from "@/components/folder-tree"
 import GridContainer from "@/components/grid-container"
 import LoadingSkeleton from "@/components/loading-skeleton"
+import CodeBlockHeader from "@/components/mdx/code-block-header"
 import CodeBlock from "@/components/mdx/codeblock"
 import Youtube from "@/components/mdx/youtube"
 
@@ -138,6 +139,7 @@ export const components = {
     />
   ),
   pre: CodeBlock,
+  figcaption: CodeBlockHeader,
   code: ({ className, ...props }) => (
     <code
       className={cn(

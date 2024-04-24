@@ -203,7 +203,10 @@ export default makeSource({
             dark: "github-dark-dimmed",
             light: "github-light",
           },
-          keepBackground: true,
+          keepBackground: false,
+          defaultLang: {
+            block: "plaintext",
+          },
           onVisitLine(node: any) {
             if (node.children.length === 0) {
               node.children = [{ type: "text", value: " " }]

@@ -32,11 +32,11 @@ const CopyButton = ({
   }, [hasCopied])
 
   return (
-    <div className={cn("absolute right-4 top-4", withMeta && "top-16")}>
+    <div className={cn("absolute right-2 top-1", withMeta && "top-16")}>
       <Button
         {...props}
         size="icon"
-        variant="outline"
+        variant="ghost"
         className={cn("relative z-10 size-7", className)}
         onClick={handleCopy}
       >

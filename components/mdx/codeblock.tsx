@@ -18,7 +18,6 @@ export default function CodeBlock({
   __withMeta__,
   ...props
 }: Readonly<CodeBlockProps>) {
-  console.log("__rawString__:", __rawString__)
   return (
     <>
       <pre

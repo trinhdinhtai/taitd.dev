@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { useMDXComponent } from "next-contentlayer/hooks"
 
 import { cn } from "@/lib/utils"
@@ -164,7 +163,6 @@ export const components = {
       {...props}
     />
   ),
-  Image,
   Callout,
   GridContainer,
   LoadingSkeleton,

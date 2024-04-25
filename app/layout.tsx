@@ -111,7 +111,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="pointer-events-none fixed inset-0 z-[99] h-full w-full overflow-hidden bg-[url(/noise.png)] opacity-30"></div>
+            <div className="pointer-events-none fixed inset-0 z-[99] h-full w-full overflow-hidden bg-[url(/noise.png)] opacity-40 dark:opacity-60" />
             {children}
             <Toaster position="bottom-right" className="!font-sans" />
             <ScrollToTopButton />

@@ -80,3 +80,8 @@ interface UseData {
   Icon: (props: React.ComponentProps<"svg">) => JSX.Element
   link: string
 }
+
+interface SeriesWithPosts {
+  title: string
+  posts: Post[]
+}

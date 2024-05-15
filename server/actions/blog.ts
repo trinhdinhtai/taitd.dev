@@ -2,7 +2,7 @@
 
 import { db } from "@/server/db"
 
-export const getBlogReactionsCount = async () => {
+const getBlogReactionsCount = async () => {
   const reactionsCount = await db.postFavorite.aggregate({
     _sum: {
       likes: true,
@@ -11,3 +11,19 @@ export const getBlogReactionsCount = async () => {
 
   return reactionsCount._sum.likes
 }
+
+const getPostMetrics = async (slug: string) => {
+  const post = await db.post.findFirst({
+    where: {
+      slug,
+    },
+    select: {
+      views: true,
+      likes: true,
+    },
+  })
+
+  return { views: post?.views, likes: post?.likes }
+}
+
+export { getBlogReactionsCount, getPostMetrics }

@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton"
+import Counter from "@/components/counter"
 
 interface StatCardProps {
   card: { title: string; link?: string; value?: string | number }
@@ -15,7 +16,11 @@ export default function StatCard({ card }: StatCardProps) {
       rel="noreferrer"
     >
       <h1 className="my-2 text-3xl font-bold text-gray-600 group-hover:text-black dark:text-gray-200 dark:group-hover:text-white">
-        {value ?? <Skeleton className="h-[36px] w-28 rounded-sm" />}
+        {value ? (
+          <Counter value={value} digits={2} />
+        ) : (
+          <Skeleton className="h-[36px] w-28 rounded-sm" />
+        )}
       </h1>
 
       <span className="font-medium text-gray-600 group-hover:text-black dark:text-gray-400 dark:group-hover:text-white">

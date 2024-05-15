@@ -3,7 +3,7 @@ import { allPosts } from "@/.contentlayer/generated"
 import { compareDesc } from "date-fns"
 
 import PageHeading from "@/components/page-heading"
-import PostCard from "@/components/post-card"
+import FilteredPost from "@/components/posts/filtered-posts"
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -20,16 +20,10 @@ const BlogPage = () => {
     <>
       <PageHeading
         title="Blog"
-        description="A blog built using Contentlayer. Posts are written in MDX."
+        description={`In December 2021, I began producing articles, mostly regarding software and information sharing. On my blog, I have written ${posts.length} items in total. In the search box below, you can look for articles by title.`}
       />
 
-      {posts?.length ? (
-        <div className="grid gap-10 lg:grid-cols-2">
-          {posts.map((post, index) => (
-            <PostCard key={post._id} post={post} index={index} />
-          ))}
-        </div>
-      ) : null}
+      <FilteredPost posts={posts} />
     </>
   )
 }

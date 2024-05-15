@@ -8,6 +8,9 @@ import { Metadata } from "next"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner"
+import Footer from "@/components/layout/footer"
+import MainNavbar from "@/components/layout/main-nav"
+import Logo from "@/components/logo"
 import { QueryProvider } from "@/components/providers/query-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { ScrollToTopButton } from "@/components/scroll-to-top-button"
@@ -112,7 +115,20 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <div className="pointer-events-none fixed inset-0 z-[99] h-full w-full overflow-hidden bg-[url(/noise.png)] opacity-40 dark:opacity-60" />
-            {children}
+            <div className="flex min-h-screen flex-col">
+              <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-md">
+                <div className="container lg:max-w-4xl xl:max-w-6xl">
+                  <div className="flex h-20 items-center space-x-8 py-6">
+                    <Logo />
+                    <MainNavbar />
+                  </div>
+                </div>
+              </header>
+              <main className="container flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl">
+                {children}
+              </main>
+              <Footer />
+            </div>
             <Toaster position="bottom-right" className="!font-sans" />
             <ScrollToTopButton />
             <TailwindIndicator />

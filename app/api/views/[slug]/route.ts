@@ -1,6 +1,5 @@
+import { db } from "@/server/db"
 import * as z from "zod"
-
-import { prisma } from "@/lib/prisma"
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -18,7 +17,7 @@ export async function GET(
 
     const { slug } = params
 
-    const post = await prisma.post.findUnique({
+    const post = await db.post.findUnique({
       where: { slug },
     })
 
@@ -45,7 +44,7 @@ export async function POST(
     const { slug } = params
 
     // Update the post.
-    const post = await prisma.post.upsert({
+    const post = await db.post.upsert({
       where: { slug },
       create: { slug, views: 1 },
       update: { views: { increment: 1 } },

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
+import { db } from "@/server/db"
 
-import { prisma } from "@/lib/prisma"
 import PageHeading from "@/components/page-heading"
 import Projects from "@/components/projects"
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export const revalidate = 60
 
 export default async function ProjectPage() {
-  const projects = await prisma.project.findMany({
+  const projects = await db.project.findMany({
     include: {
       projectStack: {
         include: {

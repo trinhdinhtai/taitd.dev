@@ -1,13 +1,13 @@
 import authConfig from "@/auth.config"
+import { db } from "@/server/db"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import type { NextAuthConfig } from "next-auth"
 import NextAuth from "next-auth"
 
 import { env } from "@/env.mjs"
-import { prisma } from "@/lib/prisma"
 
 export const config = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   basePath: "/api/auth",
   secret: env.AUTH_SECRET,

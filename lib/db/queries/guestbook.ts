@@ -1,7 +1,7 @@
-import { prisma } from "@/lib/prisma"
+import { db } from "@/server/db"
 
 export const getMessages = async () => {
-  const messages = await prisma.guestbook.findMany({
+  const messages = await db.guestbook.findMany({
     select: {
       id: true,
       message: true,

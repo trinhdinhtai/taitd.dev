@@ -1,8 +1,7 @@
 import { createHash } from "crypto"
 import type { NextApiRequest, NextApiResponse } from "next"
+import { db } from "@/server/db"
 import { z } from "zod"
-
-import { prisma } from "@/lib/prisma"
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,12 +31,12 @@ export default async function handler(
       case "GET": {
         const [post, user] = await Promise.all([
           // get the number of likes this post has
-          prisma.post.findUnique({
+          db.post.findUnique({
             where: { slug },
           }),
 
           // get the number of times the current user has liked this post
-          prisma.postFavorite.findUnique({
+          db.postFavorite.findUnique({
             where: { id: sessionId },
           }),
         ])
@@ -58,7 +57,7 @@ export default async function handler(
         // route receives
         const [post, user] = await Promise.all([
           // increment the number of times everyone has liked this post
-          prisma.post.upsert({
+          db.post.upsert({
             where: { slug },
             create: {
               slug,
@@ -72,7 +71,7 @@ export default async function handler(
           }),
 
           // increment the number of times this user has liked this post
-          prisma.postFavorite.upsert({
+          db.postFavorite.upsert({
             where: { id: sessionId },
             create: {
               id: sessionId,

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
+import { db } from "@/server/db"
 
-import { prisma } from "@/lib/prisma"
 import PageHeading from "@/components/page-heading"
 import ProjectContent from "@/components/project/project-content"
 
@@ -16,7 +16,7 @@ export default async function ProjectPage({
   params,
 }: Readonly<ProjectPageProps>) {
   const slug = params.slug
-  const project = await prisma.project.findFirst({
+  const project = await db.project.findFirst({
     where: {
       slug: {
         equals: slug,

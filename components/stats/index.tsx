@@ -1,5 +1,6 @@
 "use client"
 
+import { getBlogReactionsCount } from "@/server/actions/blog"
 import { useQuery } from "@tanstack/react-query"
 
 import { Percentage } from "@/types/wakatime"
@@ -21,6 +22,13 @@ export default function Stats() {
   const { data: umamiData } = useQuery({
     queryKey: ["umamiData"],
     queryFn: () => fetch("/api/stats/views").then((res) => res.json()),
+  })
+
+  const { data: reactionsCount } = useQuery({
+    queryKey: ["get-reactions-count"],
+    queryFn: async () => await getBlogReactionsCount(),
+    retry: true,
+    retryDelay: 500,
   })
 
   const statCards = [
@@ -73,6 +81,12 @@ export default function Stats() {
       value: umamiData?.data.pageviews.value,
       description: "Total blog views",
       link: "https://us.umami.is/share/1hfu7snOAr7VkPJj/taitd.io.vn",
+    },
+    {
+      title: "Blog Reactions",
+      value: reactionsCount,
+      description: "Total blog reactions",
+      link: "https://taitd.io.vn/blog",
     },
   ]
 

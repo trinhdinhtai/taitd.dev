@@ -6,7 +6,7 @@ export const siteConfig: SiteConfig = {
   description:
     "This website is my personal blog. I write about web development, JavaScript, TypeScript, React, Node.js, CSS, and more.",
   url: "https://taitd.io.vn",
-  ogImage: "https://taitd.io.vn/og.jpg",
+  ogImage: "/images/og.png",
   links: {
     mail: "taitd153.dev@gmail.com",
     twitter: "https://twitter.com/taitddev",

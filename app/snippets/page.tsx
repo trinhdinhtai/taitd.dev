@@ -27,11 +27,12 @@ const SnippetsPage = () => {
         new Date(b.lastUpdatedDate)
       )
     })
+
   return (
     <>
       <PageHeading
-        title="Blog"
-        description="A blog built using Contentlayer. Posts are written in MDX."
+        title="Snippets"
+        description="A collection of code snippets that I use in my projects."
       />
 
       <Table>

@@ -9,7 +9,7 @@ import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
 import { visit } from "unist-util-visit"
 
-import { calculateReadingTime } from "./lib/utils"
+import { calculateReadingTime } from "./lib/read-time"
 
 export const tagOptions = [
   "starter",

@@ -39,7 +39,7 @@ export default function SeriesCard({ series }: SeriesCardProps) {
               </Link>
 
               <span className="text-xs text-muted-foreground">
-                {post.readingTime}
+                {post.readingTime} min read
               </span>
             </li>
           ))}

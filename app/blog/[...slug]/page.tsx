@@ -134,7 +134,7 @@ const PostPage = async ({ params }: PostPageProps) => {
               <time dateTime={post.date}>{formatDate(post.date)}</time>
             )}
             <span>&middot;</span>
-            <span>{post.readingTime}</span>
+            <span>{post.readingTime} min read</span>
             <span>&middot;</span>
             <PostMetrics slug={post.slugAsParams} />
           </div>

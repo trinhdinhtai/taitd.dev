@@ -4,11 +4,12 @@ import {
   defineNestedType,
   makeSource,
 } from "contentlayer/source-files"
-import readingTime from "reading-time"
 import rehypePrettyCode from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
 import { visit } from "unist-util-visit"
+
+import { calculateReadingTime } from "./lib/utils"
 
 export const tagOptions = [
   "starter",
@@ -51,8 +52,8 @@ const computedFields: ComputedFields = {
     resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
   },
   readingTime: {
-    type: "json",
-    resolve: (doc) => readingTime(doc.body.raw),
+    type: "number",
+    resolve: (doc) => calculateReadingTime(doc.body.raw),
   },
 }
 

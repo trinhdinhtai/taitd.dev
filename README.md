@@ -18,10 +18,10 @@ This is my personal blog built with [Next.js](https://nextjs.org/). This blog is
 
 - Next.js 13 with `/app` dir
 - Written in **TypeScript**
-- UI Components built using **Radix UI**
+- UI Components built using **Radix UI** & **shadcnui**
 - Styled using **Tailwind CSS**
 - ORM using **Prisma**
-- Database on **PlanetScale**
+- Database on **Supabase**
 - Documentation and blog using **MDX** and **Contentlayer**
 - Validations using **Zod**
 

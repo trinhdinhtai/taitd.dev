@@ -196,8 +196,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(prettier@3.0.3)
       '@types/node':
-        specifier: 20.12.7
-        version: 20.12.7
+        specifier: 20.12.12
+        version: 20.12.12
       '@types/react':
         specifier: 18.2.74
         version: 18.2.74
@@ -1627,8 +1627,8 @@ packages:
   '@types/ms@0.7.31':
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
 
-  '@types/node@20.12.7':
-    resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
+  '@types/node@20.12.12':
+    resolution: {integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==}
 
   '@types/parse5@6.0.3':
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
@@ -5260,7 +5260,7 @@ snapshots:
   '@grpc/grpc-js@1.8.14':
     dependencies:
       '@grpc/proto-loader': 0.7.7
-      '@types/node': 20.12.7
+      '@types/node': 20.12.12
 
   '@grpc/proto-loader@0.6.13':
     dependencies:
@@ -6321,7 +6321,7 @@ snapshots:
 
   '@types/ms@0.7.31': {}
 
-  '@types/node@20.12.7':
+  '@types/node@20.12.12':
     dependencies:
       undici-types: 5.26.5
 
@@ -9149,7 +9149,7 @@ snapshots:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.2
-      '@types/node': 20.12.7
+      '@types/node': 20.12.12
       long: 4.0.0
 
   protobufjs@7.2.3:
@@ -9164,7 +9164,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.12.7
+      '@types/node': 20.12.12
       long: 5.2.3
 
   proxy-from-env@1.1.0: {}

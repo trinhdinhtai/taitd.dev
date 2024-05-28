@@ -31,7 +31,7 @@ export async function GET(req: Request) {
     return new ImageResponse(
       (
         <div
-          tw="flex relative flex-col p-12 w-full h-full items-start"
+          tw="relative flex h-full w-full flex-col items-start p-12"
           style={{
             color: paint,
             background:
@@ -69,15 +69,15 @@ export async function GET(req: Request) {
               </clipPath>
             </defs>
           </svg>
-          <div tw="flex flex-col flex-1 py-10">
+          <div tw="flex flex-1 flex-col py-10">
             <div
-              tw="flex text-xl uppercase font-bold tracking-tight"
+              tw="flex text-xl font-bold uppercase tracking-tight"
               style={{ fontFamily: "Inter", fontWeight: "normal" }}
             >
               {values.type}
             </div>
             <div
-              tw="flex leading-[1.1] text-[80px] font-bold"
+              tw="flex text-[80px] font-bold leading-[1.1]"
               style={{
                 fontFamily: "Cal Sans",
                 fontWeight: "bold",
@@ -88,7 +88,7 @@ export async function GET(req: Request) {
               {heading}
             </div>
           </div>
-          <div tw="flex items-center w-full justify-between">
+          <div tw="flex w-full items-center justify-between">
             <div
               tw="flex text-xl"
               style={{ fontFamily: "Inter", fontWeight: "normal" }}
@@ -115,7 +115,7 @@ export async function GET(req: Request) {
                   stroke-linejoin="round"
                 />
               </svg>
-              <div tw="flex ml-2">github.com/trinhdinhtai/next-blog</div>
+              <div tw="ml-2 flex">github.com/trinhdinhtai/next-blog</div>
             </div>
           </div>
         </div>

@@ -60,7 +60,7 @@ const LikeButton = ({ slug }: LikeButtonProps) => {
             )}
           />
 
-          <HeartIcon className="relative w-5 transform text-rose-100 transition duration-500 delay-100 ease-out group-hover:scale-110" />
+          <HeartIcon className="relative w-5 transform text-rose-100 transition delay-100 duration-500 ease-out group-hover:scale-110" />
         </button>
       </div>
 

@@ -42,7 +42,7 @@
     "cmdk": "^0.2.0",
     "contentlayer": "^0.3.2",
     "date-fns": "^2.30.0",
-    "eslint": "8.39.0",
+    "eslint": "8.57.0",
     "eslint-config-next": "13.3.1",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.379.0",

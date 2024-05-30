@@ -33,7 +33,7 @@
     "@t3-oss/env-nextjs": "^0.10.0",
     "@tailwindcss/typography": "^0.5.9",
     "@tanstack/react-query": "^5.25.0",
-    "@umami/api-client": "^0.67.0",
+    "@umami/api-client": "^0.68.0",
     "@vercel/og": "^0.6.0",
     "autoprefixer": "10.4.19",
     "axios": "^1.5.0",

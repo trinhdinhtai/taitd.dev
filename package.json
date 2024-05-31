@@ -69,7 +69,7 @@
     "simple-icons": "^12.0.0",
     "sonner": "^1.4.3",
     "swr": "^2.2.4",
-    "tailwind-merge": "^1.14.0",
+    "tailwind-merge": "^2.0.0",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.4.5",

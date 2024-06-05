@@ -2,6 +2,7 @@ import { useMDXComponent } from "next-contentlayer/hooks"
 
 import { cn } from "@/lib/utils"
 import AboutContact from "@/components/about-contact"
+import { BlurImage } from "@/components/blur-image"
 import { Callout } from "@/components/callout"
 import CodePlayground from "@/components/code-playground"
 import ComponentPreview from "@/components/component-preview"
@@ -163,6 +164,16 @@ export const components = {
       {...props}
     />
   ),
+  Image: (props: React.ComponentPropsWithoutRef<typeof BlurImage>) => {
+    const { caption, alt, ...rest } = props
+
+    return (
+      <>
+        <BlurImage className="rounded-lg border" alt={alt} {...rest} />
+        {caption && <figcaption className="mt-4 text-center">{alt}</figcaption>}
+      </>
+    )
+  },
   Callout,
   GridContainer,
   LoadingSkeleton,

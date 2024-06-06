@@ -2,6 +2,8 @@
 
 import { SendIcon } from "lucide-react"
 
+import { useCurrentUser } from "@/hooks/use-current-user"
+import { useSignInModal } from "@/hooks/use-sign-in-modal"
 import { Button } from "@/components/ui/button"
 import CommentEditor, {
   useCommentEditor,
@@ -9,8 +11,10 @@ import CommentEditor, {
 
 export default function PostComment() {
   const [editor, setEditor] = useCommentEditor()
+  const user = useCurrentUser()
+  const { setOpen } = useSignInModal()
 
-  const disabled = false
+  const disabled = !user
 
   return (
     <form className="mt-6">
@@ -33,6 +37,14 @@ export default function PostComment() {
         >
           <SendIcon className="size-4" />
         </Button>
+
+        {!user ? (
+          <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/5 backdrop-blur-[0.8px]">
+            <Button type="button" onClick={() => setOpen(true)}>
+              Please sign in to comment
+            </Button>
+          </div>
+        ) : null}
       </div>
     </form>
   )

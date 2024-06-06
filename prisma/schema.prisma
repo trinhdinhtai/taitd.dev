@@ -12,11 +12,12 @@ datasource db {
 }
 
 model Post {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  slug      String   @unique
-  likes     Int      @default(0)
-  views     Int      @default(0)
+  id          String        @id @default(cuid())
+  createdAt   DateTime      @default(now())
+  slug        String        @unique
+  likes       Int           @default(0)
+  views       Int           @default(0)
+  PostComment PostComment[]
 }
 
 model PostFavorite {
@@ -94,14 +95,15 @@ model Session {
 }
 
 model User {
-  id            String      @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?     @unique
+  email         String?       @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   guestbook     Guestbook[]
+  PostComment   PostComment[]
 }
 
 model VerificationToken {
@@ -118,4 +120,17 @@ model Guestbook {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+}
+
+model PostComment {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message   Json
+  parentId  String?
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

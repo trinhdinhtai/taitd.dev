@@ -18,6 +18,7 @@ import BreadcrumbNavigation from "@/components/layout/breadcrumb-navigation"
 import LikeButton from "@/components/like-button"
 import PostMetrics from "@/components/post-metrics"
 import PostSeriesBox from "@/components/post-series"
+import PostComment from "@/components/posts/post-comment"
 import SocialShare from "@/components/social-share"
 import TableOfContents from "@/components/toc"
 
@@ -189,6 +190,7 @@ const PostPage = async ({ params }: PostPageProps) => {
 
         <hr className="my-4" />
 
+        {/* Post tag */}
         <div className="flex flex-row items-center justify-between">
           {post.tags && (
             <ul className="m-0 list-none space-x-2 p-0 text-sm text-muted-foreground">
@@ -209,6 +211,8 @@ const PostPage = async ({ params }: PostPageProps) => {
             url={`${BASE_URL}/${post._raw.flattenedPath}`}
           />
         </div>
+
+        <PostComment />
       </div>
 
       {/* Table of contents */}

@@ -124,7 +124,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       react-github-calendar:
         specifier: ^4.1.2
-        version: 4.1.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 4.1.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-hook-form:
         specifier: ^7.46.1
         version: 7.46.1(react@18.2.0)
@@ -4233,8 +4233,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  react-activity-calendar@2.2.7:
-    resolution: {integrity: sha512-U96ps+I2VFkscEtOcdPYlJK7chIAD1rRwA5P6cHHVVRYx0l+4zh7bCKdQNbwajGsuj/fY0AiNJCJcMNtMR7VJA==}
+  react-activity-calendar@2.2.9:
+    resolution: {integrity: sha512-p6OjMe0OMjnUciWw4rYDyUnTEGH1qkOnL1gbKOWVMn7za5Ycb0jSxC2ExQcoxSW14coFq09esGpwhGt/jBQguA==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
@@ -4247,13 +4247,13 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
-  react-error-boundary@4.0.12:
-    resolution: {integrity: sha512-kJdxdEYlb7CPC1A0SeUY38cHpjuu6UkvzKiAmqmOFL21VRfMhOcWxTCBgLVCO0VEMh9JhFNcVaXlV4/BTpiwOA==}
+  react-error-boundary@4.0.13:
+    resolution: {integrity: sha512-b6PwbdSv8XeOSYvjt8LpgpKrZ0yGdtZokYwkwV2wlcZbxgopHX/hgPl5VgpnoVOWd868n1hktM8Qm4b+02MiLQ==}
     peerDependencies:
       react: '>=16.13.1'
 
-  react-github-calendar@4.1.2:
-    resolution: {integrity: sha512-tSqugswiJk4YtTGkmnF50mSEjFIBew6hGanuqWvAmulS7hFF3VJ+UQlu5p6UybAVeRUFz2C1Eaq/nhcIIZhA0A==}
+  react-github-calendar@4.1.5:
+    resolution: {integrity: sha512-l3Uzt2TnDdFGeKSpqpbX1rwIYydQLmVk4kjS6lpBhtbKAG1ejVRLbqM1TJhLgRIzORlouzGz94sis3trCiTi7A==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
@@ -10174,7 +10174,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-activity-calendar@2.2.7(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  react-activity-calendar@2.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@types/chroma-js': 2.4.4
       chroma-js: 2.4.2
@@ -10192,17 +10192,17 @@ snapshots:
       react: 18.2.0
       scheduler: 0.23.0
 
-  react-error-boundary@4.0.12(react@18.2.0):
+  react-error-boundary@4.0.13(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.24.7
       react: 18.2.0
 
-  react-github-calendar@4.1.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  react-github-calendar@4.1.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       react: 18.2.0
-      react-activity-calendar: 2.2.7(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-activity-calendar: 2.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
-      react-error-boundary: 4.0.12(react@18.2.0)
+      react-error-boundary: 4.0.13(react@18.2.0)
 
   react-hook-form@7.46.1(react@18.2.0):
     dependencies:

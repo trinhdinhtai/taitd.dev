@@ -9,6 +9,7 @@ import ComponentPreview from "@/components/component-preview"
 import CoverImage from "@/components/cover-image"
 import FolderTree from "@/components/folder-tree"
 import GridContainer from "@/components/grid-container"
+import ImageZoom from "@/components/image-zoom"
 import LoadingSkeleton from "@/components/loading-skeleton"
 import CodeBlockHeader from "@/components/mdx/code-block-header"
 import CodeBlock from "@/components/mdx/codeblock"
@@ -169,7 +170,9 @@ export const components = {
 
     return (
       <>
-        <BlurImage className="rounded-lg border" alt={alt} {...rest} />
+        <ImageZoom>
+          <BlurImage className="mt-6 rounded-lg border" alt={alt} {...rest} />
+        </ImageZoom>
         {caption && <figcaption className="mt-4 text-center">{alt}</figcaption>}
       </>
     )

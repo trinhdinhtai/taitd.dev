@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { allPages } from "@/.contentlayer/generated"
 
-import { env } from "@/env.mjs"
+import { env } from "@/env"
 import { siteConfig } from "@/config/site"
 import { absoluteUrl } from "@/lib/utils"
 import Mdx from "@/components/mdx/mdx-components"

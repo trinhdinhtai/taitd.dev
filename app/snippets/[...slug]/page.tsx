@@ -8,7 +8,7 @@ import "@/styles/mdx.css"
 
 import { Metadata } from "next"
 
-import { env } from "@/env.mjs"
+import { env } from "@/env"
 
 const BASE_URL = env.NEXT_PUBLIC_APP_URL
 

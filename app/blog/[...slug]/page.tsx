@@ -11,7 +11,7 @@ import "@/styles/mdx.css"
 import { Metadata } from "next"
 import { PostSeries, SeriesItem } from "@/types"
 
-import { env } from "@/env.mjs"
+import { env } from "@/env"
 import { siteConfig } from "@/config/site"
 import { getTableOfContents } from "@/lib/toc"
 import BreadcrumbNavigation from "@/components/layout/breadcrumb-navigation"

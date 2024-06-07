@@ -16,6 +16,8 @@ import CommentEditor, {
 export default function CommentForm() {
   const { slug } = useCommentsContext()
   const [editor, setEditor] = useCommentEditor()
+  const utils = api.useUtils()
+
   const user = useCurrentUser()
   const { setOpen } = useSignInModal()
 
@@ -27,6 +29,7 @@ export default function CommentForm() {
       toast.success("Comment posted")
     },
     onError: (error) => toast.error(error.message),
+    onSettled: () => utils.comment.getAll.invalidate(),
   })
 
   const handlePostComment = async (event: FormEvent<HTMLFormElement>) => {

@@ -13,19 +13,17 @@ export default function CommentList() {
 
   return (
     <div className="space-y-2 rounded-lg border py-2 dark:bg-zinc-900/30">
-      {isLoading ? (
-        <Loader className="size-4 animate-spin" />
-      ) : (
-        comments?.map((comment) => (
-          <CommentItem key={comment.id} comment={comment} />
-        ))
-      )}
+      <div className="flex items-center justify-center">
+        {isLoading ? <Loader className="size-4 animate-spin" /> : null}
 
-      {!comments?.length ? (
-        <div className="flex min-h-10 items-center justify-center">
+        {!isLoading && !comments?.length ? (
           <p className="text-sm text-muted-foreground">No comments</p>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
+
+      {comments?.map((comment) => (
+        <CommentItem key={comment.id} comment={comment} />
+      ))}
     </div>
   )
 }

@@ -212,7 +212,7 @@ const PostPage = async ({ params }: PostPageProps) => {
           />
         </div>
 
-        <PostComment />
+        <PostComment slug={post.slugAsParams} />
       </div>
 
       {/* Table of contents */}

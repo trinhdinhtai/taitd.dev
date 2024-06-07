@@ -55,7 +55,7 @@
     "date-fns": "^3.0.0",
     "framer-motion": "^11.0.0",
     "jiti": "^1.21.3",
-    "lucide-react": "^0.383.0",
+    "lucide-react": "^0.390.0",
     "next": "14.2.3",
     "next-auth": "5.0.0-beta.19",
     "next-contentlayer": "^0.3.2",

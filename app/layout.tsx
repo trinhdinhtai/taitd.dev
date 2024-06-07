@@ -4,14 +4,16 @@ import localFont from "next/font/local"
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
+import { TRPCReactProvider } from "@/trpc/react"
+import { SessionProvider } from "next-auth/react"
 
+import { env } from "@/env"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner"
 import Footer from "@/components/layout/footer"
 import MainNavbar from "@/components/layout/main-nav"
 import Logo from "@/components/logo"
-import { QueryProvider } from "@/components/providers/query-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { ScrollToTopButton } from "@/components/scroll-to-top-button"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -86,54 +88,56 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const isProduction = process.env.NODE_ENV === "production"
+  const isProduction = env.NODE_ENV === "production"
 
   return (
-    <QueryProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            "min-h-screen font-sans antialiased",
-            fontSans.variable,
-            fontCode.variable,
-            fontHeading.variable
-          )}
-        >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="pointer-events-none fixed inset-0 z-[99] h-full w-full overflow-hidden bg-[url(/noise.png)] opacity-40 dark:opacity-60" />
-            <div className="flex min-h-screen flex-col">
-              <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-md">
-                <div className="container lg:max-w-4xl xl:max-w-6xl">
-                  <div className="flex h-20 items-center space-x-8 py-6">
-                    <Logo />
-                    <MainNavbar />
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen font-sans antialiased",
+          fontSans.variable,
+          fontCode.variable,
+          fontHeading.variable
+        )}
+      >
+        <TRPCReactProvider>
+          <SessionProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="pointer-events-none fixed inset-0 z-[99] h-full w-full overflow-hidden bg-[url(/noise.png)] opacity-40 dark:opacity-60" />
+              <div className="flex min-h-screen flex-col">
+                <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-md">
+                  <div className="container lg:max-w-4xl xl:max-w-6xl">
+                    <div className="flex h-20 items-center space-x-8 py-6">
+                      <Logo />
+                      <MainNavbar />
+                    </div>
                   </div>
-                </div>
-              </header>
-              <main className="container flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl">
-                {children}
-              </main>
-              <Footer />
-            </div>
-            <Toaster position="bottom-right" className="!font-sans" />
-            <ScrollToTopButton />
-            <TailwindIndicator />
-          </ThemeProvider>
+                </header>
+                <main className="container flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl">
+                  {children}
+                </main>
+                <Footer />
+              </div>
+              <Toaster position="bottom-right" className="!font-sans" />
+              <ScrollToTopButton />
+              <TailwindIndicator />
+            </ThemeProvider>
+          </SessionProvider>
+        </TRPCReactProvider>
 
-          {isProduction && (
-            <script
-              defer
-              src="https://analytics.us.umami.is/script.js"
-              data-website-id="918e78b6-7a58-445d-9c09-1c0e53d6fe18"
-            ></script>
-          )}
-        </body>
-      </html>
-    </QueryProvider>
+        {isProduction && (
+          <script
+            defer
+            src="https://analytics.us.umami.is/script.js"
+            data-website-id="918e78b6-7a58-445d-9c09-1c0e53d6fe18"
+          ></script>
+        )}
+      </body>
+    </html>
   )
 }

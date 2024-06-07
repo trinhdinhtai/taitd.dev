@@ -95,15 +95,16 @@ model Session {
 }
 
 model User {
-  id            String        @id @default(cuid())
-  name          String?
-  email         String?       @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  guestbook     Guestbook[]
-  PostComment   PostComment[]
+  id                  String                @id @default(cuid())
+  name                String?
+  email               String?               @unique
+  emailVerified       DateTime?
+  image               String?
+  accounts            Account[]
+  sessions            Session[]
+  guestbook           Guestbook[]
+  PostComment         PostComment[]
+  PostCommentReaction PostCommentReaction[]
 }
 
 model VerificationToken {
@@ -123,14 +124,24 @@ model Guestbook {
 }
 
 model PostComment {
-  id        String   @id @default(cuid())
-  postId    String
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  id                  String                @id @default(cuid())
+  postId              String
+  post                Post                  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId              String
+  user                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message             Json
+  parentId            String?
+  isDeleted           Boolean               @default(false)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  PostCommentReaction PostCommentReaction[]
+}
+
+model PostCommentReaction {
+  id        String      @id @default(cuid())
+  commentId String
+  comment   PostComment @relation(fields: [commentId], references: [id], onDelete: Cascade)
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  message   Json
-  parentId  String?
-  isDeleted Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
 }

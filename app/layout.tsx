@@ -5,6 +5,7 @@ import "@/styles/globals.css"
 
 import { Metadata } from "next"
 import { TRPCReactProvider } from "@/trpc/react"
+import { SessionProvider } from "next-auth/react"
 
 import { env } from "@/env"
 import { siteConfig } from "@/config/site"
@@ -88,7 +89,6 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const isProduction = env.NODE_ENV === "production"
-  console.log("isProduction:", isProduction)
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -101,31 +101,33 @@ export default function RootLayout({
         )}
       >
         <TRPCReactProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="pointer-events-none fixed inset-0 z-[99] h-full w-full overflow-hidden bg-[url(/noise.png)] opacity-40 dark:opacity-60" />
-            <div className="flex min-h-screen flex-col">
-              <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-md">
-                <div className="container lg:max-w-4xl xl:max-w-6xl">
-                  <div className="flex h-20 items-center space-x-8 py-6">
-                    <Logo />
-                    <MainNavbar />
+          <SessionProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="pointer-events-none fixed inset-0 z-[99] h-full w-full overflow-hidden bg-[url(/noise.png)] opacity-40 dark:opacity-60" />
+              <div className="flex min-h-screen flex-col">
+                <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-md">
+                  <div className="container lg:max-w-4xl xl:max-w-6xl">
+                    <div className="flex h-20 items-center space-x-8 py-6">
+                      <Logo />
+                      <MainNavbar />
+                    </div>
                   </div>
-                </div>
-              </header>
-              <main className="container flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl">
-                {children}
-              </main>
-              <Footer />
-            </div>
-            <Toaster position="bottom-right" className="!font-sans" />
-            <ScrollToTopButton />
-            <TailwindIndicator />
-          </ThemeProvider>
+                </header>
+                <main className="container flex-1 py-6 md:py-10 lg:max-w-4xl xl:max-w-6xl">
+                  {children}
+                </main>
+                <Footer />
+              </div>
+              <Toaster position="bottom-right" className="!font-sans" />
+              <ScrollToTopButton />
+              <TailwindIndicator />
+            </ThemeProvider>
+          </SessionProvider>
         </TRPCReactProvider>
 
         {isProduction && (

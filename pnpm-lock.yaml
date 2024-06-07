@@ -88,13 +88,13 @@ importers:
         version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/pm@2.4.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.394(@trpc/server@11.0.0-rc.394)
+        version: 11.0.0-rc.396(@trpc/server@11.0.0-rc.396)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-rc.394(@tanstack/react-query@5.40.1(react@18.2.0))(@trpc/client@11.0.0-rc.394(@trpc/server@11.0.0-rc.394))(@trpc/server@11.0.0-rc.394)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 11.0.0-rc.396(@tanstack/react-query@5.40.1(react@18.2.0))(@trpc/client@11.0.0-rc.396(@trpc/server@11.0.0-rc.396))(@trpc/server@11.0.0-rc.396)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.394
+        version: 11.0.0-rc.396
       '@umami/api-client':
         specifier: ^0.68.0
         version: 0.68.0(next@14.2.3(@babel/core@7.24.7)(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -160,7 +160,7 @@ importers:
         version: 7.51.5(react@18.2.0)
       react-icons:
         specifier: ^5.0.1
-        version: 5.0.1(react@18.2.0)
+        version: 5.2.1(react@18.2.0)
       react-intersection-observer:
         specifier: ^9.8.0
         version: 9.8.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1592,22 +1592,22 @@ packages:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
 
-  '@trpc/client@11.0.0-rc.394':
-    resolution: {integrity: sha512-efXKQAyNtx0aSbT+tqJgcE8TG1VEqBY0DJ/qCDi7HXNEgIiS0fzkHBC7ph4hsz5w4cOBZy+AlOvXcvINTRz/IQ==}
+  '@trpc/client@11.0.0-rc.396':
+    resolution: {integrity: sha512-dDr70zaur6U2woaYS2bf4LIwrZ8iGXXTcLNZCt5POyQXtdwRud7qYD1EZ36sB1bqmNa/uTikohwGfa9qV5RxlQ==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.394+eab054f77
+      '@trpc/server': 11.0.0-rc.396+e2bcb75a9
 
-  '@trpc/react-query@11.0.0-rc.394':
-    resolution: {integrity: sha512-/zuO70L5nExrPM6KNsW/I38CosQdE5ef0uTisAzz+6epZoyqXqyZUM8JG2Z9Tz84sNT0xq7Izg+3BBIH2YYlcg==}
+  '@trpc/react-query@11.0.0-rc.396':
+    resolution: {integrity: sha512-fLT+jAbhKTtGSxorO0kZUYeoKMoHPSL2yIrfe3lQdvXGvaOoqTVfEnknOGuIAqnHifMn0frN4L+HXSj0otzLnQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.25.0
-      '@trpc/client': 11.0.0-rc.394+eab054f77
-      '@trpc/server': 11.0.0-rc.394+eab054f77
+      '@trpc/client': 11.0.0-rc.396+e2bcb75a9
+      '@trpc/server': 11.0.0-rc.396+e2bcb75a9
       react: '>=18.2.0'
       react-dom: '>=18.2.0'
 
-  '@trpc/server@11.0.0-rc.394':
-    resolution: {integrity: sha512-j6iDUSea5pFL0/vrwF551TucQiz8+EiJuBkmfDVA1/BCN1zk+dwnWtL8ploTKWVL0xAyHH6NcfwRtRbt9Wj/lA==}
+  '@trpc/server@11.0.0-rc.396':
+    resolution: {integrity: sha512-xn5uElk64Ji2HXp4dy7/GfMfn/8SiTsWRYPvAGrVspM9w0TWKSwr4VF/RfZGi2m75LhKP7q0PbiBHTpjl5UgFQ==}
 
   '@types/acorn@4.0.6':
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
@@ -4335,8 +4335,8 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
 
-  react-icons@5.0.1:
-    resolution: {integrity: sha512-WqLZJ4bLzlhmsvme6iFdgO8gfZP17rfjYEJ2m9RsZjZ+cc4k1hTzknEz63YS1MeT50kVzoa1Nz36f4BEx+Wigw==}
+  react-icons@5.2.1:
+    resolution: {integrity: sha512-zdbW5GstTzXaVKvGSyTaBalt7HSfuK5ovrzlpyiWHAFXndXTdd/1hdDHI4xBM1Mn7YriT6aqESucFl9kEXzrdw==}
     peerDependencies:
       react: '*'
 
@@ -6720,19 +6720,19 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@trpc/client@11.0.0-rc.394(@trpc/server@11.0.0-rc.394)':
+  '@trpc/client@11.0.0-rc.396(@trpc/server@11.0.0-rc.396)':
     dependencies:
-      '@trpc/server': 11.0.0-rc.394
+      '@trpc/server': 11.0.0-rc.396
 
-  '@trpc/react-query@11.0.0-rc.394(@tanstack/react-query@5.40.1(react@18.2.0))(@trpc/client@11.0.0-rc.394(@trpc/server@11.0.0-rc.394))(@trpc/server@11.0.0-rc.394)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@trpc/react-query@11.0.0-rc.396(@tanstack/react-query@5.40.1(react@18.2.0))(@trpc/client@11.0.0-rc.396(@trpc/server@11.0.0-rc.396))(@trpc/server@11.0.0-rc.396)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@tanstack/react-query': 5.40.1(react@18.2.0)
-      '@trpc/client': 11.0.0-rc.394(@trpc/server@11.0.0-rc.394)
-      '@trpc/server': 11.0.0-rc.394
+      '@trpc/client': 11.0.0-rc.396(@trpc/server@11.0.0-rc.396)
+      '@trpc/server': 11.0.0-rc.396
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@trpc/server@11.0.0-rc.394': {}
+  '@trpc/server@11.0.0-rc.396': {}
 
   '@types/acorn@4.0.6':
     dependencies:
@@ -10309,7 +10309,7 @@ snapshots:
     dependencies:
       react: 18.2.0
 
-  react-icons@5.0.1(react@18.2.0):
+  react-icons@5.2.1(react@18.2.0):
     dependencies:
       react: 18.2.0
 

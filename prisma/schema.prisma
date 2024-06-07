@@ -96,10 +96,10 @@ model Session {
 
 model User {
   id                  String                @id @default(cuid())
-  name                String?
+  name                String
   email               String?               @unique
   emailVerified       DateTime?
-  image               String?
+  image               String
   accounts            Account[]
   sessions            Session[]
   guestbook           Guestbook[]
@@ -126,10 +126,10 @@ model Guestbook {
 model PostComment {
   id                  String                @id @default(cuid())
   postId              String
-  post                Post                  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post                Post                  @relation(fields: [postId], references: [slug], onDelete: Cascade)
   userId              String
   user                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  message             Json
+  content             Json
   parentId            String?
   isDeleted           Boolean               @default(false)
   createdAt           DateTime              @default(now())

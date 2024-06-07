@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils"
 
 type CodeBlockProps = HTMLAttributes<HTMLElement> & {
   title?: string
+  ["data-language"]?: string
 }
 
 export default function CodeBlockHeader({

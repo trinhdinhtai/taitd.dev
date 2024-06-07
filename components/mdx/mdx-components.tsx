@@ -1,3 +1,4 @@
+import { AnchorHTMLAttributes, HTMLAttributes } from "react"
 import { useMDXComponent } from "next-contentlayer/hooks"
 
 import { cn } from "@/lib/utils"
@@ -16,7 +17,7 @@ import CodeBlock from "@/components/mdx/codeblock"
 import Youtube from "@/components/mdx/youtube"
 
 export const components = {
-  h1: ({ className, ...props }) => (
+  h1: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
         "mt-2 scroll-m-20 text-4xl font-bold tracking-tight",
@@ -25,7 +26,7 @@ export const components = {
       {...props}
     />
   ),
-  h2: ({ className, ...props }) => (
+  h2: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
         "mt-10 scroll-m-28 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0",
@@ -34,7 +35,7 @@ export const components = {
       {...props}
     />
   ),
-  h3: ({ className, ...props }) => (
+  h3: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className={cn(
         "mt-8 scroll-m-28 text-2xl font-semibold tracking-tight",
@@ -43,7 +44,7 @@ export const components = {
       {...props}
     />
   ),
-  h4: ({ className, ...props }) => (
+  h4: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h4
       className={cn(
         "mt-8 scroll-m-28 text-xl font-semibold tracking-tight",
@@ -52,7 +53,7 @@ export const components = {
       {...props}
     />
   ),
-  h5: ({ className, ...props }) => (
+  h5: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h5
       className={cn(
         "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
@@ -61,7 +62,7 @@ export const components = {
       {...props}
     />
   ),
-  h6: ({ className, ...props }) => (
+  h6: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
     <h6
       className={cn(
         "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
@@ -70,29 +71,29 @@ export const components = {
       {...props}
     />
   ),
-  a: ({ className, ...props }) => (
+  a: ({ className, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
       className={cn("font-medium underline underline-offset-4", className)}
       target={props?.href?.startsWith("http") ? "_blank" : undefined}
       {...props}
     />
   ),
-  p: ({ className, ...props }) => (
+  p: ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
     <p
       className={cn("leading-8 [&:not(:first-child)]:mt-6", className)}
       {...props}
     />
   ),
-  ul: ({ className, ...props }) => (
+  ul: ({ className, ...props }: HTMLAttributes<HTMLElement>) => (
     <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
   ),
-  ol: ({ className, ...props }) => (
+  ol: ({ className, ...props }: HTMLAttributes<HTMLElement>) => (
     <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
   ),
-  li: ({ className, ...props }) => (
+  li: ({ className, ...props }: HTMLAttributes<HTMLElement>) => (
     <li className={cn("mt-2", className)} {...props} />
   ),
-  blockquote: ({ className, ...props }) => (
+  blockquote: ({ className, ...props }: HTMLAttributes<HTMLElement>) => (
     <blockquote
       className={cn(
         "my-6 border-l-4 pl-6 italic [&>*]:text-gray-800 dark:[&>*]:text-gray-300",
@@ -121,7 +122,7 @@ export const components = {
       {...props}
     />
   ),
-  th: ({ className, ...props }) => (
+  th: ({ className, ...props }: HTMLAttributes<HTMLTableCellElement>) => (
     <th
       className={cn(
         "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
@@ -130,7 +131,7 @@ export const components = {
       {...props}
     />
   ),
-  td: ({ className, ...props }) => (
+  td: ({ className, ...props }: HTMLAttributes<HTMLTableCellElement>) => (
     <td
       className={cn(
         "border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
@@ -141,7 +142,10 @@ export const components = {
   ),
   pre: CodeBlock,
   figcaption: CodeBlockHeader,
-  code: ({ className, ...props }) => (
+  code: ({
+    className,
+    ...props
+  }: React.ComponentPropsWithoutRef<typeof CodeBlockHeader>) => (
     <code
       className={cn(
         "relative rounded border bg-muted px-[0.3rem] py-0.5 font-mono text-[0.95em]",

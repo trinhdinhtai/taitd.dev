@@ -4,14 +4,15 @@ import localFont from "next/font/local"
 import "@/styles/globals.css"
 
 import { Metadata } from "next"
+import { TRPCReactProvider } from "@/trpc/react"
 
+import { env } from "@/env"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/sonner"
 import Footer from "@/components/layout/footer"
 import MainNavbar from "@/components/layout/main-nav"
 import Logo from "@/components/logo"
-import { QueryProvider } from "@/components/providers/query-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { ScrollToTopButton } from "@/components/scroll-to-top-button"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -86,19 +87,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const isProduction = process.env.NODE_ENV === "production"
+  const isProduction = env.NODE_ENV === "production"
+  console.log("isProduction:", isProduction)
 
   return (
-    <QueryProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            "min-h-screen font-sans antialiased",
-            fontSans.variable,
-            fontCode.variable,
-            fontHeading.variable
-          )}
-        >
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen font-sans antialiased",
+          fontSans.variable,
+          fontCode.variable,
+          fontHeading.variable
+        )}
+      >
+        <TRPCReactProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -124,16 +126,16 @@ export default function RootLayout({
             <ScrollToTopButton />
             <TailwindIndicator />
           </ThemeProvider>
+        </TRPCReactProvider>
 
-          {isProduction && (
-            <script
-              defer
-              src="https://analytics.us.umami.is/script.js"
-              data-website-id="918e78b6-7a58-445d-9c09-1c0e53d6fe18"
-            ></script>
-          )}
-        </body>
-      </html>
-    </QueryProvider>
+        {isProduction && (
+          <script
+            defer
+            src="https://analytics.us.umami.is/script.js"
+            data-website-id="918e78b6-7a58-445d-9c09-1c0e53d6fe18"
+          ></script>
+        )}
+      </body>
+    </html>
   )
 }

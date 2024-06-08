@@ -7,16 +7,9 @@ import { FcGoogle } from "react-icons/fc"
 
 import { Button } from "@/components/ui/button"
 
-const DEFAULT_LOGIN_REDIRECT = "/guestbook"
-
 export default function SocialSignInButton() {
-  const searchParams = useSearchParams()
-  const callbackUrl = searchParams?.get("callbackUrl")
-
   const handleClick = (provider: "google" | "github") => {
-    signIn(provider, {
-      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
-    })
+    signIn(provider)
   }
 
   return (

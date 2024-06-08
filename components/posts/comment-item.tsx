@@ -16,6 +16,7 @@ import CommentEditor, {
   useCommentEditor,
 } from "@/components/posts/comment-editor"
 import CommentMenu from "@/components/posts/comment-menu"
+import CommentReplies from "@/components/posts/comment-replies"
 import CommentReply from "@/components/posts/comment-reply"
 import Timestamp from "@/components/timestamp"
 
@@ -29,6 +30,7 @@ export default function CommentItem({ comment }: CommentItemProps) {
     id,
     parentId,
     content,
+    repliesCount,
     createdAt,
   } = comment
 
@@ -86,6 +88,8 @@ export default function CommentItem({ comment }: CommentItemProps) {
             />
 
             {isReplying ? <CommentReply /> : <CommentActions />}
+
+            {!parentId && repliesCount > 0 ? <CommentReplies /> : null}
           </div>
         </div>
       </div>

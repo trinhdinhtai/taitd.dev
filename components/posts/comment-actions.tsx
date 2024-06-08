@@ -19,7 +19,7 @@ export default function CommentActions() {
         className="gap-1"
       >
         <ThumbsUpIcon className="size-4" />
-        {comment.likes}
+        {comment.likesCount}
       </Button>
 
       <Button
@@ -29,8 +29,19 @@ export default function CommentActions() {
         className="gap-1"
       >
         <ThumbsDownIcon className="size-4" />
-        {comment.dislikes}
+        {comment.dislikesCount}
       </Button>
+
+      {!comment.parentId && isAuthenticated ? (
+        <Button
+          size="sm"
+          variant="secondary"
+          className="text-xs font-medium text-muted-foreground"
+          onClick={() => setIsReplying(true)}
+        >
+          Reply
+        </Button>
+      ) : null}
     </div>
   )
 }

@@ -32,7 +32,7 @@ export const commentRouter = createTRPCRouter({
       z.object({
         slug: z.string().min(1),
         parentId: z.string().optional(),
-        sort: z.enum(["newest", "oldest"]).optional(),
+        sort: z.enum(["asc", "desc"]).optional(),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -47,20 +47,26 @@ export const commentRouter = createTRPCRouter({
           user: true,
         },
         orderBy: {
-          createdAt: input.sort === "newest" ? "desc" : "asc",
+          createdAt: input.sort || "desc",
         },
       })
 
       const formattedComments = await Promise.all(
         query.map(async (comment) => {
-          const likes = await ctx.db.postCommentReaction.count({
+          const repliesCount = await ctx.db.postComment.count({
+            where: {
+              parentId: comment.id,
+            },
+          })
+
+          const likesCount = await ctx.db.postCommentReaction.count({
             where: {
               commentId: comment.id,
               like: true,
             },
           })
 
-          const dislikes = await ctx.db.postCommentReaction.count({
+          const dislikesCount = await ctx.db.postCommentReaction.count({
             where: {
               commentId: comment.id,
               like: false,
@@ -69,8 +75,9 @@ export const commentRouter = createTRPCRouter({
 
           return {
             ...comment,
-            likes,
-            dislikes,
+            likesCount,
+            dislikesCount,
+            repliesCount,
           }
         })
       )

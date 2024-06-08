@@ -21,7 +21,7 @@ export default function CommentForm() {
   const { isAuthenticated } = useCurrentUser()
   const { setOpen } = useSignInModal()
 
-  const commentMutation = api.comment.create.useMutation({
+  const { mutate, isPending } = api.comment.create.useMutation({
     onSuccess: () => {
       editor?.clearValue()
       toast.success("Comment posted")
@@ -29,6 +29,8 @@ export default function CommentForm() {
     onError: (error) => toast.error(error.message),
     onSettled: () => utils.comment.getAll.invalidate(),
   })
+
+  const disabled = !isAuthenticated || isPending
 
   const handlePostComment = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -42,7 +44,7 @@ export default function CommentForm() {
 
     const content = editor.getValue()
 
-    commentMutation.mutate({
+    mutate({
       slug,
       content,
     })
@@ -55,7 +57,7 @@ export default function CommentForm() {
           editor={editor}
           onChange={setEditor}
           placeholder={"Leave comment"}
-          disabled={!isAuthenticated}
+          disabled={disabled}
         />
 
         <Button
@@ -63,9 +65,9 @@ export default function CommentForm() {
           size="icon"
           className="absolute bottom-1.5 right-2 size-7"
           type="submit"
-          disabled={!isAuthenticated || !editor || editor.isEmpty}
+          disabled={disabled || !editor || editor.isEmpty}
           aria-label="Send comment"
-          aria-disabled={!isAuthenticated || !editor || editor.isEmpty}
+          aria-disabled={disabled || !editor || editor.isEmpty}
         >
           <SendIcon className="size-4" />
         </Button>

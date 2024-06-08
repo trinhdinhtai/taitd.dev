@@ -1,9 +1,6 @@
 "use client"
 
-import { SiGithub, SiGoogle } from "react-icons/si"
-
 import { useSignInModal } from "@/hooks/use-sign-in-modal"
-import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -11,23 +8,31 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import {
+  ResponsiveDialog,
+  ResponsiveDialogBody,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+} from "@/components/ui/responsive-dialog"
 import SocialSignInButton from "@/components/auth/social-sign-in-button"
 
 export default function SignInModal() {
   const { open, setOpen } = useSignInModal()
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
+    <ResponsiveDialog open={open} onOpenChange={setOpen}>
+      <ResponsiveDialogContent>
+        <ResponsiveDialogHeader>
           <DialogTitle className="text-left text-2xl">Sign in</DialogTitle>
           <DialogDescription className="text-left">
             to continue to taitd.io.vn
           </DialogDescription>
-        </DialogHeader>
+        </ResponsiveDialogHeader>
 
-        <SocialSignInButton />
-      </DialogContent>
-    </Dialog>
+        <ResponsiveDialogBody>
+          <SocialSignInButton />
+        </ResponsiveDialogBody>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   )
 }

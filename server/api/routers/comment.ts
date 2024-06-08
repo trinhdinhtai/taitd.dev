@@ -3,6 +3,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc"
+import type { RouterOutputs } from "@/trpc/react"
 import { TRPCError } from "@trpc/server"
 import { z } from "zod"
 
@@ -119,3 +120,5 @@ export const commentRouter = createTRPCRouter({
       })
     }),
 })
+
+export type GetCommentsResponse = RouterOutputs["comment"]["getAll"]

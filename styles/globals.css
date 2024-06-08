@@ -104,3 +104,8 @@
 .react-activity-calendar {
   width: 100% !important;
 }
+
+/* Comment highlighted */
+[id^="comment-"].highlighted-comment {
+  @apply bg-accent;
+}

@@ -2,8 +2,9 @@
 
 import { useCommentsContext } from "@/contexts/comments"
 import { api } from "@/trpc/react"
-import { Loader } from "lucide-react"
+import { Loader, Loader2Icon } from "lucide-react"
 
+import { useCommentHighlighter } from "@/hooks/use-comment-highlighter"
 import CommentItem from "@/components/posts/comment-item"
 
 export default function CommentList() {
@@ -11,19 +12,25 @@ export default function CommentList() {
 
   const { data: comments, isLoading } = api.comment.getAll.useQuery({ slug })
 
+  useCommentHighlighter(comments)
+
   return (
     <div className="space-y-2 rounded-lg border py-2 dark:bg-zinc-900/30">
-      <div className="flex items-center justify-center">
-        {isLoading ? <Loader className="size-4 animate-spin" /> : null}
+      {isLoading ? (
+        <div className="flex min-h-20 items-center justify-center">
+          <Loader2Icon className="size-7 animate-spin" />
+        </div>
+      ) : (
+        comments
+          ?.filter((c) => !c.parentId)
+          .map((comment) => <CommentItem key={comment.id} comment={comment} />)
+      )}
 
-        {!isLoading && !comments?.length ? (
+      {comments?.length === 0 ? (
+        <div className="flex min-h-20 items-center justify-center">
           <p className="text-sm text-muted-foreground">No comments</p>
-        ) : null}
-      </div>
-
-      {comments?.map((comment) => (
-        <CommentItem key={comment.id} comment={comment} />
-      ))}
+        </div>
+      ) : null}
     </div>
   )
 }

@@ -16,6 +16,8 @@ interface CommentItemProps {
 export default function CommentItem({ comment }: CommentItemProps) {
   const {
     user: { name, image },
+    id,
+    parentId,
     content,
     createdAt,
   } = comment
@@ -23,7 +25,10 @@ export default function CommentItem({ comment }: CommentItemProps) {
   const [editor, setEditor] = useCommentEditor()
 
   return (
-    <div className="overflow-hidden">
+    <div
+      className="overflow-hidden"
+      id={parentId ? `comment-${parentId}-${id}` : `comment-${id}`}
+    >
       <div className="flex gap-2 p-2 sm:px-4">
         <Avatar className="size-8">
           <AvatarImage src={image} />

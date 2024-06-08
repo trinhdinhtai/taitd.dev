@@ -2,7 +2,7 @@
 
 import { useCommentsContext } from "@/contexts/comments"
 import { api } from "@/trpc/react"
-import { Loader, Loader2Icon } from "lucide-react"
+import { Loader2Icon } from "lucide-react"
 
 import { useCommentHighlighter } from "@/hooks/use-comment-highlighter"
 import CommentItem from "@/components/posts/comment-item"

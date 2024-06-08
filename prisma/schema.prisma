@@ -143,5 +143,6 @@ model PostCommentReaction {
   comment   PostComment @relation(fields: [commentId], references: [id], onDelete: Cascade)
   userId    String
   user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  like      Boolean
   createdAt DateTime    @default(now())
 }

@@ -17,7 +17,7 @@ export default function Message({ message }: MessageProps) {
   const { id, message: body, user, createdAt } = message
 
   const isAuthor = user.email === siteConfig.author.email
-  const currentUser = useCurrentUser()
+  const { user: currentUser } = useCurrentUser()
 
   return (
     <div className="flex gap-3 px-3 text-sm">

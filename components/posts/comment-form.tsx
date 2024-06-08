@@ -18,10 +18,8 @@ export default function CommentForm() {
   const [editor, setEditor] = useCommentEditor()
   const utils = api.useUtils()
 
-  const user = useCurrentUser()
+  const { isAuthenticated } = useCurrentUser()
   const { setOpen } = useSignInModal()
-
-  const disabled = !user
 
   const commentMutation = api.comment.create.useMutation({
     onSuccess: () => {
@@ -57,7 +55,7 @@ export default function CommentForm() {
           editor={editor}
           onChange={setEditor}
           placeholder={"Leave comment"}
-          disabled={disabled}
+          disabled={!isAuthenticated}
         />
 
         <Button
@@ -65,14 +63,14 @@ export default function CommentForm() {
           size="icon"
           className="absolute bottom-1.5 right-2 size-7"
           type="submit"
-          disabled={disabled || !editor || editor.isEmpty}
+          disabled={!isAuthenticated || !editor || editor.isEmpty}
           aria-label="Send comment"
-          aria-disabled={disabled || !editor || editor.isEmpty}
+          aria-disabled={!isAuthenticated || !editor || editor.isEmpty}
         >
           <SendIcon className="size-4" />
         </Button>
 
-        {!user ? (
+        {!isAuthenticated ? (
           <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/5 backdrop-blur-[0.8px]">
             <Button type="button" onClick={() => setOpen(true)}>
               Please sign in to comment

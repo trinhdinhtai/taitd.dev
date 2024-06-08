@@ -8,7 +8,6 @@ import { signOut } from "next-auth/react"
 import { useFormStatus } from "react-dom"
 import { toast } from "sonner"
 
-import { useCurrentUser } from "@/hooks/use-current-user"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

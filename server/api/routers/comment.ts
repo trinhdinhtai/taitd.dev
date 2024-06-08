@@ -51,7 +51,31 @@ export const commentRouter = createTRPCRouter({
         },
       })
 
-      return query
+      const formattedComments = await Promise.all(
+        query.map(async (comment) => {
+          const likes = await ctx.db.postCommentReaction.count({
+            where: {
+              commentId: comment.id,
+              like: true,
+            },
+          })
+
+          const dislikes = await ctx.db.postCommentReaction.count({
+            where: {
+              commentId: comment.id,
+              like: false,
+            },
+          })
+
+          return {
+            ...comment,
+            likes,
+            dislikes,
+          }
+        })
+      )
+
+      return formattedComments
     }),
 
   create: protectedProcedure
@@ -122,3 +146,4 @@ export const commentRouter = createTRPCRouter({
 })
 
 export type GetCommentsResponse = RouterOutputs["comment"]["getAll"]
+export type CommentResponse = RouterOutputs["comment"]["getAll"][0]

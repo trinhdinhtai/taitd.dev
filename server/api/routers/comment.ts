@@ -3,6 +3,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc"
+import { TRPCError } from "@trpc/server"
 import { z } from "zod"
 
 const baseJSONContent = z.object({
@@ -73,5 +74,48 @@ export const commentRouter = createTRPCRouter({
       })
 
       return comment
+    }),
+
+  delete: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().min(1),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const session = ctx.session
+
+      // Check comment exists
+      const comment = await ctx.db.postComment.findFirst({
+        where: {
+          id: input.id,
+        },
+        include: {
+          user: true,
+        },
+      })
+
+      if (!comment) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Comment not found",
+        })
+      }
+
+      // Check if the user is the owner of the comment
+      if (comment.user.email !== session.user.email) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+        })
+      }
+
+      // TODO: If the comment has replies, just mark it as deleted and keep the replies.
+
+      // Otherwise, delete the comment
+      await ctx.db.postComment.delete({
+        where: {
+          id: input.id,
+        },
+      })
     }),
 })

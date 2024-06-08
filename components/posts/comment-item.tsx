@@ -3,6 +3,7 @@ import { PostComment, User } from "@prisma/client"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
+import CommentActions from "@/components/posts/comment-actions"
 import CommentEditor, {
   useCommentEditor,
 } from "@/components/posts/comment-editor"
@@ -38,6 +39,8 @@ export default function CommentItem({ comment }: CommentItemProps) {
 
               <Timestamp datetime={createdAt.toString()} />
             </div>
+
+            <CommentActions comment={comment} />
           </div>
 
           <CommentEditor

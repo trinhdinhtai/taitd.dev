@@ -1,23 +1,3 @@
----
-title: Copy text to clipboard
-description: Copy text to clipboard in Javascript
-category: Javascript
-lastUpdatedDate: "2024-01-13"
----
-
-## Javascript
-
-```js
-const copyToClipboard = (str) => {
-  if (navigator && navigator.clipboard && navigator.clipboard.writeText)
-    return navigator.clipboard.writeText(str)
-  return Promise.reject("The Clipboard API is not available.")
-}
-```
-
-## ReactJS hook
-
-```
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -66,4 +46,3 @@ export const useCopyToClipboard = (): {
 
   return { copy, isCopied }
 }
-```

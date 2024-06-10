@@ -1,5 +1,9 @@
+import Link from "next/link"
 import { allPosts } from "@/.contentlayer/generated"
 import { compareDesc } from "date-fns"
+
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 
 import PostCard from "./post-card"
 import SectionHeading from "./ui/section-heading"
@@ -22,6 +26,20 @@ const BlogSection = () => {
           ))}
         </div>
       ) : null}
+
+      <div className="my-8 flex items-center justify-center">
+        <Link
+          href="/blog"
+          className={cn(
+            buttonVariants({
+              variant: "outline",
+            }),
+            "rounded-xl"
+          )}
+        >
+          See all articles
+        </Link>
+      </div>
     </div>
   )
 }

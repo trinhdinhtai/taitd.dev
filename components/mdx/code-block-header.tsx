@@ -1,6 +1,7 @@
 "use client"
 
-import { HTMLAttributes } from "react"
+import { HTMLAttributes, ReactNode } from "react"
+import { TerminalIcon } from "lucide-react"
 import { IconType } from "react-icons"
 import { AiOutlineFileText, AiOutlineFolderOpen } from "react-icons/ai"
 import { BsFileEarmarkCodeFill } from "react-icons/bs"
@@ -33,51 +34,42 @@ export default function CodeBlockHeader({
 }: Readonly<CodeBlockProps>) {
   const language = props["data-language"]
 
-  let Icon: IconType
-  switch (language) {
-    case "html":
-      Icon = SiHtml5
-      break
-    case "css":
-      Icon = SiCss3
-      break
-    case "js":
-      Icon = IoLogoJavascript
-      break
-    case "bash":
-      Icon = SiGnubash
-      break
-    case "py":
-      Icon = SiPython
-      break
-    case "json":
-      Icon = VscJson
-      break
-    case "jsx":
-      Icon = SiReact
-      break
-    case "text":
-      Icon = AiOutlineFileText
-      break
-    case "md":
-      Icon = SiMarkdown
-      break
-    case "next":
-      Icon = SiNextdotjs
-      break
-    case "directory":
-      Icon = AiOutlineFolderOpen
-      break
-    case "vercel":
-      Icon = SiVercel
-      break
-    case "ts":
-    case "tsx":
-      Icon = SiTypescript
-      break
-    default:
-      Icon = BsFileEarmarkCodeFill
-      break
+  const getLanguageIcon = (lang: string): ReactNode => {
+    switch (lang) {
+      case "html":
+        return <SiHtml5 className="size-4" />
+      case "css":
+        return <SiCss3 className="size-4" />
+      case "js":
+        return <IoLogoJavascript className="size-4" />
+      case "bash":
+      case "sh":
+      case "shell":
+      case "zsh": {
+        return <TerminalIcon className="size-4" />
+      }
+      case "py":
+        return <SiPython className="size-4" />
+      case "json":
+        return <VscJson className="size-4" />
+      case "jsx":
+        return <SiReact className="size-4" />
+      case "text":
+        return <AiOutlineFileText className="size-4" />
+      case "md":
+        return <SiMarkdown className="size-4" />
+      case "next":
+        return <SiNextdotjs className="size-4" />
+      case "directory":
+        return <AiOutlineFolderOpen className="size-4" />
+      case "vercel":
+        return <SiVercel className="size-4" />
+      case "ts":
+      case "tsx":
+        return <SiTypescript className="size-4" />
+      default:
+        return <BsFileEarmarkCodeFill className="size-4" />
+    }
   }
 
   return (
@@ -88,7 +80,7 @@ export default function CodeBlockHeader({
       )}
       {...props}
     >
-      <Icon className="size-4" />
+      {language && getLanguageIcon(language)}
       {children}
     </figcaption>
   )

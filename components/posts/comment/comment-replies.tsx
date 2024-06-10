@@ -1,6 +1,7 @@
 import { useCommentContext } from "@/contexts/comment"
 import { useCommentsContext } from "@/contexts/comments"
 import { api } from "@/trpc/react"
+import { Loader2Icon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import CommentItem from "@/components/posts/comment/comment-item"
@@ -9,7 +10,7 @@ export default function CommentReplies() {
   const { comment, isOpenReplies, setIsOpenReplies } = useCommentContext()
   const { slug } = useCommentsContext()
 
-  const { data: comments } = api.comment.getAll.useQuery(
+  const { data: comments, isLoading } = api.comment.getAll.useQuery(
     {
       slug,
       parentId: comment.id,
@@ -21,7 +22,7 @@ export default function CommentReplies() {
 
   return (
     <div>
-      {isOpenReplies ? (
+      {isOpenReplies && !isLoading ? (
         comments?.map((reply) => <CommentItem key={reply.id} comment={reply} />)
       ) : (
         <Button
@@ -31,6 +32,9 @@ export default function CommentReplies() {
           type="button"
         >
           Show all {comment.repliesCount} replies
+          {isLoading ? (
+            <Loader2Icon className="ml-2 size-3 animate-spin" />
+          ) : null}
         </Button>
       )}
     </div>

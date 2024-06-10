@@ -7,17 +7,16 @@ import {
   CommentResponse,
   GetCommentsResponse,
 } from "@/server/api/routers/comment"
-import { PostComment, User } from "@prisma/client"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"
-import CommentActions from "@/components/posts/comment-actions"
+import CommentActions from "@/components/posts/comment/comment-actions"
 import CommentEditor, {
   useCommentEditor,
-} from "@/components/posts/comment-editor"
-import CommentMenu from "@/components/posts/comment-menu"
-import CommentReplies from "@/components/posts/comment-replies"
-import CommentReply from "@/components/posts/comment-reply"
+} from "@/components/posts/comment/comment-editor"
+import CommentMenu from "@/components/posts/comment/comment-menu"
+import CommentReplies from "@/components/posts/comment/comment-replies"
+import CommentReply from "@/components/posts/comment/comment-reply"
 import Timestamp from "@/components/timestamp"
 
 interface CommentItemProps {

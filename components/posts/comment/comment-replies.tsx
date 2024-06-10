@@ -3,7 +3,7 @@ import { useCommentsContext } from "@/contexts/comments"
 import { api } from "@/trpc/react"
 
 import { Button } from "@/components/ui/button"
-import CommentItem from "@/components/posts/comment-item"
+import CommentItem from "@/components/posts/comment/comment-item"
 
 export default function CommentReplies() {
   const { comment, isOpenReplies, setIsOpenReplies } = useCommentContext()

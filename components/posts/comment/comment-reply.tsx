@@ -8,7 +8,7 @@ import { useCurrentUser } from "@/hooks/use-current-user"
 import { Button } from "@/components/ui/button"
 import CommentEditor, {
   useCommentEditor,
-} from "@/components/posts/comment-editor"
+} from "@/components/posts/comment/comment-editor"
 
 export default function CommentReply() {
   const { isAuthenticated } = useCurrentUser()

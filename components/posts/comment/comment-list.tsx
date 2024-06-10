@@ -5,7 +5,7 @@ import { api } from "@/trpc/react"
 import { Loader2Icon } from "lucide-react"
 
 import { useCommentHighlighter } from "@/hooks/use-comment-highlighter"
-import CommentItem from "@/components/posts/comment-item"
+import CommentItem from "@/components/posts/comment/comment-item"
 
 export default function CommentList() {
   const { slug } = useCommentsContext()

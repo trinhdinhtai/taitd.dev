@@ -13,6 +13,8 @@ import { Editor, EditorContent, type JSONContent } from "@tiptap/react"
 import { cn } from "@/lib/utils"
 import EditorToolbar from "@/components/posts/comment/editor-toolbar"
 
+import "@/styles/editor.css"
+
 interface CommentEditorProps {
   editor: UseCommentEditor | null
   placeholder?: string

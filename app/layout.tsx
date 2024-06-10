@@ -91,7 +91,7 @@ export default function RootLayout({
   const isProduction = env.NODE_ENV === "production"
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body
         className={cn(
           "min-h-screen font-sans antialiased",

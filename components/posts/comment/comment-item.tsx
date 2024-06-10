@@ -3,10 +3,7 @@
 import { useMemo, useState } from "react"
 import { CommentContext, CommentProvider } from "@/contexts/comment"
 import { useCommentsContext } from "@/contexts/comments"
-import {
-  CommentResponse,
-  GetCommentsResponse,
-} from "@/server/api/routers/comment"
+import { CommentResponse } from "@/server/api/routers/comment"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Skeleton } from "@/components/ui/skeleton"

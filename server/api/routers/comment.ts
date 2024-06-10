@@ -73,11 +73,23 @@ export const commentRouter = createTRPCRouter({
             },
           })
 
+          const userReaction = await ctx.db.postCommentReaction.findFirst({
+            where: {
+              commentId: comment.id,
+              userId: session?.user.id,
+            },
+          })
+
+          const liked = userReaction && userReaction.like === true
+          const disliked = userReaction && userReaction.like === false
+
           return {
             ...comment,
             likesCount,
             dislikesCount,
             repliesCount,
+            liked,
+            disliked,
           }
         })
       )

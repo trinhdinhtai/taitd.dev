@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client")
 
 const database = new PrismaClient()
 
-async function main() {
+async function run() {
   try {
     await database.stack.createMany({
       data: [{ name: "Next.js" }, { name: "React" }, { name: "Git" }],
@@ -11,6 +11,7 @@ async function main() {
       data: [
         {
           title: "Personal portfolio",
+          slug: "taitd.io.vn",
           description:
             "My personal portfolio website, built with Next.js, Tailwind CSS, and TypeScript. It's a place where I can showcase my work and share my thoughts.",
           imageUrl: "/images/projects/blog.png",
@@ -19,6 +20,7 @@ async function main() {
         },
         {
           title: "Background snippets",
+          slug: "bg-snippets",
           description:
             "Collections of ready-to-use, simply copy and paste into your next project. All snippets crafted with Tailwind CSS and Vanilla CSS for easy integration.",
           imageUrl: "/images/projects/bg-snippets.png",
@@ -36,4 +38,4 @@ async function main() {
   }
 }
 
-main()
+run()

@@ -18,13 +18,6 @@ export const viewRouter = createTRPCRouter({
         where: { slug: input.slug },
       })
 
-      if (!post) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Post not found",
-        })
-      }
-
-      return { views: post.views }
+      return { views: post?.views ?? 0 }
     }),
 })

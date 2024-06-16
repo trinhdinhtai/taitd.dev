@@ -3,8 +3,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Post } from "@/.contentlayer/generated"
-import { getPostMetrics } from "@/server/actions/blog"
-import { useQuery } from "@tanstack/react-query"
+import { api } from "@/trpc/react"
+import { EyeIcon, ThumbsUpIcon } from "lucide-react"
 
 import { formatDate } from "@/lib/utils"
 
@@ -14,11 +14,12 @@ interface PostCardProps {
 }
 
 const PostCard = ({ post, index }: PostCardProps) => {
-  const { data: postMetric, isPending } = useQuery({
-    queryKey: ["get-post-views", post.slugAsParams],
-    queryFn: async () => await getPostMetrics(post.slugAsParams),
-    retry: true,
-    retryDelay: 500,
+  const viewQuery = api.view.get.useQuery({
+    slug: post.slugAsParams,
+  })
+
+  const likeQuery = api.like.get.useQuery({
+    slug: post.slugAsParams,
   })
 
   return (
@@ -44,13 +45,23 @@ const PostCard = ({ post, index }: PostCardProps) => {
           </p>
         )}
 
-        <div className="mt-auto flex items-center justify-between gap-2 px-2 pt-4 text-sm text-muted-foreground">
+        <div className="mt-auto flex items-center justify-between gap-2 pt-4 text-sm text-muted-foreground">
           {post.date && <span>{formatDate(post.date)}</span>}
 
-          <div className="flex gap-2">
-            {isPending ? "--" : <div>{postMetric?.views} views</div>}
-            <div>&middot;</div>
-            {isPending ? "--" : <div>{postMetric?.likes} likes</div>}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1">
+              <EyeIcon className="size-4" />
+              <span>
+                {viewQuery.isLoading ? "--" : viewQuery.data?.views} views
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <ThumbsUpIcon className="size-4" />
+              <span>
+                {likeQuery.isLoading ? "--" : likeQuery.data?.likes} likes
+              </span>
+            </div>
           </div>
         </div>
       </div>

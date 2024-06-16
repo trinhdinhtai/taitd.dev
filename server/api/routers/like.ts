@@ -18,13 +18,6 @@ export const likeRouter = createTRPCRouter({
         where: { slug: input.slug },
       })
 
-      if (!post) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Post not found",
-        })
-      }
-
-      return { likes: post.likes }
+      return { likes: post?.likes ?? 0 }
     }),
 })

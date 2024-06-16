@@ -130,14 +130,12 @@ const PostPage = async ({ params }: PostPageProps) => {
             {post.title}
           </h1>
 
-          <div className="mt-4 flex space-x-2 text-lg text-muted-foreground">
+          <div className="text-md mt-4 flex justify-between text-muted-foreground">
             {post.date && (
               <time dateTime={post.date}>{formatDate(post.date)}</time>
             )}
-            <span>&middot;</span>
-            <span>{post.readingTime} min read</span>
-            <span>&middot;</span>
-            <PostMetrics slug={post.slugAsParams} />
+
+            <PostMetrics post={post} />
           </div>
 
           {authors?.length ? (

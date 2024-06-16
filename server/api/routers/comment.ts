@@ -97,6 +97,18 @@ export const commentRouter = createTRPCRouter({
       return formattedComments
     }),
 
+  getCount: publicProcedure
+    .input(z.object({ slug: z.string().min(1) }))
+    .query(async ({ ctx, input }) => {
+      const count = await ctx.db.postComment.count({
+        where: {
+          postId: input.slug,
+        },
+      })
+
+      return count
+    }),
+
   create: protectedProcedure
     .input(
       z.object({

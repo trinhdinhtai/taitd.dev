@@ -1,75 +1,52 @@
 "use client"
 
-import { useEffect } from "react"
-
-import { usePollIfInView } from "@/hooks/use-poll-if-in-view"
-import { usePostLikes } from "@/hooks/use-post-likes"
-import { usePostViews } from "@/hooks/use-post-view"
-
-import { InlineMetric } from "./inline-metric"
-import { LoadingDots } from "./ui/loading-dot"
+import { Post } from "@/.contentlayer/generated"
+import { api } from "@/trpc/react"
+import { EyeIcon, MessageSquare, ThumbsUpIcon, TimerIcon } from "lucide-react"
 
 interface PostMetricsProps {
-  slug: string
+  post: Post
 }
 
-const PostMetrics = ({ slug }: PostMetricsProps) => {
-  const interval = 5000
-  const { shouldPoll, intersectionRef } = usePollIfInView(interval)
+const PostMetrics = ({ post }: PostMetricsProps) => {
+  const utils = api.useUtils()
 
-  const {
-    views,
-    isLoading: viewsIsLoading,
-    isError: viewsIsError,
-    increment: incrementViews,
-  } = usePostViews(slug, {
-    // Avoid fetching view count we *know* is stale since increment() mutation
-    // returns view count
-    revalidateOnMount: false,
-    // Only poll when in view
-    refreshInterval: shouldPoll ? interval : 0,
-    // Override `usePostViews` default dedupingInterval for the polling usecase
-    // (refresh interval can never be faster than deduping interval)
-    dedupingInterval: interval,
+  const viewQuery = api.view.get.useQuery({
+    slug: post.slugAsParams,
   })
 
-  const {
-    likes,
-    isLoading: likesIsLoading,
-    isError: likesIsError,
-  } = usePostLikes(slug, {
-    // only poll when in view
-    refreshInterval: shouldPoll ? interval : 0,
+  const likeQuery = api.like.get.useQuery({
+    slug: post.slugAsParams,
   })
 
-  useEffect(() => {
-    incrementViews()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const commentQuery = api.comment.getCount.useQuery({
+    slug: post.slugAsParams,
+  })
 
   return (
-    <>
-      <div ref={intersectionRef}>
-        {viewsIsError || viewsIsLoading ? (
-          <LoadingDots />
-        ) : (
-          <InlineMetric key={views} stat={views} />
-        )}{" "}
-        views
+    <div className="flex items-center gap-4">
+      <div className="flex items-center gap-1">
+        <TimerIcon className="size-4" />
+        <span>{post.readingTime} min read</span>
       </div>
 
-      <div className="text-muted-foreground">&middot;</div>
-
-      <div>
-        {" "}
-        {likesIsError || likesIsLoading ? (
-          <LoadingDots />
-        ) : (
-          <InlineMetric key={likes} stat={likes} />
-        )}{" "}
-        likes
+      <div className="flex items-center gap-1">
+        <EyeIcon className="size-4" />
+        <span>{viewQuery.isLoading ? "--" : viewQuery.data?.views} views</span>
       </div>
-    </>
+
+      <div className="flex items-center gap-1">
+        <ThumbsUpIcon className="size-4" />
+        <span>{likeQuery.isLoading ? "--" : likeQuery.data?.likes} likes</span>
+      </div>
+
+      <div className="flex items-center gap-1">
+        <MessageSquare className="size-4" />
+        <span>
+          {commentQuery.isLoading ? "--" : commentQuery.data} comments
+        </span>
+      </div>
+    </div>
   )
 }
 

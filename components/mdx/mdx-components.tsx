@@ -8,6 +8,7 @@ import { Callout } from "@/components/callout"
 import CodePlayground from "@/components/code-playground"
 import ComponentPreview from "@/components/component-preview"
 import CoverImage from "@/components/cover-image"
+import { File, Files, Folder } from "@/components/files"
 import FolderTree from "@/components/folder-tree"
 import GridContainer from "@/components/grid-container"
 import ImageZoom from "@/components/image-zoom"
@@ -190,6 +191,9 @@ export const components = {
   CoverImage,
   AboutContact,
   Youtube,
+  Files,
+  Folder,
+  File,
 }
 
 interface MdxProps {

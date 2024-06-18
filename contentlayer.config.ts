@@ -142,6 +142,29 @@ export const Snippet = defineDocumentType(() => ({
   computedFields,
 }))
 
+export const Note = defineDocumentType(() => ({
+  name: "Note",
+  filePathPattern: `notes/**/*.mdx`,
+  contentType: "mdx",
+  fields: {
+    title: {
+      type: "string",
+      required: true,
+    },
+    description: {
+      type: "string",
+    },
+    category: {
+      type: "string",
+    },
+    lastUpdatedDate: {
+      type: "date",
+      required: true,
+    },
+  },
+  computedFields,
+}))
+
 export const Author = defineDocumentType(() => ({
   name: "Author",
   filePathPattern: `authors/**/*.mdx`,
@@ -168,7 +191,7 @@ export const Author = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: "content",
-  documentTypes: [Post, Page, Author, Snippet],
+  documentTypes: [Post, Page, Author, Snippet, Note],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [

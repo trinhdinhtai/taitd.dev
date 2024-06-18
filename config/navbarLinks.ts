@@ -13,6 +13,11 @@ const moreContent: ContentNavItem[] = [
       "Code snippets that I use often. Mostly for personal reference.",
   },
   {
+    title: "Notes",
+    href: "/notes",
+    description: "My notes on various topics. Mostly for personal reference.",
+  },
+  {
     title: "Stats",
     href: "/stats",
     description: "My personal statistics about coding and other things.",

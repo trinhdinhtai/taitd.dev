@@ -169,7 +169,7 @@ dependencies:
     version: 9.0.1(@types/react@18.3.3)(react@18.3.1)
   react-medium-image-zoom:
     specifier: ^5.2.4
-    version: 5.2.4(react-dom@18.3.1)(react@18.3.1)
+    version: 5.2.5(react-dom@18.3.1)(react@18.3.1)
   react-use:
     specifier: ^17.4.0
     version: 17.4.0(react-dom@18.3.1)(react@18.3.1)
@@ -8298,8 +8298,8 @@ packages:
       - supports-color
     dev: false
 
-  /react-medium-image-zoom@5.2.4(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-XLu/fLqpbmhiDAGA6yie78tDv4kh8GxvS7kKQArSOvCvm5zvgItoh4h01NAAvnezQ60ovsTeedHiHG3eG9CcGg==}
+  /react-medium-image-zoom@5.2.5(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-q8C++zcjZ5VMo3siCR4XaO6NMHo+zuykLbzAo2suQNScYA/MIbGOWhD1v2a4gKDV2zQZGinCiefYVe1oRAVKjQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0

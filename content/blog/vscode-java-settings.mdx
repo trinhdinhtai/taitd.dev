@@ -1,0 +1,61 @@
+---
+title: "Code Java trên VSCode, tại sao không ?"
+description: "Cho dù trong những năm qua, Next.js luôn là một trong những framework Javascript phổ biến nhất, nhưng framework nào thì cũng có những vấn đề của nó, Nextjs cũng vậy, trong bài viết này mình sẽ đưa ra quan điểm cá nhân về những thứ mình chưa thích ở Nextjs."
+date: "2024-07-26"
+image: https://res.cloudinary.com/daukjyo6s/image/upload/v1706598055/twitter-card_sznp94.png
+series:
+  order: 1
+  title: "VSCode"
+authors:
+  - taitd
+---
+
+## 1. Tại sao chọn VSCode chứ không phải là một IDE nào khác ?
+Nếu hỏi đâu là IDE mạnh mẽ nhất để code Java tại thời điểm này, chắc có lẽ nhiều lập trình viên (trong đó có tôi) sẽ chọn **IntelliJ IDEA** (nhưng mà là bản Ultimate ,lol 🤣). 
+
+Nhưng nếu bạn không có tiền (như tôi) để mua bản Ultimate thì sao ? VSCode sẽ là một sự lựa chọn tuyệt vời dành cho bạn, đặc biệt là nếu bạn là một lập trình viên Full Stack, thì 1 công đôi việc nó lại là hợp lý vl 🐧 ~~thực ra là vì nó free~~
+
+## 2. Cài đặt môi trường phát triển Java trên VSCode.
+
+Chạy `java --version` để đảm bảo máy bạn đã có Java JDK.
+
+Cài đặt các extension giúp bạn có thể chạy được một Project Java trên VSCode
+
+### 2.1. [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
+
+**Extension Pack for Java** là một bộ sưu tập các extensions cần thiết giúp bạn code, test và debug Java trên VSCode, nó bao gồm 6 extension nhỏ sau:
+- [Language Support for Java™ by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.java)
+- [Debugger for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug)
+- [Test Runner for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-test)
+- [Maven for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-maven)
+- [Project Manager for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-dependency)
+- [Visual Studio IntelliCode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
+
+
+### 2.2. [Spring Boot Extension Pack](https://marketplace.visualstudio.com/items?itemName=vmware.vscode-boot-dev-pack)
+Spring Boot Extension Pack là extension giúp bạn phát triển ứng dụng Java Spring Boot trên VSCode.
+
+### 2.3. [Trailing Spaces](https://marketplace.visualstudio.com/items?itemName=shardulm94.trailing-spaces)
+Extension này dùng để check file có thừa khoảng trắng hay không, ví dụ như `application.properties` mà thừa khoảng trắng là toang ngay. Tuy nhiên để tránh phiền phức khi sử dụng extension này, ae nên ignore một số file không cần check ở `setting.json`
+
+```json title="settings.json"
+{
+  // other settings
+  "trailing-spaces.syntaxIgnore": [
+    "html",
+    "java",
+    "javascript",
+    "markdown",
+    "sql",
+    "typescript",
+    "typescriptreact",
+    "xml",
+    "xsl",
+    "yaml"
+  ]
+}
+```
+
+
+### 2.4. [XML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml)
+Extension này hỗ trợ chúng ta chỉnh sửa file XML, vd như file `pom.xml`

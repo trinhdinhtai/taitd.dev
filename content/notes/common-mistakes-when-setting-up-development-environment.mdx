@@ -1,0 +1,34 @@
+---
+title: Một số lỗi phổ biến khi setup môi trường phát triển
+description: ""
+lastUpdatedDate: "2024-07-26"
+category: Javascript
+---
+
+## 1. Lỗi scripts bị disable trên Window
+
+<Image
+  src="https://res.cloudinary.com/daukjyo6s/image/upload/v1721990190/taitd.io.vn/Screenshot_1_gnimdi.png"
+  width={1280}
+  height={720}
+  alt="git commit"
+/>
+
+Cách fix:
+
+Chạy Power Shell với quyền Admin và chạy các lệnh sau:
+
+```bash
+Set-ExecutionPolicy RemoteSigned
+Set-ExecutionPolicy Restricted
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+<Image
+  src="https://res.cloudinary.com/daukjyo6s/image/upload/v1721990769/taitd.io.vn/Screenshot_3_vp7al4.png"
+  width={1280}
+  height={720}
+  alt="git commit"
+/>
+
+

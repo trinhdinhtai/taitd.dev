@@ -1,0 +1,65 @@
+---
+title: "Mô hình MVC là gì ?"
+description: "Cho dù trong những năm qua, Next.js luôn là một trong những framework Javascript phổ biến nhất, nhưng framework nào thì cũng có những vấn đề của nó, Nextjs cũng vậy, trong bài viết này mình sẽ đưa ra quan điểm cá nhân về những thứ mình chưa thích ở Nextjs."
+date: "2024-07-26"
+image: https://res.cloudinary.com/daukjyo6s/image/upload/v1706598055/twitter-card_sznp94.png
+series:
+  order: 1
+  title: "VSCode"
+authors:
+  - taitd
+---
+
+Nếu bạn là một lập trình viên Web, bạn không thể không biết đến mô hình MVC, bởi vì nó là một trong những mô hình được sử dụng hầu hết trong các dự án phát triển web.
+
+Trong bài viết này, mình sẽ trình bày thảo luận về mô hình MVC hoạt động như thế nào cùng với ưu, nhược điểm của nó. Gét gô!
+
+## 1. Giới thiệu.
+Okey, có thể tưởng tượng mô hình MVC trong thực tế giống như quy trình làm việc ở nhà hàng:
+
+<Image
+  src="https://res.cloudinary.com/daukjyo6s/image/upload/v1722183006/taitd.io.vn/c90b4902-ba7d-47a0-b655-5ce42f2e7dab_nlugtm.png"
+  width={1920}
+  height={1024}
+  alt="git"
+/>
+
+- Đầu tiên thì người phục vụ dọn bàn cho khách và mang thực đơn để họ order
+- Sau khi khách hàng order xong thì sẽ thông báo cho cho người phục vụ về lựa chọn của họ.
+- Người phục vụ tiếp nhận yêu cầu của khách hàng, sau đó chuyển tiếp yêu cầu đó cho đầu bếp, đầu bếp sẽ thực hiện nấu ăn theo yêu cầu.
+- Sau khi hoàn thành món ăn thì đầu bếp giao món ăn cho người phục vụ, phục vụ này sẽ mang món ăn đến bàn của khách hàng.
+
+
+Từ ví dụ trên, chúng ta có thể phân công vai trò của quy trình này như sau, tạm đặt là M, V và C như sau:
+- **Bộ phận M**: chính là đầu bếp, có nhiệm vụ tiếp nhận yêu cầu từ người phục vụ cà có trách nhiệm chuẩn bị bữa ăn cho khách hàng
+- **Bộ phận V**: chính là phòng khách trong nhà hàng, là nơi khách hàng có thể ngồi gọi món và thưởng thức món ăn.
+- **Bộ phận C**: chính là người phục vụ bàn, có trách nhiệm tiếp nhận order của khách hàng, chuyển chúng cho bộ phận M và sau đó chuyển món ăn tới tay khách hàng.
+
+## 2. Các thành phần trong mô hình MVC ?
+
+MVC là một **Design Pattern**, là kiến trúc áp dụng khi xây dựng các ứng dụng web. MVC là từ viết tắt của **Model View Controller**.
+
+MVC chia ứng dụng thành ba thành phần **độc lập** với nhau, mỗi thành phần đều có vai trò cụ thể.
+
+<Image
+  src="https://res.cloudinary.com/daukjyo6s/image/upload/v1722020045/taitd.io.vn/c03d29f3-6295-4c96-9f0e-1da226f3a831_vrlmht.webp"
+  width={1920}
+  height={1024}
+  alt="git"
+/>
+
+- **Model**: là nơi chứa nghiệp vụ tương tác với database, nó sẽ bao gồm các class/function xử lý kết nối, truy vấn dữ liệu, thêm – xóa – sửa dữ liệu…
+- **View**: là giao diện của ứng dụng, nó đảm nhiệm nhiệm vụ hiển thị dữ liệu và giúp người dùng tương tác với hệ thống.
+- **Controller**: là cầu nối giữa **Model** và **View**, nó tiếp nhận yêu cầu xử lý từ người dùng, Nó chấp nhận các yêu cầu từ khung nhìn, thông qua Model để lấy dữ liệu và trả kết quả cho View để hiển thị dữ liệu cho người dùng.
+
+## 3. Ưu điểm và nhược điểm của mô hình MVC
+## 3.1. Ưu điểm
+- Trình tự xử lý rất rõ ràng
+- Mô hình MVC quy hoạch các class/function vào các thành phần riêng biêt Controller - Model - View, việc đó làm cho quá trình phát triển - quản lý - vận hành - bảo trì web diễn ra thuận lợi hơn, tạo ra được các chức năng chuyên biệt hoá đồng thời kiểm soát được luồng xử lý.
+- Tạo mô hình chuẩn cho dự án, khi người có chuyên môn ngoài dự án tiếp cận với dự án dễ dàng hơn.
+- Mô hình đơn giản, dễ hiểu, xử lý những nghiệp vụ đơn giản, và dễ dàng triển khai với các dự án nhỏ.
+## 3.2. Nhược điểm
+- Đối với các dự án có tính phức tạp cao thì mô hình MVC trở nên không khả dụng.
+
+## 4. Tài liệu tham khảo
+[The Power of MVC Pattern Explained Simply](https://tentyp.dev/blog/architecture/model-view-controller/?ref=dailydev)

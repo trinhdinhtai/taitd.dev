@@ -1,6 +1,6 @@
 import { Metadata } from "next"
-import { allPosts } from "@/.contentlayer/generated"
 import { SeriesWithPosts } from "@/types"
+import { allPosts } from "content-collections"
 import { compareDesc } from "date-fns"
 
 import PageHeading from "@/components/page-heading"

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { allPosts } from "@/.contentlayer/generated"
+import { allPosts } from "content-collections"
 import { compareDesc } from "date-fns"
 
 import { cn } from "@/lib/utils"
@@ -22,7 +22,7 @@ const BlogSection = () => {
       {posts?.length ? (
         <div className="grid gap-10 sm:grid-cols-2">
           {posts.map((post, index) => (
-            <PostCard key={post._id} post={post} index={index} />
+            <PostCard key={post.slug} post={post} index={index} />
           ))}
         </div>
       ) : null}

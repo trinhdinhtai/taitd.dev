@@ -1,7 +1,7 @@
 "use client"
 
 import { ChangeEvent, useState } from "react"
-import { Post } from "@/.contentlayer/generated"
+import { Post } from "content-collections"
 import { SearchIcon } from "lucide-react"
 
 import { Input } from "@/components/ui/input"

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { allNotes } from "@/.contentlayer/generated"
+import { allNotes } from "content-collections"
 import { compareDesc } from "date-fns"
 
 import { formatDate } from "@/lib/utils"

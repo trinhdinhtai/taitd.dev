@@ -1,7 +1,7 @@
 "use client"
 
-import { Post } from "@/.contentlayer/generated"
 import { api } from "@/trpc/react"
+import { Post } from "content-collections"
 import { EyeIcon, MessageSquare, ThumbsUpIcon, TimerIcon } from "lucide-react"
 
 interface PostMetricsProps {

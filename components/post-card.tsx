@@ -2,8 +2,8 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Post } from "@/.contentlayer/generated"
 import { api } from "@/trpc/react"
+import { Post } from "content-collections"
 import { EyeIcon, ThumbsUpIcon } from "lucide-react"
 
 import { formatDate } from "@/lib/utils"
@@ -15,11 +15,11 @@ interface PostCardProps {
 
 const PostCard = ({ post, index }: PostCardProps) => {
   const viewQuery = api.view.get.useQuery({
-    slug: post.slugAsParams,
+    slug: post.slug,
   })
 
   const likeQuery = api.like.get.useQuery({
-    slug: post.slugAsParams,
+    slug: post.slug,
   })
 
   return (

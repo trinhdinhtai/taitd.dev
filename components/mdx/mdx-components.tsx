@@ -1,5 +1,5 @@
 import { AnchorHTMLAttributes, HTMLAttributes } from "react"
-import { useMDXComponent } from "next-contentlayer/hooks"
+import { useMDXComponent } from "@content-collections/mdx/react"
 
 import { cn } from "@/lib/utils"
 import AboutContact from "@/components/about-contact"

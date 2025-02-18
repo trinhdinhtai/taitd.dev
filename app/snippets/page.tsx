@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { allSnippets } from "@/.contentlayer/generated"
+import { allSnippets } from "content-collections"
 import { compareDesc } from "date-fns"
 
 import { formatDate } from "@/lib/utils"

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { allNotes, allSnippets } from "@/.contentlayer/generated"
+import { allNotes, allSnippets } from "content-collections"
 
 import { formatDate } from "@/lib/utils"
 import Mdx from "@/components/mdx/mdx-components"

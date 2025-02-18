@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { allAuthors, allPosts } from "@/.contentlayer/generated"
+import { allAuthors, allPosts } from "content-collections"
 
 import { absoluteUrl, formatDate } from "@/lib/utils"
 import Mdx from "@/components/mdx/mdx-components"

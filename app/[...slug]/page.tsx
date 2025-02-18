@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { allPages } from "@/.contentlayer/generated"
+import { allPages } from "content-collections"
 
 import { env } from "@/env"
 import { siteConfig } from "@/config/site"
@@ -60,7 +60,7 @@ export async function generateMetadata({
 
 async function getPageFromParams(params: { slug: string[] }) {
   const slug = params?.slug?.join("/")
-  const page = allPages.find((page) => page.slugAsParams === slug)
+  const page = allPages.find((page) => page.slug === slug)
 
   if (!page) {
     return null
@@ -79,7 +79,7 @@ export default async function PagePage({ params }: PageProps) {
   return (
     <article>
       <PageHeading title={page.title} description={page?.description} />
-      <Mdx code={page.body.code} />
+      <Mdx code={page.code} />
     </article>
   )
 }

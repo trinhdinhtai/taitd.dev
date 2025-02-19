@@ -10,6 +10,14 @@ html.dark code[data-theme*=" "] span {
   background-color: var(--shiki-dark-bg);
 }
 
+.shiki span {
+  color: var(--shiki-light);
+}
+
+.dark .shiki span {
+  color: var(--shiki-dark);
+}
+
 [data-rehype-pretty-code-figure] {
   @apply relative my-6 rounded-lg border;
 }

@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { allAuthors, allPosts } from "content-collections"
+import { allPosts } from "content-collections"
 
 import { absoluteUrl, formatDate } from "@/lib/utils"
 import Mdx from "@/components/mdx/mdx-components"
@@ -13,7 +13,6 @@ import { PostSeries, SeriesItem } from "@/types"
 
 import { env } from "@/env"
 import { siteConfig } from "@/config/site"
-import { getTableOfContents } from "@/lib/toc"
 import BreadcrumbNavigation from "@/components/layout/breadcrumb-navigation"
 import LikeButton from "@/components/like-button"
 import PostMetrics from "@/components/post-metrics"
@@ -50,7 +49,7 @@ export async function generateMetadata({
     title: title,
     description: description,
     authors: authors.map((author) => ({
-      name: author,
+      name: author.name,
     })),
     openGraph: {
       title,
@@ -77,7 +76,7 @@ export async function generateMetadata({
 
 async function getPostFromParams(params: { slug: string[] }) {
   const slug = params?.slug?.join("/")
-  const post = allPosts.find((post) => post.slugAsParams === slug)
+  const post = allPosts.find((post) => post.slug === slug)
 
   if (!post) {
     return null
@@ -113,27 +112,21 @@ const PostPage = async ({ params }: PostPageProps) => {
     notFound()
   }
 
-  const authors = post.authors.map((author) =>
-    allAuthors.find(({ slug }) => slug === `/authors/${author}`)
-  )
-
-  const toc = await getTableOfContents(post.body.raw)
+  const { title, date, image, slug, authors, series, tags, toc } = post
 
   return (
     <article className="relative lg:gap-10 xl:grid xl:max-w-6xl xl:grid-cols-[1fr_250px]">
       {/* Blog content */}
       <div className="w-full min-w-0">
-        <BreadcrumbNavigation pageTitle={post.title} />
+        <BreadcrumbNavigation pageTitle={title} />
 
         <div>
           <h1 className="mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl">
-            {post.title}
+            {title}
           </h1>
 
           <div className="text-md mt-4 flex justify-between text-muted-foreground">
-            {post.date && (
-              <time dateTime={post.date}>{formatDate(post.date)}</time>
-            )}
+            {date && <time dateTime={date}>{formatDate(date)}</time>}
 
             <PostMetrics post={post} />
           </div>
@@ -143,21 +136,21 @@ const PostPage = async ({ params }: PostPageProps) => {
               {authors.map((author) =>
                 author ? (
                   <Link
-                    key={author._id}
-                    href={`https://twitter.com/${author.twitter}`}
+                    key={author.name}
+                    href={`https://twitter.com/${author.username}`}
                     className="flex items-center space-x-2 text-sm"
                   >
                     <Image
                       src={author.avatar}
-                      alt={author.title}
+                      alt={author.name}
                       width={42}
                       height={42}
                       className="rounded-full bg-white"
                     />
                     <div className="flex-1 text-left leading-tight">
-                      <p className="font-medium">{author.title}</p>
+                      <p className="font-medium">{author.name}</p>
                       <p className="text-[12px] text-muted-foreground">
-                        @{author.twitter}
+                        @{author.username}
                       </p>
                     </div>
                   </Link>
@@ -166,7 +159,7 @@ const PostPage = async ({ params }: PostPageProps) => {
             </div>
           ) : null}
 
-          {post.image && (
+          {image && (
             <Image
               src={post.image}
               alt={post.title}
@@ -178,21 +171,21 @@ const PostPage = async ({ params }: PostPageProps) => {
           )}
         </div>
 
-        {post?.series && (
+        {series && (
           <div className="not-prose">
             <PostSeriesBox series={post.series} />
           </div>
         )}
 
-        <Mdx code={post.body.code} />
+        <Mdx code={post.code} />
 
         <hr className="my-4" />
 
         {/* Post tag */}
         <div className="flex flex-row items-center justify-between">
-          {post.tags && (
+          {tags && (
             <ul className="m-0 list-none space-x-2 p-0 text-sm text-muted-foreground">
-              {post.tags.map((tag: string) => (
+              {tags.map((tag: string) => (
                 <li className="inline-block p-0" key={tag}>
                   <Link
                     href={`/tags/${tag}`}
@@ -205,23 +198,21 @@ const PostPage = async ({ params }: PostPageProps) => {
             </ul>
           )}
           <SocialShare
-            text={`${post.title} via ${siteConfig.handle}`}
-            url={`${BASE_URL}/${post._raw.flattenedPath}`}
+            text={`${title} via ${siteConfig.handle}`}
+            url={`${BASE_URL}/blog/${slug}`}
           />
         </div>
 
-        <PostComment slug={post.slugAsParams} />
+        <PostComment slug={slug} />
       </div>
 
       {/* Table of contents */}
       <div className="hidden text-sm xl:block">
         <div className="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] pt-10">
           <TableOfContents toc={toc} />
-
           <hr className="my-4" />
-
           <div className="flex items-center justify-between">
-            <LikeButton slug={post.slugAsParams} />
+            <LikeButton slug={slug} />
           </div>
         </div>
       </div>

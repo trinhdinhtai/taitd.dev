@@ -132,7 +132,31 @@ const posts = defineCollection({
     published: z.boolean().default(true),
     date: z.string(),
     image: z.string(),
+    series: z
+      .object({
+        title: z.string(),
+        order: z.number(),
+      })
+      .optional(),
+    tags: z.array(z.nativeEnum(TagOptions)).optional(),
+    authors: z
+      .array(
+        z.object({
+          name: z.string(),
+          avatar: z.string().url(),
+          username: z.string(),
+        })
+      )
+      .optional()
+      .default([
+        {
+          name: "Trịnh Đình Tài",
+          avatar: "https://avatars.githubusercontent.com/trinhdinhtai",
+          username: "taitd153",
+        },
+      ]),
   }),
+
   transform,
 })
 

@@ -1,33 +1,22 @@
 "use client"
 
-import { useMemo } from "react"
+import { TOC } from "@/types"
 
-import { TableOfContents as TOC } from "@/lib/toc"
 import { cn } from "@/lib/utils"
 import useActiveItem from "@/hooks/use-active-item"
 import useMounted from "@/hooks/use-mounted"
 
 interface TableOfContentProps {
-  toc: TOC
+  toc: TOC[]
 }
 
 export default function TableOfContents({ toc }: TableOfContentProps) {
-  const itemIds = useMemo(
-    () =>
-      toc.items
-        ? toc.items
-            .flatMap((item) => [item.url, item?.items?.map((item) => item.url)])
-            .flat()
-            .filter(Boolean)
-            .map((id) => id?.split("#")[1])
-        : [],
-    [toc]
-  )
+  const itemIds = toc.map((item) => item.url)
 
   const mounted = useMounted()
   const activeHeading = useActiveItem(itemIds)
 
-  if (!toc?.items || !mounted) {
+  if (!toc || !mounted) {
     return null
   }
 
@@ -40,32 +29,32 @@ export default function TableOfContents({ toc }: TableOfContentProps) {
 }
 
 interface TreeProps {
-  tree: TOC
-  level?: number
+  tree: TOC[]
   activeItem?: string | null
 }
 
-function Tree({ tree, level = 1, activeItem }: TreeProps) {
-  return tree?.items?.length && level < 3 ? (
+function Tree({ tree, activeItem }: TreeProps) {
+  const minDepth = Math.min(...tree.map((item) => item.depth))
+
+  return tree?.length ? (
     <ul className={cn("m-0 list-none")}>
-      {tree.items.map((item) => {
+      {tree.map((item) => {
         return (
           <li key={item.url} className={cn("mt-0")}>
             <a
               href={item.url}
               className={cn(
                 "inline-block border-l-2 py-1.5 pl-4 no-underline transition-all hover:text-primary hover:underline",
-                item.url === `#${activeItem}`
+                item.url === activeItem
                   ? "border-primary text-primary"
-                  : "text-sm text-muted-foreground",
-                { "pl-8": level !== 1 }
+                  : "text-sm text-muted-foreground"
               )}
+              style={{
+                paddingLeft: `${(item.depth - minDepth + 1) * 16}px`,
+              }}
             >
               {item.title}
             </a>
-            {item.items?.length ? (
-              <Tree tree={item} level={level + 1} activeItem={activeItem} />
-            ) : null}
           </li>
         )
       })}

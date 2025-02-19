@@ -7,7 +7,7 @@ image: https://res.cloudinary.com/daukjyo6s/image/upload/v1739932774/taitd.io.vn
 
 ## 1. Giới thiệu
 
-Webhook là một cơ chế giúp website tự động thông báo và gửi dữ liệu **thời gian thực** đến các hệ thống khi có một sự kiện nào đó phát sinh trên website, ví dụ như thực hiện đăng ký, đăng nhập, add giỏ hàng, v.v.
+**Webhook** là một cơ chế giúp website tự động thông báo và gửi dữ liệu **thời gian thực** đến các hệ thống khi có một sự kiện nào đó phát sinh trên website, ví dụ như thực hiện đăng ký, đăng nhập, add giỏ hàng, v.v.
 
 **Clerk** là một nền tảng quản lý xác thực và người dùng, hỗ trợ webhook để gửi thông báo khi có thay đổi về người dùng, phiên đăng nhập, v.v.
 
@@ -22,9 +22,9 @@ Trong bài viết này, chúng ta sẽ học cách:
 
 ## 2. Tạo project Next.js với Clerk
 
-Trong bài viết này, mình sẽ sử dụng Next.js để đăng ký Webhook, tuy nhiên bạn có thể thực hiện tương tự với Express, Fastify hoặc các thư viện khác nhé.
+Trong bài viết này, mình sẽ tạo một ứng dụng Next.js để nhận request webhook, bạn có thể thực hiện tương tự với Express, Fastify hoặc các thư viện khác nhé.
 
-### 2.1. Tạo project Next.js
+### Tạo project Next.js
 
 Tạo project Next.js mới tích hợp sẵn Clerk.
 
@@ -32,7 +32,7 @@ Tạo project Next.js mới tích hợp sẵn Clerk.
 git clone https://github.com/clerkinc/clerk-next-app.git
 ```
 
-### 2.2. Tạo application trên Clerk Dashboard
+### Tạo application trên Clerk Dashboard
 
 - Đăng nhập vào **[Clerk Dashboard](https://dashboard.clerk.dev/)** và tạo một application mới
 
@@ -57,27 +57,7 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_pub_key
 CLERK_SECRET_KEY=your_clerk_secret_key
 ```
 
-### 2.3. Run project
-
-## 2. Tạo Webhook Trong Clerk
-
-### Bước 1: Truy cập Trang Quản Lý Clerk
-
-- Đăng nhập vào **[Clerk Dashboard](https://dashboard.clerk.dev/)**.
-- Chọn **Webhooks** từ menu bên trái.
-- Nhấn **Create Webhook**.
-
-### Bước 2: Cấu hình Webhook
-
-- **URL**: Ban đầu, có thể nhập tạm một URL placeholder, chúng ta sẽ cập nhật sau khi có đường dẫn từ ngrok.
-- **Events**: Chọn các sự kiện mà bạn muốn webhook lắng nghe (ví dụ: `user.created`, `user.updated`).
-- **Secret**: Lưu lại khóa bí mật để xác thực request webhook.
-
-Nhấn **Create** để tạo webhook.
-
----
-
-## 3. Chạy ứng dụng ở localhost
+### Chạy ứng dụng ở localhost
 
 Chạy ứng dụng bằng lệnh
 
@@ -94,44 +74,77 @@ Màn hình chính của ứng dụng:
   alt="git"
 />
 
-Chúng ta sẽ tạo một ứng dụng đơn giản sử dụng **Node.js** với **Express.js** để nhận request webhook.
+## 3. Chạy Ngrok
 
-### Cài đặt Express
+### Cài đặt Ngrok
 
-```sh
-mkdir clerk-webhook && cd clerk-webhook
-npm init -y
-npm install express
-```
+Cài đặt ngrok tại địa chỉ [https://ngrok.com/download](https://ngrok.com/downloads)
 
-### 3.1. Tạo Server Nhận Webhook
-
-Tạo file `server.js` và thêm đoạn code sau:
-
-```javascript
-const express = require("express")
-const app = express()
-const PORT = 3000
-
-app.use(express.json())
-
-app.post("/webhook", (req, res) => {
-  console.log("Received Clerk Webhook:", req.body)
-  res.status(200).send("Webhook received")
-})
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
-})
-```
-
-Chạy server:
+### Chạy Ngrok để tạo tunnel
 
 ```sh
-node server.js
+ngrok http 3000
 ```
 
----
+Bạn sẽ nhận được một URL có dạng:
+
+```
+Forwarding https://random-subdomain.ngrok.io -> http://localhost:3000
+```
+
+Ví dụ:
+
+<Image
+  src="https://res.cloudinary.com/daukjyo6s/image/upload/v1739962573/taitd.io.vn/socialscreenshots-2_19_2025_5_55_16_PM_ly48ez.png"
+  width={1920}
+  height={1024}
+  alt="git"
+/>
+
+Okey, copy public URL của Ngrok lên browser và xem thành quả nhé :D
+
+<Image
+  src="https://res.cloudinary.com/daukjyo6s/image/upload/v1739962802/taitd.io.vn/socialscreenshots-2_19_2025_5_59_47_PM_hzcgro.png"
+  width={1920}
+  height={1024}
+  alt="git"
+/>
+
+## 4. Tạo Webhook Trong Clerk
+
+### Tạo Webhook trên Clerk Dashboard
+
+- Đăng nhập vào **[Clerk Dashboard](https://dashboard.clerk.dev/)**.
+- Chọn **Webhooks** từ menu bên trái.
+- Nhấn **Add Endpoint**.
+
+<Image
+  src="https://res.cloudinary.com/daukjyo6s/image/upload/v1739963352/taitd.io.vn/socialscreenshots-2_19_2025_6_09_00_PM_lsgak2.png"
+  width={1920}
+  height={1024}
+  alt="git"
+/>
+
+### Cấu hình Webhook
+
+- **Endpoint URL**: Public URL từ ngrok.
+- **Events**: Chọn các sự kiện mà bạn muốn webhook lắng nghe (ví dụ: `user.created`, `user.deleted`, `user.updated`).
+
+<Image
+  src="https://res.cloudinary.com/daukjyo6s/image/upload/v1739963681/taitd.io.vn/socialscreenshots-2_19_2025_6_14_30_PM_dzkktu.png"
+  width={1920}
+  height={1024}
+  alt="git"
+/>
+
+Chúng ta sẽ có một webhook mới, copy `Signing Secret` để sử dụng cho các bước tiếp theo.
+
+<Image
+  src="https://res.cloudinary.com/daukjyo6s/image/upload/v1739963881/taitd.io.vn/socialscreenshots-2_19_2025_6_17_47_PM_nfbbu6.png"
+  width={1920}
+  height={1024}
+  alt="git"
+/>
 
 ## 4. Chạy Ngrok
 

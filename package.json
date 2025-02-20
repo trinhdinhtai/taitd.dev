@@ -50,7 +50,7 @@
     "@trpc/server": "next",
     "@umami/api-client": "^0.68.0",
     "@vercel/og": "^0.6.0",
-    "autoprefixer": "10.4.19",
+    "autoprefixer": "10.4.20",
     "axios": "^1.5.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",

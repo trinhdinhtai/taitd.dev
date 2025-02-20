@@ -7,6 +7,7 @@ import {
 import { compileMDX } from "@content-collections/mdx"
 
 import { rehypePlugins, remarkPlugins } from "@/lib/mdx-plugins"
+import { calculateReadingTime } from "@/lib/read-time"
 import { getTOC } from "@/lib/toc"
 
 type BaseDoc = {
@@ -14,7 +15,7 @@ type BaseDoc = {
   content: string
 }
 
-enum TagOptions {
+export enum TagOption {
   Starter = "starter",
   Development = "development",
   Docs = "docs",
@@ -47,30 +48,9 @@ const transform = async <D extends BaseDoc>(document: D, context: Context) => {
     code,
     slug: path,
     toc: await getTOC(document.content),
+    readingTime: calculateReadingTime(document.content),
   }
 }
-
-const blogs = defineCollection({
-  name: "blogs",
-  directory: "content/blog",
-  include: "**/*.mdx",
-  schema: (z) => ({
-    title: z.string(),
-    description: z.string().optional(),
-    date: z.string(),
-    published: z.boolean().default(true),
-    image: z.string(),
-    tags: z.array(z.nativeEnum(TagOptions)).optional(),
-    series: z
-      .object({
-        title: z.string(),
-        order: z.number(),
-      })
-      .optional(),
-    authors: z.array(z.string()).optional(),
-  }),
-  transform,
-})
 
 const pages = defineCollection({
   name: "pages",
@@ -109,19 +89,6 @@ const notes = defineCollection({
   transform,
 })
 
-const authors = defineCollection({
-  name: "authors",
-  directory: "content/authors",
-  include: "**/*.mdx",
-  schema: (z) => ({
-    title: z.string(),
-    description: z.string().optional(),
-    avatar: z.string(),
-    twitter: z.string(),
-  }),
-  transform,
-})
-
 const posts = defineCollection({
   name: "posts",
   directory: "content/posts",
@@ -138,7 +105,7 @@ const posts = defineCollection({
         order: z.number(),
       })
       .optional(),
-    tags: z.array(z.nativeEnum(TagOptions)).optional(),
+    tags: z.array(z.nativeEnum(TagOption)).optional(),
     authors: z
       .array(
         z.object({
@@ -161,5 +128,5 @@ const posts = defineCollection({
 })
 
 export default defineConfig({
-  collections: [posts],
+  collections: [posts, pages, snippets, notes],
 })

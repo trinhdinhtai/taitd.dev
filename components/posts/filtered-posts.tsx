@@ -44,7 +44,7 @@ export default function FilteredPost({ posts }: FilteredPostProps) {
       {filteredPosts.length ? (
         <div className="grid gap-10 lg:grid-cols-2">
           {filteredPosts.map((post, index) => (
-            <PostCard key={post._id} post={post} index={index} />
+            <PostCard key={post.slug} post={post} index={index} />
           ))}
         </div>
       ) : (

@@ -12,15 +12,15 @@ const PostMetrics = ({ post }: PostMetricsProps) => {
   const utils = api.useUtils()
 
   const viewQuery = api.view.get.useQuery({
-    slug: post.slugAsParams,
+    slug: post.slug,
   })
 
   const likeQuery = api.like.get.useQuery({
-    slug: post.slugAsParams,
+    slug: post.slug,
   })
 
   const commentQuery = api.comment.getCount.useQuery({
-    slug: post.slugAsParams,
+    slug: post.slug,
   })
 
   return (

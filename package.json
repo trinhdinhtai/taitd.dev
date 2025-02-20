@@ -61,7 +61,7 @@
     "jiti": "^1.21.3",
     "lucide-react": "^0.390.0",
     "next": "14.2.4",
-    "next-auth": "5.0.0-beta.19",
+    "next-auth": "5.0.0-beta.25",
     "next-themes": "^0.3.0",
     "postcss": "8.4.38",
     "react": "^18.2.0",

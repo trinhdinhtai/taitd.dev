@@ -15,6 +15,7 @@ Nếu bạn là một lập trình viên Web, bạn không thể không biết �
 Trong bài viết này, mình sẽ trình bày thảo luận về mô hình MVC hoạt động như thế nào cùng với ưu, nhược điểm của nó. Gét gô!
 
 ## 1. Giới thiệu.
+
 Okey, có thể tưởng tượng mô hình MVC trong thực tế giống như quy trình làm việc ở nhà hàng:
 
 <Image
@@ -29,8 +30,8 @@ Okey, có thể tưởng tượng mô hình MVC trong thực tế giống như q
 - Người phục vụ tiếp nhận yêu cầu của khách hàng, sau đó chuyển tiếp yêu cầu đó cho đầu bếp, đầu bếp sẽ thực hiện nấu ăn theo yêu cầu.
 - Sau khi hoàn thành món ăn thì đầu bếp giao món ăn cho người phục vụ, phục vụ này sẽ mang món ăn đến bàn của khách hàng.
 
-
 Từ ví dụ trên, chúng ta có thể phân công vai trò của quy trình này như sau, tạm đặt là M, V và C như sau:
+
 - **Bộ phận M**: chính là đầu bếp, có nhiệm vụ tiếp nhận yêu cầu từ người phục vụ cà có trách nhiệm chuẩn bị bữa ăn cho khách hàng
 - **Bộ phận V**: chính là phòng khách trong nhà hàng, là nơi khách hàng có thể ngồi gọi món và thưởng thức món ăn.
 - **Bộ phận C**: chính là người phục vụ bàn, có trách nhiệm tiếp nhận order của khách hàng, chuyển chúng cho bộ phận M và sau đó chuyển món ăn tới tay khách hàng.
@@ -53,13 +54,18 @@ MVC chia ứng dụng thành ba thành phần **độc lập** với nhau, mỗi
 - **Controller**: là cầu nối giữa **Model** và **View**, nó tiếp nhận yêu cầu xử lý từ người dùng, Nó chấp nhận các yêu cầu từ khung nhìn, thông qua Model để lấy dữ liệu và trả kết quả cho View để hiển thị dữ liệu cho người dùng.
 
 ## 3. Ưu điểm và nhược điểm của mô hình MVC
+
 ## 3.1. Ưu điểm
+
 - Trình tự xử lý rất rõ ràng
 - Mô hình MVC quy hoạch các class/function vào các thành phần riêng biêt Controller - Model - View, việc đó làm cho quá trình phát triển - quản lý - vận hành - bảo trì web diễn ra thuận lợi hơn, tạo ra được các chức năng chuyên biệt hoá đồng thời kiểm soát được luồng xử lý.
 - Tạo mô hình chuẩn cho dự án, khi người có chuyên môn ngoài dự án tiếp cận với dự án dễ dàng hơn.
 - Mô hình đơn giản, dễ hiểu, xử lý những nghiệp vụ đơn giản, và dễ dàng triển khai với các dự án nhỏ.
+
 ## 3.2. Nhược điểm
+
 - Đối với các dự án có tính phức tạp cao thì mô hình MVC trở nên không khả dụng.
 
 ## 4. Tài liệu tham khảo
+
 [The Power of MVC Pattern Explained Simply](https://tentyp.dev/blog/architecture/model-view-controller/?ref=dailydev)

@@ -1,7 +1,7 @@
 "use client"
 
-import { Post } from "@/.contentlayer/generated"
 import { api } from "@/trpc/react"
+import { Post } from "content-collections"
 import { EyeIcon, MessageSquare, ThumbsUpIcon, TimerIcon } from "lucide-react"
 
 interface PostMetricsProps {
@@ -12,15 +12,15 @@ const PostMetrics = ({ post }: PostMetricsProps) => {
   const utils = api.useUtils()
 
   const viewQuery = api.view.get.useQuery({
-    slug: post.slugAsParams,
+    slug: post.slug,
   })
 
   const likeQuery = api.like.get.useQuery({
-    slug: post.slugAsParams,
+    slug: post.slug,
   })
 
   const commentQuery = api.comment.getCount.useQuery({
-    slug: post.slugAsParams,
+    slug: post.slug,
   })
 
   return (

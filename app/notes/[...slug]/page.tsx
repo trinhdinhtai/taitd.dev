@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { allNotes, allSnippets } from "@/.contentlayer/generated"
+import { allNotes, allSnippets } from "content-collections"
 
 import { formatDate } from "@/lib/utils"
 import Mdx from "@/components/mdx/mdx-components"
@@ -42,7 +42,7 @@ export async function generateMetadata({
 
 async function getNoteFromParams(params: { slug: string[] }) {
   const slug = params?.slug?.join("/")
-  const note = allNotes.find((note) => note.slugAsParams === slug)
+  const note = allNotes.find((note) => note.slug === slug)
 
   return note
 }
@@ -71,7 +71,7 @@ export default async function NotePage({ params }: NotePageProps) {
           </div>
         </div>
 
-        <Mdx code={snippet.body.code} />
+        <Mdx code={snippet.code} />
       </div>
     </article>
   )

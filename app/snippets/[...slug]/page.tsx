@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { allSnippets } from "@/.contentlayer/generated"
+import { allSnippets } from "content-collections"
 
 import { formatDate } from "@/lib/utils"
 import Mdx from "@/components/mdx/mdx-components"
@@ -42,7 +42,7 @@ export async function generateMetadata({
 
 async function getSnippetFromParams(params: { slug: string[] }) {
   const slug = params?.slug?.join("/")
-  const snippet = allSnippets.find((snippet) => snippet.slugAsParams === slug)
+  const snippet = allSnippets.find((snippet) => snippet.slug === slug)
 
   return snippet
 }
@@ -71,7 +71,7 @@ const SnippetPage = async ({ params }: SnippetPageProps) => {
           </div>
         </div>
 
-        <Mdx code={snippet.body.code} />
+        <Mdx code={snippet.code} />
       </div>
     </article>
   )

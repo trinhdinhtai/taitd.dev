@@ -1,6 +1,6 @@
 import { fileURLToPath } from "node:url"
+import { withContentCollections } from "@content-collections/next"
 import createJiti from "jiti"
-import { withContentlayer } from "next-contentlayer"
 
 const jiti = createJiti(fileURLToPath(import.meta.url))
 
@@ -20,4 +20,4 @@ const nextConfig = {
   },
 }
 
-export default withContentlayer(nextConfig)
+export default withContentCollections(nextConfig)

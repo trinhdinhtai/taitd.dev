@@ -1,4 +1,3 @@
-import { PropsWithChildren } from "react"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
@@ -12,7 +11,6 @@ export default function ReactMarkdownComponent({
   children,
 }: ReactMarkdownComponentProps) {
   return (
-    // @ts-expect-error
     <Markdown components={components} remarkPlugins={[remarkGfm]}>
       {children}
     </Markdown>

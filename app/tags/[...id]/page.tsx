@@ -1,5 +1,6 @@
 import { Metadata } from "next"
-import { allPosts } from "@/.contentlayer/generated"
+import { TagOption } from "@/content-collections"
+import { allPosts } from "content-collections"
 import { compareDesc } from "date-fns"
 
 import PageHeading from "@/components/page-heading"
@@ -26,7 +27,9 @@ async function getPostFromParams(params: { id: string[] }) {
   const tagId = params?.id?.join("/")
 
   const posts = allPosts
-    .filter((post) => post.published && post?.tags?.includes(tagId))
+    .filter(
+      (post) => post.published && post?.tags?.includes(tagId as TagOption)
+    )
     .sort((a, b) => {
       return compareDesc(new Date(a.date), new Date(b.date))
     })
@@ -49,7 +52,7 @@ const TagsPage = async ({ params }: TagsPageProps) => {
       {posts?.length ? (
         <div className="grid gap-10 sm:grid-cols-2">
           {posts.map((post, index) => (
-            <PostCard key={post._id} post={post} index={index} />
+            <PostCard key={post.slug} post={post} index={index} />
           ))}
         </div>
       ) : null}

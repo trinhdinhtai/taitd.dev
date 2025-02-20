@@ -1,5 +1,5 @@
 import { AnchorHTMLAttributes, HTMLAttributes } from "react"
-import { useMDXComponent } from "next-contentlayer/hooks"
+import { useMDXComponent } from "@content-collections/mdx/react"
 
 import { cn } from "@/lib/utils"
 import AboutContact from "@/components/about-contact"
@@ -143,18 +143,6 @@ export const components = {
   ),
   pre: CodeBlock,
   figcaption: CodeBlockHeader,
-  code: ({
-    className,
-    ...props
-  }: React.ComponentPropsWithoutRef<typeof CodeBlockHeader>) => (
-    <code
-      className={cn(
-        "relative rounded border bg-muted px-[0.3rem] py-0.5 font-mono text-[0.95em]",
-        className
-      )}
-      {...props}
-    />
-  ),
   Steps: ({ ...props }) => (
     <div
       className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]"

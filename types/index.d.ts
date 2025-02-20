@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { Post } from "@/.contentlayer/generated"
+import { Post } from "content-collections"
 import { Variants } from "framer-motion"
 
 export type SiteConfig = {
@@ -84,4 +84,10 @@ interface UseData {
 interface SeriesWithPosts {
   title: string
   posts: Post[]
+}
+
+export type TOC = {
+  title: string
+  url: string
+  depth: number
 }

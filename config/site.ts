@@ -1,4 +1,26 @@
+import type { Route } from "next"
 import type { SiteConfig } from "@/types"
+
+import type { NavItem } from "@/types/nav"
+
+export const MAIN_NAV: NavItem<Route>[] = [
+  {
+    title: "Components",
+    href: "/components",
+  },
+  {
+    title: "Blocks",
+    href: "/blocks",
+  },
+  {
+    title: "Blog",
+    href: "/blog",
+  },
+  {
+    title: "Sponsors",
+    href: "/sponsors",
+  },
+]
 
 export const siteConfig: SiteConfig = {
   name: "Taitd",

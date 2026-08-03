@@ -1,5 +1,5 @@
 {
-  "name": "next-blog",
+  "name": "taitd.dev",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -40,5 +40,6 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "pnpm@11.5.3"
 }

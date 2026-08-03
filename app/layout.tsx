@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import "./globals.css"
+import "../styles/globals.css"
 
 import { fontVariables } from "@/lib/fonts"
 

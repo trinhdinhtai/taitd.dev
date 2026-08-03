@@ -9,19 +9,10 @@
   },
   "editor.colorDecorators": false,
   "tailwindCSS.experimental.classRegex": [
-    [
-      "cva\\(((?:[^()]|\\([^()]*\\))*)\\)",
-      "[\"'`]?([^\"'`]+)[\"'`]?"
-    ],
-    [
-      "cn\\(((?:[^()]|\\([^()]*\\))*)\\)",
-      "(?:'|\"|`)([^']*)(?:'|\"|`)"
-    ]
+    ["cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]?([^\"'`]+)[\"'`]?"],
+    ["cn\\(((?:[^()]|\\([^()]*\\))*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
-  "tailwindCSS.classFunctions": [
-    "cva",
-    "cn"
-  ],
+  "tailwindCSS.classFunctions": ["cva", "cn"],
   "files.associations": {
     "*.css": "tailwindcss"
   },

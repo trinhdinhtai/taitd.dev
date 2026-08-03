@@ -3,6 +3,9 @@
 import { ProgressProvider } from "@bprogress/next/app"
 import { ThemeProvider } from "next-themes"
 
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { TooltipProvider as BaseTooltipProvider } from "@/components/base/ui/tooltip"
+
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
@@ -20,7 +23,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         delay={500}
         options={{ showSpinner: false }}
       >
-        {children}
+        <BaseTooltipProvider>
+          <TooltipProvider>{children}</TooltipProvider>
+        </BaseTooltipProvider>
       </ProgressProvider>
     </ThemeProvider>
   )

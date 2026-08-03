@@ -1,10 +1,10 @@
-import type { Metadata } from "next"
-
 import "../styles/globals.css"
 
+import type { Metadata } from "next"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 import { fontVariables } from "@/lib/fonts"
+import { Providers } from "@/components/Providers"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,9 +17,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={fontVariables}>
+    <html lang="en" className={fontVariables} suppressHydrationWarning>
       <body>
-        <NuqsAdapter>{children}</NuqsAdapter>
+        <NuqsAdapter>
+          <Providers>{children}</Providers>
+        </NuqsAdapter>
       </body>
     </html>
   )

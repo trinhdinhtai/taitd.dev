@@ -4,9 +4,12 @@ import { GeistSans } from "geist/font/sans"
 import { cn } from "@/lib/utils"
 
 const fontSans = GeistSans
+
 const fontMono = Google_Sans_Code({
   subsets: ["latin"],
   variable: "--font-google-sans-code",
+  adjustFontFallback: false,
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
 })
 
 export const fontVariables = cn(

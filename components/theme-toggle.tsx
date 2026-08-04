@@ -16,7 +16,7 @@ export function ThemeToggle() {
 
   const [clickSound] = useClickSound()
 
-  const switchTheme = () => {
+  const onSwitchTheme = () => {
     const next = resolvedTheme === "dark" ? "light" : "dark"
 
     clickSound()
@@ -24,7 +24,7 @@ export function ThemeToggle() {
     setTheme(next === systemTheme ? "system" : next)
   }
 
-  useHotkeys("t", () => switchTheme())
+  useHotkeys("t", () => onSwitchTheme())
 
   return (
     <Tooltip>
@@ -35,7 +35,7 @@ export function ThemeToggle() {
             variant="ghost"
             size="icon-sm"
             aria-label="Toggle mode"
-            onClick={() => switchTheme()}
+            onClick={() => onSwitchTheme()}
           >
             <span
               className="absolute size-12 pointer-fine:hidden"

@@ -3,6 +3,8 @@
 import { useTheme } from "next-themes"
 import { useHotkeys } from "react-hotkeys-hook"
 
+import { useClickSound } from "@/hooks/soundcn/use-click-sound"
+
 import { MoonIcon } from "./animated-icons/moon-icon"
 import { SunIcon } from "./animated-icons/sun-icon"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./base/ui/tooltip"
@@ -12,8 +14,12 @@ import { Kbd } from "./ui/kbd"
 export function ThemeToggle() {
   const { resolvedTheme, systemTheme, setTheme } = useTheme()
 
+  const [clickSound] = useClickSound()
+
   const switchTheme = () => {
     const next = resolvedTheme === "dark" ? "light" : "dark"
+
+    clickSound()
 
     setTheme(next === systemTheme ? "system" : next)
   }

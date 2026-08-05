@@ -4,6 +4,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { CommandMenu } from "./command-menu"
 import Logo from "./logo"
 import { NavDesktop } from "./nav-desktop"
+import { NavItemGitHub } from "./nav-item-github"
 import { Separator } from "./ui/separator"
 
 export function SiteHeader() {
@@ -23,6 +24,18 @@ export function SiteHeader() {
           />
 
           <CommandMenu />
+
+          <Separator
+            orientation="vertical"
+            className="mx-2 max-sm:hidden data-vertical:h-5 data-vertical:self-center"
+          />
+
+          <NavItemGitHub />
+
+          <Separator
+            orientation="vertical"
+            className="mx-2 data-vertical:h-5 data-vertical:self-center"
+          />
 
           <ThemeToggle />
         </div>

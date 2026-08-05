@@ -15,7 +15,7 @@ export const siteConfig: SiteConfig = {
   handle: "@taitd",
   description:
     "This website is my personal blog. I write about web development, JavaScript, TypeScript, React, Node.js, CSS, and more.",
-  url: "https://taitd.io.vn",
+  url: "https://taitd.dev",
   ogImage: "/images/og.png",
   links: {
     mail: "taitd153.dev@gmail.com",
@@ -25,5 +25,9 @@ export const siteConfig: SiteConfig = {
   author: {
     name: "Trịnh Đình Tài",
     email: "taitd153.dev@gmail.com",
+  },
+  repo: "trinhdinhtai/taitd.dev",
+  utmParams: {
+    source: "taitd.dev",
   },
 }

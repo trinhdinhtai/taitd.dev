@@ -13,4 +13,8 @@ export type SiteConfig = {
     name: string
     email: string
   }
+  repo: string
+  utmParams: {
+    source: string
+  }
 }

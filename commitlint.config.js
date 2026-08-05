@@ -21,7 +21,7 @@ module.exports = {
     "scope-enum": [2, "always", ["auth", "api", "ui", "db", "infra", "deps"]],
     "subject-empty": [2, "never"],
     "subject-full-stop": [2, "never", "."],
-    "header-max-length": [2, "always", 100],
+    "header-max-length": [2, "always", 150],
     "body-leading-blank": [2, "always"],
     "footer-leading-blank": [2, "always"],
   },

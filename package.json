@@ -36,6 +36,7 @@
     "@commitlint/config-conventional": "^21.2.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.20",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/node": "^20",
     "@types/react": "^19",

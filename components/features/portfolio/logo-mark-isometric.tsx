@@ -22,25 +22,16 @@ const transition: Transition = {
 }
 
 /**
- * An SVG mark whose outline is traced by a gradient highlight that follows the
- * cursor, paired with a springy press effect and a tactile click sound.
- *
- * Swap the SVG paths below for your own artwork. The interaction is driven by:
- * - a `radialGradient` whose center springs toward the pointer (the spotlight),
- *   reused as a second stroke layered over the base outline.
- * - `whileTap="pressed"` morphing the path `d` values between two states.
- *
- * The demo mark was designed by ncdai on Figma with the
- * [Fast Isometric Plugin](https://www.figma.com/community/plugin/1249759048471403961).
+ * Designed by ncdai on Figma with [Fast Isometric Plugin](https://www.figma.com/community/plugin/1249759048471403961).
  * Inspired by tailwindcss.com.
  */
-export function SpotlightLogo() {
+export function LogoMarkIsometric() {
   const id = useId()
   const ids = {
-    facePattern: `spotlight-logo-face-pattern-${id}`,
-    faceFill: `spotlight-logo-face-fill-${id}`,
-    stroke: `spotlight-logo-stroke-${id}`,
-    radialGradient: `spotlight-logo-radial-gradient-${id}`,
+    facePattern: `ncdai-face-pattern-${id}`,
+    faceFill: `ncdai-face-fill-${id}`,
+    stroke: `ncdai-stroke-${id}`,
+    radialGradient: `ncdai-radial-gradient-${id}`,
   }
 
   const ref = useRef<SVGSVGElement>(null)
@@ -89,7 +80,7 @@ export function SpotlightLogo() {
   return (
     <motion.svg
       ref={ref}
-      className="h-auto w-full touch-manipulation [--pattern:color-mix(in_oklab,var(--foreground)_12%,var(--background))] [--stroke:color-mix(in_oklab,var(--foreground)_16%,var(--background))]"
+      className="h-auto w-full touch-manipulation overflow-visible [--pattern:color-mix(in_oklab,var(--foreground)_12%,var(--background))] [--stroke:color-mix(in_oklab,var(--foreground)_16%,var(--background))]"
       viewBox="0 0 556 354"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -196,6 +187,14 @@ export function SpotlightLogo() {
         </motion.radialGradient>
       </defs>
 
+      <g className="stroke-line" strokeWidth="1" strokeDasharray="4 2">
+        <path d="M-477.55 756.57L1254.51 -243.41" />
+        {/* <path d="M-782.39 676.57L949.67 -323.41" /> */}
+        <path d="M977.37 788.58L-754.67 -211.42" />
+        <path d="M1143.65 692.58L-588.39 -307.42" />
+        {/* <path d="M1337.65 612.57L-394.41 -387.41" /> */}
+      </g>
+
       <g className="fill-background" fillRule="evenodd" clipRule="evenodd">
         <motion.path
           variants={{
@@ -245,6 +244,49 @@ export function SpotlightLogo() {
 
       <use href={`#${ids.faceFill}`} className="fill-background" />
       <use href={`#${ids.faceFill}`} fill={`url(#${ids.facePattern})`} />
+
+      <motion.path
+        variants={{
+          normal: {
+            d: [
+              // C
+              "M28.21 240.58 L0.50 224.58 V192.58 L111.35 128.58 L166.78 160.58 V192.58 L83.64 240.58",
+              "M166.78 160.58 L0.50 256.58 V288.58 L111.35 352.58 L166.78 320.58 L222.20 352.58 L333.05 288.58 V256.58 L277.63 224.58 L166.78 288.58 L0.50 192.58",
+              "M0.50 256.58 L111.35 320.58 L166.78 288.58 L222.20 320.58 L333.05 256.58",
+              "M111.35 320.58 V352.58",
+              "M166.78 288.58 V320.58",
+              "M222.20 320.58 V352.58",
+              // D
+              "M499.33 96.58 L554.76 128.58 V160.58 L388.48 256.58 L166.78 128.58 V96.58 L333.05 0.58 L499.33 96.58",
+              "M166.78 96.58 L388.48 224.58 L554.76 128.58",
+              "M527.04 112.58 L554.76 96.58 V64.58 L443.90 0.58 L277.63 96.58 L388.48 160.58 L554.76 64.58",
+              "M305.34 112.58 L388.48 64.58 L471.62 112.58",
+              "M388.48 224.58 V256.58",
+              "M388.48 32.58 V64.58",
+            ].join(""),
+          },
+          pressed: {
+            d: [
+              // C
+              "M42.07 248.58 L0.50 224.58 V208.58 L111.35 144.58 L166.78 176.58 V192.58 L69.78 248.58",
+              "M166.78 176.58 L0.5 272.58 V288.58 L111.35 352.58 L166.78 320.58 L222.20 352.58 L333.05 288.58 V272.58 L277.63 240.58 L166.78 304.58 L0.5 208.58",
+              "M0.5 272.58 L111.35 336.58 L166.78 304.58 L222.20 336.58 L333.05 272.58",
+              "M111.35 336.58 V352.58",
+              "M166.78 304.58 V320.58",
+              "M222.20 336.58 V352.58",
+              // D
+              "M499.33 112.58 L554.76 144.58 V160.58 L388.48 256.58 L166.78 128.58 V112.58 L333.05 16.58 L499.33 112.58",
+              "M166.78 112.58 L388.48 240.58 L554.76 144.58",
+              "M513.19 120.58 L554.76 96.58 V80.58 L443.90 16.58 L277.63 112.58 L388.48 176.58 L554.76 80.58",
+              "M291.48 120.58 L388.48 64.58 L485.47 120.58",
+              "M388.48 240.58 V256.58",
+              "M388.48 48.58 V64.58",
+            ].join(""),
+          },
+        }}
+        transition={transition}
+        stroke="var(--stroke)"
+      />
 
       <use href={`#${ids.stroke}`} stroke="var(--stroke)" />
       <use href={`#${ids.stroke}`} stroke={`url(#${ids.radialGradient})`} />

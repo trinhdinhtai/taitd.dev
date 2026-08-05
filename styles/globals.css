@@ -42,6 +42,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-surface: var(--surface);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -318,7 +319,7 @@
   @apply relative;
   &:before {
     content: "";
-    @apply bg-line absolute top-0 left-[-100vw] -z-1 h-px w-[200vw];
+    @apply absolute top-0 left-[-100vw] -z-1 h-px w-[200vw] bg-line;
   }
 }
 
@@ -326,6 +327,6 @@
   @apply relative;
   &:after {
     content: "";
-    @apply bg-line absolute bottom-0 left-[-100vw] -z-1 h-px w-[200vw];
+    @apply absolute bottom-0 left-[-100vw] -z-1 h-px w-[200vw] bg-line;
   }
 }

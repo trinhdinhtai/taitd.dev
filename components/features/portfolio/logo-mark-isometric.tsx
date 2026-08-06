@@ -29,6 +29,8 @@ const transition: Transition = {
 const tTopFace =
   "M0 128L221.70 0L277.13 32L193.99 80L360.26 176L304.84 208L138.56 112L55.43 160Z"
 
+const faceImageSize = 160
+
 /**
  * Designed by ncdai on Figma with [Fast Isometric Plugin](https://www.figma.com/community/plugin/1249759048471403961).
  * Inspired by tailwindcss.com.
@@ -37,6 +39,7 @@ export function LogoMarkIsometric() {
   const id = useId()
   const ids = {
     facePattern: `ncdai-face-pattern-${id}`,
+    faceImagePattern: `ncdai-face-image-pattern-${id}`,
     faceFill: `ncdai-face-fill-${id}`,
     stroke: `ncdai-stroke-${id}`,
     radialGradient: `ncdai-radial-gradient-${id}`,
@@ -112,6 +115,35 @@ export function LogoMarkIsometric() {
             strokeWidth="1"
           />
         </pattern>
+
+        <motion.pattern
+          id={ids.faceImagePattern}
+          patternUnits="userSpaceOnUse"
+          width={faceImageSize}
+          height={faceImageSize}
+          initial={{ x: 80, y: 260 }}
+          animate={
+            shouldReduceMotion || !isInView
+              ? { x: 80, y: 260 }
+              : {
+                  x: [80, 400, 80],
+                  y: [260, 40, 260],
+                }
+          }
+          transition={{
+            duration: 14,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        >
+          <image
+            href="/images/Bongo-Cat.png"
+            width={faceImageSize}
+            height={faceImageSize}
+            preserveAspectRatio="xMidYMid meet"
+            opacity="0.55"
+          />
+        </motion.pattern>
 
         <motion.g
           id={ids.faceFill}
@@ -219,7 +251,6 @@ export function LogoMarkIsometric() {
 
       <g className="stroke-line" strokeWidth="1" strokeDasharray="4 2">
         <path d="M-248.92 720.50L1081.28 -47.50" />
-        <path d="M-248.92 432.50L1081.28 -335.50" />
         <path d="M-692.32 -79.50L637.88 688.50" />
         <path d="M-415.19 -239.50L915.01 528.50" />
       </g>
@@ -277,6 +308,7 @@ export function LogoMarkIsometric() {
 
       <use href={`#${ids.faceFill}`} className="fill-background" />
       <use href={`#${ids.faceFill}`} fill={`url(#${ids.facePattern})`} />
+      <use href={`#${ids.faceFill}`} fill={`url(#${ids.faceImagePattern})`} />
 
       <use href={`#${ids.stroke}`} stroke="var(--stroke)" />
       <use href={`#${ids.stroke}`} stroke={`url(#${ids.radialGradient})`} />

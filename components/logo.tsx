@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { LogoMark } from "./LogoMark"
+import { LogoMark } from "./logo-mark"
 
 const Logo = () => {
   return (

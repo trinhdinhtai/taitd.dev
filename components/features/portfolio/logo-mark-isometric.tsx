@@ -116,6 +116,12 @@ export function LogoMarkIsometric() {
             },
           }}
           transition={transition}
+          // Since motion@12.43.0 SVG transforms are hardware-accelerated, which
+          // approximates the spring as a WAAPI `linear()` easing and desyncs this
+          // group from the `d` morphs that still run on the JS frameloop. Declaring
+          // `transformTemplate` opts this element back out of WAAPI; it is never
+          // invoked because a literal `transform` keyframe bypasses the builder.
+          transformTemplate={(_, generated) => generated}
         >
           <path d="M333.05 256.58L222.20 320.58L166.78 288.58L277.63 224.58L333.05 256.58Z" />
           <path d="M388.48 32.58L277.63 96.58L388.48 160.58L499.33 96.58L554.76 128.58L388.48 224.58L166.78 96.58L333.05 0.58L388.48 32.58Z" />

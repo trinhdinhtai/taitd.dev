@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/command"
 
 import { NewsIcon, SearchIcon } from "./icons"
-import { LogoMark } from "./LogoMark"
+import { LogoMark } from "./logo-mark"
 import { Button } from "./ui/button"
 import { Kbd, KbdGroup } from "./ui/kbd"
 

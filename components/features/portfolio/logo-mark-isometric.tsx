@@ -219,6 +219,7 @@ export function LogoMarkIsometric() {
 
       <g className="stroke-line" strokeWidth="1" strokeDasharray="4 2">
         <path d="M-248.92 720.50L1081.28 -47.50" />
+        <path d="M-248.92 432.50L1081.28 -335.50" />
         <path d="M-692.32 -79.50L637.88 688.50" />
         <path d="M-415.19 -239.50L915.01 528.50" />
       </g>

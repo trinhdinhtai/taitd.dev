@@ -16,7 +16,7 @@ export default function StripeSeparator({
       className={cn(
         "shrink-0 border-line",
         orientation === "horizontal"
-          ? "stripe-divider-horizontal border-y"
+          ? "stripe-divider-horizontal"
           : "stripe-divider-vertical border-x",
         className
       )}

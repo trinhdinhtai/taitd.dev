@@ -1,20 +1,58 @@
 "use client"
 
 import { useTiks } from "@rexa-developer/tiks/react"
-import { useAtom } from "jotai"
-import { atomWithStorage } from "jotai/utils"
+import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
 type AvatarLights = "on" | "off"
 
-const lightsAtom = atomWithStorage<AvatarLights>("avatarLights", "on")
+type AvatarLightsStore = {
+  lights: AvatarLights
+  setLights: (lights: AvatarLights) => void
+}
+
+function syncLightsDataset(lights: AvatarLights) {
+  document.documentElement.dataset.avatarLights = lights
+}
+
+const useAvatarLightsStore = create<AvatarLightsStore>()(
+  persist(
+    (set) => ({
+      lights: "on",
+      setLights: (lights) => {
+        syncLightsDataset(lights)
+        set({ lights })
+      },
+    }),
+    {
+      name: "avatarLights",
+      // jotai atomWithStorage wrote a bare "on" | "off" string under the same key
+      merge: (persisted, current) => {
+        if (persisted === "on" || persisted === "off") {
+          return { ...current, lights: persisted }
+        }
+
+        return {
+          ...current,
+          ...(persisted as Partial<AvatarLightsStore> | undefined),
+        }
+      },
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          syncLightsDataset(state.lights)
+        }
+      },
+    }
+  )
+)
 
 export function useAvatarLights() {
-  const [lights, setLights] = useAtom(lightsAtom)
+  const lights = useAvatarLightsStore((s) => s.lights)
+  const setLights = useAvatarLightsStore((s) => s.setLights)
   const { toggle: tiksToggle } = useTiks()
 
   const toggleLights = () => {
     const nextLights: AvatarLights = lights === "off" ? "on" : "off"
-    document.documentElement.dataset.avatarLights = nextLights
     setLights(nextLights)
     tiksToggle(nextLights === "on")
   }

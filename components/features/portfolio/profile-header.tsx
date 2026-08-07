@@ -1,5 +1,9 @@
 import React from "react"
 
+import { USER } from "@/config/site"
+import { AvatarLightsToggle } from "@/components/features/portfolio/avatar-lights-toggle"
+
+import { AvatarLights } from "./avatar-lights"
 import { LogoMarkIsometric } from "./logo-mark-isometric"
 
 export function ProfileHeader() {
@@ -10,7 +14,14 @@ export function ProfileHeader() {
       </figure>
 
       <div className="flex flex-col sm:row-span-2 sm:row-start-1">
-        <div className="screen-line-top mt-auto shrink-0 border-r border-line"></div>
+        <div className="screen-line-top mt-auto shrink-0 border-r border-line">
+          <AvatarLightsToggle className="group/avatar-lights-toggle mx-0.5 my-0.75 flex outline-none">
+            <AvatarLights
+              className="ring-border ring-offset-background group-focus-visible/avatar-lights-toggle:ring-1 group-focus-visible/avatar-lights-toggle:ring-offset-2"
+              variants={USER.avatarVariants}
+            />
+          </AvatarLightsToggle>
+        </div>
       </div>
     </div>
   )

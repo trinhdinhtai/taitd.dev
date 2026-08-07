@@ -2,6 +2,7 @@ import type { Route } from "next"
 import type { SiteConfig } from "@/types"
 
 import type { NavItem } from "@/types/nav"
+import type { User } from "@/types/user"
 
 export const MAIN_NAV: NavItem<Route>[] = [
   {
@@ -9,6 +10,19 @@ export const MAIN_NAV: NavItem<Route>[] = [
     href: "/blog",
   },
 ]
+
+export const USER: User = {
+  avatarVariants: {
+    lightOn:
+      "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/avatar-light-on.webp",
+    lightOff:
+      "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/avatar-light-off.webp",
+    darkOn:
+      "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/avatar-dark-on.webp",
+    darkOff:
+      "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/avatar-dark-off.webp",
+  },
+}
 
 export const siteConfig: SiteConfig = {
   name: "Taitd",

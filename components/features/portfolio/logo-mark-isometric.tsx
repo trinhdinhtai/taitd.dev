@@ -84,6 +84,15 @@ const walkerPath: readonly (readonly [x: number, y: number])[] = [
 const walkerXs = walkerPath.map(([x]) => x - walkerSize / 2)
 const walkerYs = walkerPath.map(([, y]) => y - walkerSize / 2)
 
+// Dashed guide lines: larger dash/gap so the crawl reads clearly at logo scale.
+const guideDash = "8 4"
+const guideDashPeriod = 22
+const guidePaths = [
+  "M-248.92 720.50L1081.28 -47.50",
+  "M-692.32 -79.50L637.88 688.50",
+  "M-415.19 -239.50L915.01 528.50",
+] as const
+
 /**
  * Designed by ncdai on Figma with [Fast Isometric Plugin](https://www.figma.com/community/plugin/1249759048471403961).
  * Inspired by tailwindcss.com.
@@ -272,10 +281,27 @@ export function LogoMarkIsometric() {
         </motion.radialGradient>
       </defs>
 
-      <g className="stroke-line" strokeWidth="1" strokeDasharray="4 2">
-        <path d="M-248.92 720.50L1081.28 -47.50" />
-        <path d="M-692.32 -79.50L637.88 688.50" />
-        <path d="M-415.19 -239.50L915.01 528.50" />
+      <g
+        className="stroke-[color-mix(in_oklab,var(--foreground)_12%,var(--background))] dark:stroke-[color-mix(in_oklab,var(--foreground)_24%,var(--background))]"
+        strokeWidth="1.25"
+        strokeDasharray={guideDash}
+      >
+        {guidePaths.map((d) => (
+          <motion.path
+            key={d}
+            d={d}
+            animate={
+              shouldReduceMotion
+                ? { strokeDashoffset: 0 }
+                : { strokeDashoffset: [0, -guideDashPeriod] }
+            }
+            transition={{
+              duration: 2,
+              ease: "linear",
+              repeat: Infinity,
+            }}
+          />
+        ))}
       </g>
 
       <g className="fill-background" fillRule="evenodd" clipRule="evenodd">

@@ -1,0 +1,50 @@
+import { cn } from "@/lib/utils"
+
+export function IntroItem({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn("flex items-center gap-4 font-mono text-sm", className)}
+      {...props}
+    />
+  )
+}
+
+export function IntroItemIcon({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "flex size-6 shrink-0 items-center justify-center rounded-md border border-muted-foreground/15 bg-muted ring-1 ring-border/50 ring-offset-1 ring-offset-background dark:ring-line",
+        "[&_svg]:pointer-events-none [&_svg]:text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+export function IntroItemContent({
+  className,
+  ...props
+}: React.ComponentProps<"p">) {
+  return <p className={cn("text-balance", className)} {...props} />
+}
+
+export function IntroItemLink({
+  className,
+  ...props
+}: React.ComponentProps<"a">) {
+  return (
+    <a
+      className={cn("link", className)}
+      target="_blank"
+      rel="noopener"
+      {...props}
+    />
+  )
+}

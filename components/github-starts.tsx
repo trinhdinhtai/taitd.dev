@@ -1,6 +1,6 @@
 import { addQueryParams } from "@/utils/url"
 
-import { siteConfig } from "@/config/site"
+import { SITE_CONFIG } from "@/config/site"
 import { Button } from "@/components/base/ui/button"
 import {
   Tooltip,
@@ -27,7 +27,7 @@ export function GitHubStars({ repo, stargazersCount }: GitHubStarsProps) {
               <a
                 href={addQueryParams(
                   `https://github.com/${repo}`,
-                  siteConfig.utmParams
+                  SITE_CONFIG.utmParams
                 )}
                 target="_blank"
                 rel="noopener"

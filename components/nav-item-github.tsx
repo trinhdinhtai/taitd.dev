@@ -1,13 +1,13 @@
 import { unstable_cache } from "next/cache"
 
-import { siteConfig } from "@/config/site"
+import { SITE_CONFIG } from "@/config/site"
 import { GitHubStars } from "@/components/github-starts"
 
 const getStargazerCount = unstable_cache(
   async () => {
     try {
       const response = await fetch(
-        `https://api.github.com/repos/${siteConfig.repo}`,
+        `https://api.github.com/repos/${SITE_CONFIG.repo}`,
         {
           headers: {
             Accept: "application/vnd.github+json",
@@ -35,6 +35,6 @@ export async function NavItemGitHub() {
   const stargazersCount = await getStargazerCount()
 
   return (
-    <GitHubStars repo={siteConfig.repo} stargazersCount={stargazersCount} />
+    <GitHubStars repo={SITE_CONFIG.repo} stargazersCount={stargazersCount} />
   )
 }

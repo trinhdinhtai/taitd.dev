@@ -13,6 +13,14 @@ export const MAIN_NAV: NavItem<Route>[] = [
 
 export const USER: User = {
   displayName: "Trịnh Đình Tài",
+  jobs: [
+    {
+      title: "Full Stack Developer / Technical Leader",
+      company: "VangleTek JSC",
+      website: "https://www.vangle.vn/vi/",
+      experienceId: "vangletek",
+    },
+  ],
   avatarVariants: {
     lightOn:
       "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/avatar-light-on.webp",
@@ -33,7 +41,7 @@ export const USER: User = {
   ],
 }
 
-export const siteConfig: SiteConfig = {
+export const SITE_CONFIG: SiteConfig = {
   name: "Taitd",
   handle: "@taitd",
   description:

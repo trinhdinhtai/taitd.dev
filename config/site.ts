@@ -13,6 +13,10 @@ export const MAIN_NAV: NavItem<Route>[] = [
 
 export const USER: User = {
   displayName: "Trịnh Đình Tài",
+  address: "Hà Nội, Việt Nam",
+  timeZone: "Asia/Ho_Chi_Minh",
+  phoneNumberB64: "Kzg0OTY1OTEzMTQ4", // E.164 format, base64 encoded (https://t.io.vn/base64-string-converter)
+  emailB64: "dGFpdGQxNTMuZGV2QGdtYWlsLmNvbQ==", // base64 encoded
   jobs: [
     {
       title: "Full Stack Developer / Technical Leader",

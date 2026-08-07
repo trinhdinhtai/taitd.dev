@@ -10,7 +10,7 @@ import { Separator } from "./ui/separator"
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 max-w-screen overflow-x-clip bg-background px-2">
-      <div className="screen-line-top screen-line-bottom mx-auto flex h-(--header-height) items-center gap-2 border-x border-line px-2 group-has-data-[slot=layout-wide]/layout:container after:z-1 after:bg-border sm:gap-4 md:max-w-3xl">
+      <div className="screen-line-top screen-line-bottom mx-auto flex h-(--header-height) items-center gap-2 border-x border-line px-2 group-has-data-[slot=layout-wide]/layout:container after:z-1 after:bg-border sm:gap-4 md:max-w-4xl">
         <Logo />
 
         <div className="flex-1" />

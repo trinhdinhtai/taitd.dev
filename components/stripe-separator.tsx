@@ -14,7 +14,7 @@ export default function StripeSeparator({
       data-slot="stripe-separator"
       data-orientation={orientation}
       className={cn(
-        "shrink-0 border-line",
+        "border-line",
         orientation === "horizontal"
           ? "stripe-divider-horizontal"
           : "stripe-divider-vertical border-x",

@@ -2,6 +2,10 @@ import type { AvatarLightsVariants } from "@/components/features/portfolio/avata
 
 export type User = {
   displayName: string
+  address: string
+  timeZone: string
+  phoneNumberB64: string
+  emailB64: string
   jobs: {
     title: string
     company: string

@@ -5,11 +5,16 @@ import StripeSeparator from "@/components/stripe-separator"
 export default function HomePage() {
   return (
     <div className="[--separator-height:--spacing(8)] **:data-[slot=panel]:scroll-mt-[calc(var(--header-height)+var(--separator-height))]">
-      <div className="mx-auto md:max-w-4xl">
-        <ProfileHeader />
-        <StripeSeparator />
+      <div className="mx-auto flex min-h-[calc(100svh-var(--header-height))] items-stretch md:max-w-4xl">
+        <StripeSeparator orientation="vertical" />
 
-        <Overview />
+        <div className="min-w-0 flex-1">
+          <ProfileHeader />
+          <StripeSeparator />
+          <Overview />
+        </div>
+
+        <StripeSeparator orientation="vertical" />
       </div>
     </div>
   )

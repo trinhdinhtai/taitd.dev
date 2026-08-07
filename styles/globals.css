@@ -154,11 +154,19 @@
   @apply bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px];
 }
 
-@utility stripe-divider {
+@utility stripe-divider-horizontal {
   @apply relative h-8;
   &:before {
     content: "";
     @apply absolute left-[-100vw] -z-1 h-full w-[200vw] diagonal-stripes;
+  }
+}
+
+@utility stripe-divider-vertical {
+  @apply relative w-8;
+  &:before {
+    content: "";
+    @apply absolute top-[-100vh] -z-1 h-[200vh] w-full diagonal-stripes;
   }
 }
 

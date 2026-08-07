@@ -10,7 +10,7 @@ import { LogoMarkIsometric } from "./logo-mark-isometric"
 
 export function ProfileHeader() {
   return (
-    <div className="screen-line-bottom grid grid-cols-[auto_1fr] grid-rows-[1fr_auto] overflow-y-clip border-x border-line">
+    <div className="screen-line-bottom grid grid-cols-[auto_1fr] grid-rows-[1fr_auto] overflow-y-clip">
       <figure className="relative col-span-2 p-2 sm:col-span-1 sm:col-start-2 sm:p-4">
         <LogoMarkIsometric />
       </figure>

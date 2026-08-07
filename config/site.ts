@@ -12,6 +12,7 @@ export const MAIN_NAV: NavItem<Route>[] = [
 ]
 
 export const USER: User = {
+  displayName: "Trịnh Đình Tài",
   avatarVariants: {
     lightOn:
       "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/avatar-light-on.webp",
@@ -22,6 +23,14 @@ export const USER: User = {
     darkOff:
       "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/avatar-dark-off.webp",
   },
+  flipSentences: [
+    "Software Engineer",
+    "Web Developer",
+    "UI/UX Designer",
+    "Full Stack Developer",
+    "Frontend Developer",
+    "Backend Developer",
+  ],
 }
 
 export const siteConfig: SiteConfig = {

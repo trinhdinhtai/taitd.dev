@@ -362,7 +362,7 @@ export function LogoMarkIsometric() {
             height={walkerSize}
             preserveAspectRatio="xMidYMid meet"
             transform={`rotate(${walkerRotate} ${walkerSize / 2} ${walkerSize / 2})`}
-            className="pointer-events-none filter-[drop-shadow(0_1px_2px_color-mix(in_oklab,var(--foreground)_35%,transparent))] dark:opacity-50 dark:filter-[brightness(0.72)_drop-shadow(0_1px_1px_color-mix(in_oklab,var(--foreground)_20%,transparent))]"
+            className="pointer-events-none filter-[drop-shadow(0_1px_2px_color-mix(in_oklab,var(--foreground)_45%,transparent))] dark:opacity-50 dark:filter-[brightness(0.72)_drop-shadow(0_1px_1px_color-mix(in_oklab,var(--foreground)_20%,transparent))]"
           />
         </motion.g>
       </motion.g>

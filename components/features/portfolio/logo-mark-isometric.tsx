@@ -29,7 +29,60 @@ const transition: Transition = {
 const tTopFace =
   "M0 128L221.70 0L277.13 32L193.99 80L360.26 176L304.84 208L138.56 112L55.43 160Z"
 
-const faceImageSize = 160
+// One walker touring only the top faces of D and T, then looping forever.
+const walkerSize = 78
+// Asset bottom cut sits ~9.3° (y-down); rotate to the iso column axis (55.425, -32) of D/T.
+const walkerBottomAngle = 9.33
+const walkerRotate =
+  (Math.atan2(-32, 55.425) * 180) / Math.PI - walkerBottomAngle
+const walkerPath: readonly (readonly [x: number, y: number])[] = [
+  // D top face — solid ring (outside the hollow)
+  [50, 290],
+  [90, 250],
+  [150, 240],
+  [210, 220],
+  [270, 250],
+  [330, 280],
+  [360, 310],
+  [320, 350],
+  [250, 380],
+  [180, 360],
+  [100, 330],
+  [50, 290],
+  // Approach the D→T junction along D's top-right
+  [150, 230],
+  [220, 220],
+  [280, 194],
+  // Short hop onto T's top face
+  [308, 146],
+  // T top face — crossbar, then stem, then back
+  [340, 120],
+  [380, 100],
+  [420, 80],
+  [460, 60],
+  [500, 45],
+  [530, 40],
+  [500, 55],
+  [490, 100],
+  [520, 130],
+  [550, 155],
+  [580, 180],
+  [560, 165],
+  [530, 145],
+  [490, 125],
+  [450, 110],
+  [400, 120],
+  [360, 130],
+  [308, 146],
+  // Return hop onto D
+  [280, 194],
+  [220, 220],
+  [150, 230],
+  [50, 290],
+]
+
+const walkerXs = walkerPath.map(([x]) => x - walkerSize / 2)
+const walkerYs = walkerPath.map(([, y]) => y - walkerSize / 2)
 
 /**
  * Designed by ncdai on Figma with [Fast Isometric Plugin](https://www.figma.com/community/plugin/1249759048471403961).
@@ -39,7 +92,6 @@ export function LogoMarkIsometric() {
   const id = useId()
   const ids = {
     facePattern: `ncdai-face-pattern-${id}`,
-    faceImagePattern: `ncdai-face-image-pattern-${id}`,
     faceFill: `ncdai-face-fill-${id}`,
     stroke: `ncdai-stroke-${id}`,
     radialGradient: `ncdai-radial-gradient-${id}`,
@@ -115,35 +167,6 @@ export function LogoMarkIsometric() {
             strokeWidth="1"
           />
         </pattern>
-
-        <motion.pattern
-          id={ids.faceImagePattern}
-          patternUnits="userSpaceOnUse"
-          width={faceImageSize}
-          height={faceImageSize}
-          initial={{ x: 80, y: 260 }}
-          animate={
-            shouldReduceMotion || !isInView
-              ? { x: 80, y: 260 }
-              : {
-                  x: [80, 400, 80],
-                  y: [260, 40, 260],
-                }
-          }
-          transition={{
-            duration: 14,
-            ease: "easeInOut",
-            repeat: Infinity,
-          }}
-        >
-          <image
-            href="/images/Bongo-Cat.png"
-            width={faceImageSize}
-            height={faceImageSize}
-            preserveAspectRatio="xMidYMid meet"
-            opacity="0.55"
-          />
-        </motion.pattern>
 
         <motion.g
           id={ids.faceFill}
@@ -308,10 +331,41 @@ export function LogoMarkIsometric() {
 
       <use href={`#${ids.faceFill}`} className="fill-background" />
       <use href={`#${ids.faceFill}`} fill={`url(#${ids.facePattern})`} />
-      <use href={`#${ids.faceFill}`} fill={`url(#${ids.faceImagePattern})`} />
 
       <use href={`#${ids.stroke}`} stroke="var(--stroke)" />
       <use href={`#${ids.stroke}`} stroke={`url(#${ids.radialGradient})`} />
+
+      <motion.g
+        variants={{
+          normal: { transform: "translate(0px, 0px)" },
+          pressed: { transform: "translate(0px, 16px)" },
+        }}
+        transition={transition}
+        transformTemplate={(_, generated) => generated}
+      >
+        <motion.g
+          initial={{ x: walkerXs[0], y: walkerYs[0] }}
+          animate={
+            shouldReduceMotion || !isInView
+              ? { x: walkerXs[0], y: walkerYs[0] }
+              : { x: walkerXs, y: walkerYs }
+          }
+          transition={{
+            duration: 60,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+        >
+          <image
+            href="/images/bongo-cat-walk.png"
+            width={walkerSize}
+            height={walkerSize}
+            preserveAspectRatio="xMidYMid meet"
+            transform={`rotate(${walkerRotate} ${walkerSize / 2} ${walkerSize / 2})`}
+            className="pointer-events-none filter-[drop-shadow(0_1px_2px_color-mix(in_oklab,var(--foreground)_35%,transparent))] dark:opacity-50 dark:filter-[brightness(0.72)_drop-shadow(0_1px_1px_color-mix(in_oklab,var(--foreground)_20%,transparent))]"
+          />
+        </motion.g>
+      </motion.g>
     </motion.svg>
   )
 }

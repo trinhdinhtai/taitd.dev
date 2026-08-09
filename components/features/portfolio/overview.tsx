@@ -1,5 +1,13 @@
-import { MapPinIcon } from "lucide-react"
+import { urlToName } from "@/utils/url"
+import {
+  LinkIcon,
+  MapPinIcon,
+  MarsIcon,
+  NonBinaryIcon,
+  VenusIcon,
+} from "lucide-react"
 
+import type { User } from "@/types/user"
 import { USER } from "@/config/site"
 
 import { CurrentLocalTimeItem } from "./overview/current-local-time-item"
@@ -13,6 +21,17 @@ import {
 import { JobItem } from "./overview/job-item"
 import { PhoneItem } from "./overview/phone-item"
 import { Panel, PanelContent } from "./panel"
+
+function getGenderIcon(gender: User["gender"]) {
+  switch (gender) {
+    case "male":
+      return <MarsIcon />
+    case "female":
+      return <VenusIcon />
+    case "non-binary":
+      return <NonBinaryIcon />
+  }
+}
 
 export function Overview() {
   return (
@@ -51,7 +70,30 @@ export function Overview() {
         <PhoneItem phoneNumberB64={USER.phoneNumberB64} />
 
         <EmailItem emailB64={USER.emailB64} />
+
+        <IntroItem>
+          <IntroItemIcon>
+            <LinkIcon />
+          </IntroItemIcon>
+          <IntroItemContent>
+            <IntroItemLink
+              href={USER.website}
+              aria-label={`Personal website: ${urlToName(USER.website)}`}
+            >
+              {urlToName(USER.website)}
+            </IntroItemLink>
+          </IntroItemContent>
+        </IntroItem>
+
+        <IntroItem>
+          <IntroItemIcon>{getGenderIcon(USER.gender)}</IntroItemIcon>
+          <IntroItemContent aria-label={`Pronouns: ${USER.pronouns}`}>
+            {USER.pronouns}
+          </IntroItemContent>
+        </IntroItem>
       </PanelContent>
+
+      <div className="pointer-events-none absolute inset-y-0 left-1/2 -z-1 w-px -translate-x-2.25 border-r border-dashed border-line max-sm:hidden" />
     </Panel>
   )
 }

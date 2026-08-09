@@ -17,6 +17,9 @@ export const USER: User = {
   timeZone: "Asia/Ho_Chi_Minh",
   phoneNumberB64: "Kzg0OTY1OTEzMTQ4", // E.164 format, base64 encoded (https://t.io.vn/base64-string-converter)
   emailB64: "dGFpdGQxNTMuZGV2QGdtYWlsLmNvbQ==", // base64 encoded
+  website: "https://taitd.dev",
+  pronouns: "he/him",
+  gender: "male",
   jobs: [
     {
       title: "Full Stack Developer / Technical Leader",

@@ -6,6 +6,9 @@ export type User = {
   timeZone: string
   phoneNumberB64: string
   emailB64: string
+  website: string
+  pronouns: string
+  gender: string
   jobs: {
     title: string
     company: string

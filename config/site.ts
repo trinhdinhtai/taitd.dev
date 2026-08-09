@@ -53,7 +53,7 @@ export const SOCIAL = {
   github: {
     href: "https://github.com/trinhdinhtai",
     title: "GitHub",
-    handle: "@trinhdinhtai",
+    handle: "trinhdinhtai",
   },
   linkedin: {
     href: "https://www.linkedin.com/in/taitd153/",
@@ -79,6 +79,8 @@ export type SocialLink = SocialProfile & { name: SocialName }
 export const SOCIAL_LINKS: SocialLink[] = (
   Object.entries(SOCIAL) as [SocialName, SocialProfile][]
 ).map(([name, profile]) => ({ name, ...profile }))
+
+export const GITHUB_USERNAME = SOCIAL.github.handle
 
 export const SITE_CONFIG: SiteConfig = {
   name: "Taitd",

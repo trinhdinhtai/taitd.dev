@@ -1,3 +1,4 @@
+import { GitHubContributions } from "@/components/features/portfolio/github-contributions"
 import { Overview } from "@/components/features/portfolio/overview"
 import { ProfileHeader } from "@/components/features/portfolio/profile-header"
 import SocialLinks from "@/components/features/portfolio/social-links"
@@ -14,6 +15,8 @@ export default function HomePage() {
           <StripeSeparator />
           <Overview />
           <SocialLinks />
+          <GitHubContributions />
+          <StripeSeparator />
         </div>
 
         <StripeSeparator orientation="vertical" />

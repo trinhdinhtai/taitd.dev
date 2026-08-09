@@ -13,10 +13,10 @@ import { SOCIAL_ICONS } from "./social-link-icons"
 
 export default function SocialLinks() {
   return (
-    <Panel className="screen-line-bottom-none">
-      <h2 className="sr-only">Overview</h2>
+    <Panel>
+      <h2 className="sr-only">Social Links</h2>
 
-      <PanelContent className="grid gap-x-4 gap-y-2.5 sm:grid-cols-2">
+      <PanelContent>
         <ul className="flex flex-wrap gap-2">
           {SOCIAL_LINKS.map((item) => (
             <li key={item.name}>

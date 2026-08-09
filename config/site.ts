@@ -20,6 +20,7 @@ export const USER: User = {
   website: "https://taitd.dev",
   pronouns: "he/him",
   gender: "male",
+  dateOfBirth: "1996-03-15",
   jobs: [
     {
       title: "Full Stack Developer / Technical Leader",

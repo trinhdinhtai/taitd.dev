@@ -1,5 +1,6 @@
 import { urlToName } from "@/utils/url"
 import {
+  CakeIcon,
   LinkIcon,
   MapPinIcon,
   MarsIcon,
@@ -33,7 +34,14 @@ function getGenderIcon(gender: User["gender"]) {
   }
 }
 
+function formatDateOfBirth(dateOfBirth: string) {
+  const [year, month, day] = dateOfBirth.split("-")
+  return `${year}/${month}/${day}`
+}
+
 export function Overview() {
+  const dateOfBirth = formatDateOfBirth(USER.dateOfBirth)
+
   return (
     <Panel className="screen-line-bottom-none">
       <h2 className="sr-only">Overview</h2>
@@ -82,6 +90,15 @@ export function Overview() {
             >
               {urlToName(USER.website)}
             </IntroItemLink>
+          </IntroItemContent>
+        </IntroItem>
+
+        <IntroItem>
+          <IntroItemIcon>
+            <CakeIcon />
+          </IntroItemIcon>
+          <IntroItemContent aria-label={`Date of birth: ${dateOfBirth}`}>
+            {dateOfBirth}
           </IntroItemContent>
         </IntroItem>
 

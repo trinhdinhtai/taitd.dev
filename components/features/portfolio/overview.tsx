@@ -35,7 +35,7 @@ function getGenderIcon(gender: User["gender"]) {
 
 export function Overview() {
   return (
-    <Panel>
+    <Panel className="screen-line-bottom-none">
       <h2 className="sr-only">Overview</h2>
 
       <PanelContent className="grid gap-x-4 gap-y-2.5 sm:grid-cols-2">

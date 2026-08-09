@@ -1,5 +1,13 @@
 import type { AvatarLightsVariants } from "@/components/features/portfolio/avatar-lights"
 
+export type SocialProfile = {
+  title: string
+  handle: string
+  href: string
+  /** Opt-in: include this profile in JSON-LD `sameAs` (public profile page). */
+  sameAs?: boolean
+}
+
 export type User = {
   displayName: string
   address: string

@@ -2,7 +2,7 @@ import type { Route } from "next"
 import type { SiteConfig } from "@/types"
 
 import type { NavItem } from "@/types/nav"
-import type { User } from "@/types/user"
+import type { SocialProfile, User } from "@/types/user"
 
 export const MAIN_NAV: NavItem<Route>[] = [
   {
@@ -47,6 +47,37 @@ export const USER: User = {
     "Backend Developer",
   ],
 }
+
+export const SOCIAL = {
+  github: {
+    href: "https://github.com/trinhdinhtai",
+    title: "GitHub",
+    handle: "@trinhdinhtai",
+  },
+  linkedin: {
+    href: "https://www.linkedin.com/in/taitd153/",
+    title: "LinkedIn",
+    handle: "@taitd153",
+  },
+  x: {
+    href: "https://twitter.com/taitddev",
+    title: "Twitter",
+    handle: "@taitddev",
+  },
+  dailydotdev: {
+    href: "https://daily.dev/taitd",
+    title: "Daily.dev",
+    handle: "@taitd",
+  },
+} satisfies Record<string, SocialProfile>
+
+export type SocialName = keyof typeof SOCIAL
+
+export type SocialLink = SocialProfile & { name: SocialName }
+
+export const SOCIAL_LINKS: SocialLink[] = (
+  Object.entries(SOCIAL) as [SocialName, SocialProfile][]
+).map(([name, profile]) => ({ name, ...profile }))
 
 export const SITE_CONFIG: SiteConfig = {
   name: "Taitd",

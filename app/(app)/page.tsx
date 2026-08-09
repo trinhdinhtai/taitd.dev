@@ -1,5 +1,6 @@
 import { Overview } from "@/components/features/portfolio/overview"
 import { ProfileHeader } from "@/components/features/portfolio/profile-header"
+import SocialLinks from "@/components/features/portfolio/social-links"
 import StripeSeparator from "@/components/stripe-separator"
 
 export default function HomePage() {
@@ -12,6 +13,7 @@ export default function HomePage() {
           <ProfileHeader />
           <StripeSeparator />
           <Overview />
+          <SocialLinks />
         </div>
 
         <StripeSeparator orientation="vertical" />

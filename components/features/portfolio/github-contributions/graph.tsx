@@ -45,7 +45,7 @@ export function GitHubContributionGraph({
         aria-label="GitHub Contributions Graph"
       >
         <ContributionGraphCalendar
-          className="w-full px-4 **:data-[slot=month-labels]:text-muted-foreground [&_svg]:h-auto [&_svg]:w-full"
+          className="w-full px-4 text-[13px] **:data-[slot=month-labels]:text-muted-foreground [&_svg]:h-auto [&_svg]:w-full"
           title="GitHub Contributions"
           aria-hidden
         >
@@ -75,7 +75,7 @@ export function GitHubContributionGraph({
         <ContributionGraphFooter className="px-4 text-sm">
           <ContributionGraphTotalCount>
             {({ totalCount }) => (
-              <figcaption className="text-pretty tabular-nums">
+              <figcaption className="text-[13px] text-pretty text-muted-foreground tabular-nums">
                 {totalCount.toLocaleString("en")} contributions,{" "}
                 {format(parseISO(data[0].date), "dd.MM.yyyy")} –{" "}
                 {format(parseISO(data[data.length - 1].date), "dd.MM.yyyy")}.

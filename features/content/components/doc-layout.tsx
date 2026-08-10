@@ -7,7 +7,7 @@ export function DocContainer({
   return (
     <div
       data-slot="doc-container"
-      className={cn("mx-auto w-full border-line", className)}
+      className={cn("mx-auto w-full", className)}
       {...props}
     />
   )

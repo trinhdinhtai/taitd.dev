@@ -6,6 +6,7 @@ import { ArrowLeftIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Prose } from "@/components/base/ui/typography"
+import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
 import { findNeighbor, getBlogPosts, getDocBySlug } from "@/features/content"
@@ -85,6 +86,10 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
           <DocContentCol>
             <Prose className="px-(--page-padding) pt-8 [--page-padding:--spacing(4)]">
               <TOCInline className="lg:hidden" items={toc} />
+
+              <div>
+                <MDX code={doc.content} />
+              </div>
             </Prose>
 
             <div className="screen-line-top h-4" />

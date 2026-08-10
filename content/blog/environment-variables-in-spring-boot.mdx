@@ -1,19 +1,567 @@
 ---
 title: Giải ngố về quản lý cấu hình cùng biến môi trường trong Spring Boot
-description: Optimize your terminal with iTerm2, Zsh, Oh My Zsh, and Amazon Q - a guide to installation, theme customization, plugins, and configuration for an enhanced command-line experience.
 image: https://assets.chanhdai.com/images/blog/awesome-terminal.webp
 createdAt: 2026-07-26
 updatedAt: 2026-07-26
 ---
 
-Bạn vừa hoàn thành một tính năng tuyệt vời sau nhiều đêm thức trắng. Mọi thứ chạy hoàn hảo trên máy cá nhân. Với tâm trạng đầy tự hào, bạn gõ lệnh đẩy toàn bộ mã nguồn lên mạng, sẵn sàng cho đợt triển khai đầu tiên. Nhưng khoan đã... bạn bỗng nhận ra mình vừa đẩy cả mật khẩu cơ sở dữ liệu thật, khóa API thanh toán và hàng loạt thông tin nhạy cảm cho toàn thế giới chiêm ngưỡng! 🚨
+_Bạn vừa hoàn thành một tính năng tuyệt vời sau nhiều đêm thức trắng. Mọi thứ chạy hoàn hảo trên máy cá nhân. Với tâm trạng đầy tự hào, bạn gõ lệnh đẩy toàn bộ mã nguồn lên mạng, sẵn sàng cho đợt triển khai đầu tiên. Nhưng khoan đã... bạn bỗng nhận ra mình vừa đẩy cả mật khẩu cơ sở dữ liệu thật, khóa API thanh toán và hàng loạt thông tin nhạy cảm cho toàn thế giới chiêm ngưỡng! 🚨_
 
-Đừng quá lo lắng, đây là một "tai nạn" kinh điển mà gần như lập trình viên nào cũng từng trải qua. Khi mới làm quen với Spring Boot, chúng ta thường có thói quen tiện tay nhét mọi thông số cấu hình vào một file application.properties duy nhất. Cách này rất nhanh gọn khi làm việc độc lập, nhưng khi dự án phình to, cần đưa lên máy chủ thật hoặc làm việc nhóm, nó lập tức biến thành một rủi ro khổng lồ về bảo mật và vận hành. Đã đến lúc chúng ta cần "giải ngố" và nâng cấp hoàn toàn cách ứng dụng của mình quản lý các thông số này. Trong bài viết này, hãy cùng tìm hiểu nghệ thuật sử dụng YAML, Profiles và Biến môi trường để code của bạn không chỉ chạy đúng, mà còn an toàn và linh hoạt ở bất cứ đâu!
+_Đừng quá lo lắng, đây là một "tai nạn" kinh điển mà gần như lập trình viên nào cũng từng trải qua. Khi mới làm quen với Spring Boot, chúng ta thường có thói quen tiện tay nhét mọi thông số cấu hình vào một file application.properties duy nhất. Cách này rất nhanh gọn khi làm việc độc lập, nhưng khi dự án phình to, cần đưa lên máy chủ thật hoặc làm việc nhóm, nó lập tức biến thành một rủi ro khổng lồ về bảo mật và vận hành. Đã đến lúc chúng ta cần "giải ngố" và nâng cấp hoàn toàn cách ứng dụng của mình quản lý các thông số này. Trong bài viết này, hãy cùng tìm hiểu nghệ thuật sử dụng YAML, Profiles và Biến môi trường để code của bạn không chỉ chạy đúng, mà còn an toàn và linh hoạt ở bất cứ đâu!_
 
-## Phần 1. Cơ bản về Properties và YAML 📝
+# Phần 1. Cơ bản về Properties và YAML 📝
 
 Mặc định, khi bạn tạo một dự án Spring Boot, sẽ có một file tên là application.properties nằm trong thư mục src/main/resources. Đây là nơi chứa các thiết lập của ứng dụng. Bạn cũng có thể đổi đuôi file thành application.yml (hoặc .yaml). Cả hai đều có cùng mục đích nhưng khác nhau về cách trình bày văn bản.
 
-### 1.1 Định dạng .properties (Cấu trúc phẳng)
+## 1.1 Định dạng .properties (Cấu trúc phẳng)
 
-Định dạng này lưu trữ dữ liệu theo cấu trúc key=value. Mỗi dòng là một cấu hình độc lập và đường dẫn tới cấu hình được viết liền nhau.
+Định dạng này lưu trữ dữ liệu theo cấu trúc `key=value`. Mỗi dòng là một cấu hình độc lập và đường dẫn tới cấu hình được viết liền nhau.
+
+```java
+server.port=8080
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=root
+spring.datasource.password=123456
+```
+
+Đặc điểm ở đây là bạn phải lặp lại các tiền tố chung (như `spring.datasource.`) trên mỗi dòng.
+
+## 1.2 Định dạng `.yml` hoặc `.yaml` (Cấu trúc phân cấp)
+
+YAML sử dụng khoảng trắng (thụt lề) để tạo cấu trúc cây phân cấp. Nó giúp nhóm các cấu hình giống nhau lại, giảm việc lặp lại chữ và nhìn gọn gàng hơn.
+
+```yml
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydb
+    username: root
+    password: 123456
+```
+
+Lưu ý về cú pháp YAML: YAML rất nhạy cảm với khoảng trắng. Bạn phải dùng phím cách (Space) để thụt lề, không dùng phím Tab. Phía sau dấu hai chấm : luôn cần có một khoảng trắng trước khi viết giá trị (ví dụ: port: 8080).
+
+# Phần 2. Cấu hình theo môi trường (Profiles)
+
+Trong thực tế, thông số kết nối database ở máy tính của bạn (môi trường dev) sẽ khác với máy chủ vận hành thực tế (môi trường prod). Spring Boot sử dụng khái niệm "Profile" để giải quyết việc này.
+
+## 2.1 Cách triển khai Profiles
+
+Bạn có thể tạo ra nhiều file cấu hình đặt cạnh nhau trong thư mục `resources`, với quy tắc đặt tên bắt buộc là: `application-{tên_profile}.yml` (hoặc `.properties`).
+
+Ví dụ:
+
+- **application-dev.yml**: Chứa cấu hình riêng cho môi trường dev.
+- **application-prod.yml**: Chứa cấu hình riêng cho môi trường prod.
+
+Dựa vào quy tắc đặt tên `application-{tên_profile}.yml` ở trên, nếu bạn muốn tạo một file cấu hình dành riêng cho môi trường kiểm thử với tên profile là test, bạn sẽ đặt tên file đó chính xác là gì?
+
+⏩️Đáp án là: `application-test.yml` (hoặc `.properties`) nằm cùng thư mục với file cấu hình chính.
+
+Tuy nhiên đặt tên thôi là chưa đủ, bạn còn một việc nữa phải làm đó là kích hoạt một profile cụ thể bằng cách thêm dòng này vào `application.yml`:
+
+```yml
+spring:
+  profiles:
+    active: dev
+```
+
+Khi bạn không khai báo `spring.profiles.active`, Spring Boot sẽ chỉ đọc dữ liệu từ file gốc `application.yml` (hoặc `application.properties`) (file này sẽ đóng vai trò là file cấu hình chúng và mặc định là luôn chạy). Tất cả các file có hậu tố dành riêng cho môi trường (như -dev, -test, -prod) sẽ bị bỏ qua.
+
+Vì cơ chế này, thực tế mọi người thường đặt các cấu hình dùng chung cho mọi môi trường vào file `application.yml`, và chỉ đưa những thông số cần thay đổi (như tài khoản database, port riêng) vào các file profile tương ứng để ghi đè.
+
+## 2.2 Chiến lược triển khai thực tế
+
+Bạn có thể tham khảo 3 chiến lược sử dụng trong thực tế dưới đấy:
+
+**1.Ghi đè thông số (Override) 🔄**
+
+- **application.yml**: Khai báo cấu hình mặc định (vd: server.port: 8080, tên app, cấu hình log).
+- **application-prod.yml**: Chỉ ghi đè cổng chạy thực tế server.port: 80 và đường dẫn Database thực tế. Các thông số khác tự động lấy từ file gốc.
+
+**2. Bổ sung cấu hình độc quyền (Additions) ➕**
+
+Có những cấu hình chỉ tồn tại và có ý nghĩa ở một môi trường duy nhất.
+
+- **application-dev.yml**: Bạn khai báo thêm spring.h2.console.enabled: true để bật giao diện xem database lúc đang code.
+- File gốc và file prod hoàn toàn không có dòng này, đảm bảo khi lên production giao diện debug không bị lộ.
+
+**3. Tách biệt hoàn toàn (Isolation) 🧱**
+
+Trong các dự án lớn đề cao tính an toàn, người ta không muốn có sự "kế thừa" nhầm lẫn nào.
+
+- **application.yml**: Chỉ chứa đúng một cấu hình điều hướng chung, ví dụ: `spring.profiles.active: dev`.
+- **application-dev.yml và application-prod.yml**: Sẽ khai báo lại từ đầu đến cuối toàn bộ thông số một cách độc lập. Không ai kế thừa ai.
+
+Cơ chế này mang lại sự linh hoạt tuyệt vời cho ứng dụng.
+
+# Phần 3. Sử dụng cấu hình trong code
+
+Sau khi đã định nghĩa các thông số trong file cấu hình (như `application.yml`), làm thế nào để lấy các giá trị đó đưa vào trong mã nguồn Java của bạn? Spring Boot cung cấp 3 cách phổ biến:
+
+## 3.1 Dùng [@Value](https://viblo.asia/u/Value) (Lấy giá trị đơn lẻ)
+
+Cách này dùng khi bạn chỉ cần lấy một vài giá trị rời rạc, ví dụ như tên ứng dụng hoặc một cấu hình đơn giản.
+
+```java
+@Component
+public class MyService {
+
+    @Value("${server.port}")
+    private int serverPort;
+
+    public void printPort() {
+        System.out.println("Cổng hiện tại là: " + serverPort);
+    }
+}
+```
+
+- `@Value("${...}")` sẽ tự động tìm kiếm key tương ứng trong file cấu hình và gán vào biến.
+
+## 3.2 Dùng `@ConfigurationProperties` (Gom nhóm cấu hình)
+
+Khi bạn có một nhóm cấu hình liên quan đến nhau (ví dụ: cấu hình kết nối database, hoặc thông tin bảo mật), việc dùng `@Value` cho từng biến sẽ rất rườm rà. `@ConfigurationProperties` cho phép gom toàn bộ nhóm đó vào một Class riêng.
+
+Giả sử trong file `application.yml` bạn có:
+
+```yml
+app:
+  mail:
+    host: smtp.example.com
+    port: 587
+```
+
+Bạn sẽ tạo một Java class để hứng trọn bộ cấu hình này:
+
+```java
+@Component
+@ConfigurationProperties(prefix = "app.mail")
+public class MailConfig {
+    private String host;
+    private int port;
+
+    // Getters và Setters (Bắt buộc phải có để Spring gán được dữ liệu)
+    public String getHost() { return host; }
+    public void setHost(String host) { this.host = host; }
+    public int getPort() { return port; }
+    public void setPort(int port) { this.port = port; }
+}
+```
+
+Spring Boot sẽ tự động ghép tiền tố `app.mail` với tên các thuộc tính (`host`, `port`) để tự động điền dữ liệu vào đối tượng `MailConfig`.
+
+Theo bạn, với cách thứ hai ([@ConfigurationProperties](https://viblo.asia/u/ConfigurationProperties)), nếu các thuộc tính trong file YAML đổi tên thành app.mail.server-address, thì theo quy tắc đặt tên biến chuẩn của ngôn ngữ Java, bạn sẽ khai báo tên biến này trong class MailConfig như thế nào để Spring Boot có thể tự động gán giá trị thành công?
+
+## 3.3 Relaxed Binding" (liên kết linh hoạt)
+
+Nếu bạn chưa biết thì Spring Boot có một tính năng rất thông minh gọi là **"Relaxed Binding" (liên kết linh hoạt)**. Nó cho phép tên cấu hình trong file YAML và tên biến trong Java không cần phải giống nhau y hệt 100% mà vẫn tự động nhận diện được.
+
+Nên để Spring Boot tự động ánh xạ từ `server-address` trong file YAML, tên biến trong class Java của bạn cần được đặt là `serverAddress` (viết theo quy tắc camelCase).
+
+Dưới đây là chi tiết về cơ chế Relaxed Binding (Liên kết linh hoạt) tuyệt vời của Spring Boot:
+
+Spring Boot hiểu rằng các môi trường và định dạng file khác nhau có những quy ước đặt tên khác nhau. Tuy nhiên, mã nguồn Java thì luôn chuộng kiểu camelCase. Do đó, Spring Boot sẽ tự động chuyển đổi và "khớp" các định dạng sau lại với nhau:
+
+- **Kebab-case** (thường dùng trong .yml hoặc .properties): `app.mail.server-address`
+- **Snake-case** (thường dùng ở một số hệ thống cũ): `app.mail.server_address`
+- **Upper snake-case** (BẮT BUỘC dùng cho Biến môi trường của hệ điều hành): `APP_MAIL_SERVER_ADDRESS`
+
+Tất cả 3 định dạng trên đều sẽ được Spring Boot tự động đẩy giá trị vào đúng một biến Java duy nhất:
+
+```java
+@Component
+@ConfigurationProperties(prefix = "app.mail")
+public class MailConfig {
+    // Spring Boot tự hiểu serverAddress = server-address = SERVER_ADDRESS
+    private String serverAddress;
+
+    public String getServerAddress() { return serverAddress; }
+    public void setServerAddress(String serverAddress) { this.serverAddress = serverAddress; }
+}
+```
+
+**Tại sao điều này lại quan trọng?**
+
+Nhờ Relaxed Binding, bạn kết hợp được hoàn hảo với Biến môi trường. Giả sử lúc code ở máy tính, bạn để `server-address`: `localhost` trong file `application.yml`. Nhưng khi đẩy code lên máy chủ thật, bạn không cần sửa file YAML. Bạn chỉ cần vào hệ điều hành của máy chủ, tạo một biến tên là `APP_MAIL_SERVER_ADDRESS="api.congty.com"`. Spring Boot sẽ tự động ưu tiên lấy biến của hệ điều hành và ghi đè vào biến `serverAddress` trong Java.
+
+# Phần 4. Bảo mật biến môi trường và Thứ tự ưu tiên
+
+Trong Spring Boot, việc để lộ các thông tin như mật khẩu database, token, hay API key là một lỗ hổng cực kỳ nguy hiểm. Bảo mật ở đây có nghĩa là đảm bảo những thông tin này không bao giờ nằm "lộ thiên" trong mã nguồn (source code) và được quản lý an toàn khi ứng dụng được triển khai.
+
+Hành trình bảo mật này đi từ những thao tác cơ bản nhất cho đến các kiến trúc tiêu chuẩn của doanh nghiệp (enterprise). Chính vì thế mình đã chia nó ra thành 3 mức độ hoặc có thể coi là 3 cột mốc mà các bạn cần nắm được để có thể tự tin áp dụng vào mọi bài toán trong thực tế:
+
+- **🛡️ Mức độ cơ bản**: Tách rời cấu hình (Externalization). Sử dụng biến môi trường của hệ điều hành (OS Environment Variables) và tham số dòng lệnh. Đây là nguyên tắc đầu tiên và bắt buộc: tuyệt đối không commit mật khẩu lên Git.
+- **🔐 Mức độ trung cấp**: Mã hóa cấu hình (Encryption). Sử dụng các thư viện như Jasypt (Java Simplified Encryption) để mã hóa trực tiếp các giá trị nhạy cảm ngay bên trong file application.yml. Nếu file bị rò rỉ, người khác cũng chỉ nhìn thấy những chuỗi ký tự vô nghĩa.
+- **🏛️ Mức độ chuẩn mực**: Quản lý tập trung (Secret Vaults). Sử dụng các dịch vụ chuyên dụng như HashiCorp Vault, AWS Secrets Manager, hoặc Azure Key Vault. Ứng dụng Spring Boot sẽ tự động xác thực và lấy mật khẩu từ các hệ thống này vào bộ nhớ (RAM) lúc khởi động, hoàn toàn không lưu trữ bất kỳ secret nào dưới dạng file.
+
+Rồi bây giờ hãy cùng mình bắt đầu từ nền móng vững chắc nhất.
+
+## Mức 1 - Tách rời cấu hình (Externalization)
+
+Trong kiến trúc phần mềm hiện đại (đặc biệt là theo tiêu chuẩn 12-Factor App), quy tắc tối thượng về bảo mật là: Code và Cấu hình phải tách biệt hoàn toàn. Nếu bạn đẩy code lên GitHub hoặc GitLab (dù là private repo), bất kỳ ai có quyền đọc code đều có thể thấy mật khẩu nếu bạn ghi trực tiếp vào file.
+
+Hãy xem một ví dụ về cách làm chưa bảo mật (hardcode) trong file `application.yml`:
+
+```yml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydb
+    username: root
+    password: SuperSecretPassword123! # Rất nguy hiểm nếu commit dòng này!
+```
+
+Để giải quyết vấn đề này, Spring Boot hỗ trợ một cú pháp nội suy (interpolation) rất mạnh mẽ: `${TEN_BIEN}`. Khi ứng dụng khởi động, Spring Boot sẽ tìm kiếm `TEN_BIEN` này từ môi trường bên ngoài và điền vào chỗ trống. File `application.yml` của chúng ta sẽ được sửa lại an toàn như sau:
+
+```yml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydb
+    username: root
+    password: ${DB_PASSWORD}
+```
+
+Lúc này, file `application.yml` hoàn toàn sạch sẽ. Vậy làm sao để truyền giá trị thực tế cho `DB_PASSWORD` khi ứng dụng chạy? Ở mức độ cơ bản, có 2 cách phổ biến nhất:
+
+### 1. Sử dụng biến môi trường hệ điều hành (OS Environment Variables):
+
+Ứng dụng sẽ đọc trực tiếp cấu hình từ hệ điều hành nơi nó đang chạy.
+
+- Trên Linux/macOS (Terminal): Bạn gán biến rồi mới chạy ứng dụng.
+  ```none
+  export DB_PASSWORD=ThucTeKhongAiBiet
+  java -jar myapp.jar
+  ```
+- Trên Windows (CMD):
+  ```none
+  set DB_PASSWORD=ThucTeKhongAiBiet
+  java -jar myapp.jar
+  ```
+
+### 2. Sử dụng tham số dòng lệnh (Command Line Arguments):
+
+Bạn truyền thẳng giá trị vào lúc gọi lệnh chạy file JAR. Spring Boot sẽ ưu tiên nạp các giá trị này.
+
+```none
+java -jar myapp.jar --DB_PASSWORD=ThucTeKhongAiBiet
+```
+
+Với cách làm này, mật khẩu thực tế chỉ tồn tại trên server (production) hoặc trên máy cá nhân của từng lập trình viên, hoàn toàn vắng bóng trong mã nguồn.
+
+Hãy cùng phân tích một tình huống thực tế để đi sâu hơn nhé. Với cú pháp ${DB_PASSWORD} như trên, nếu một lập trình viên khác tải code về máy cá nhân (Local) để chạy thử, nhưng họ quên không thiết lập biến môi trường DB_PASSWORD trên máy của họ, thì Spring Boot sẽ không tìm thấy biến này và báo lỗi ngay lúc khởi động.
+
+Theo bạn, làm thế nào để chúng ta có thể vừa yêu cầu biến ${DB_PASSWORD} cho môi trường thực tế, nhưng đồng thời lại gài sẵn một giá trị mặc định (ví dụ: pass_local_ne) ngay trong cú pháp đó để ứng dụng vẫn khởi động thành công trên máy cá nhân khi không có biến môi trường?
+
+Cú pháp `${DB_PASSWORD:pass_local_ne}` chính là câu trả lời.
+
+Dấu `:` ở đây hoạt động như một cơ chế dự phòng (fallback). Nếu Spring Boot tìm thấy biến môi trường DB_PASSWORD (trên server), nó sẽ dùng giá trị thật. Nếu không tìm thấy (trên máy cá nhân của lập trình viên), nó sẽ dùng `pass_local_ne`. Cách này giúp toàn bộ team dev làm việc cực kỳ trơn tru mà không ai phải tự setup biến môi trường trên máy mình nếu không cần thiết.
+
+### 3. Sử dụng file để lưu trữ tập trung
+
+Lưu trữ biến môi trường vào một file độc lập là phương pháp cực kỳ phổ biến để quản lý cấu hình tập trung mà không phải gõ lệnh `export` (hoặc `set`) thủ công mỗi lần chạy ứng dụng.
+
+Trong hệ sinh thái Spring Boot, chúng ta có 2 phương pháp chính để lưu trữ với file
+
+#### 1️⃣ Sử dụng file `.env` (Phong cách Dotenv)
+
+Đây là chuẩn mực rất quen thuộc nếu bạn từng làm việc với Node.js, Python hay Docker. File `.env` lưu trữ dữ liệu dưới dạng `KEY=VALUE`.
+
+- Đặc điểm: Spring Boot không mặc định đọc file `.env`. Để sử dụng, chúng ta phải thêm thư viện bên thứ ba, nổi bật nhất là **spring-dotenv** (của me.paulschwarz).
+- Cách hoạt động: Khi ứng dụng khởi động, thư viện sẽ đọc file .env, lấy các biến trong đó và "bơm" trực tiếp vào môi trường (Environment) của Spring. Do đó, cú pháp `${DB_PASSWORD}` trong `application.yml` vẫn hoạt động hoàn hảo.
+
+Đây là cách rất được yêu thích bởi các lập trình viên chuyển từ Node.js hoặc Python sang.
+
+**Bước 1: Thêm thư viện hỗ trợ**
+
+Spring Boot mặc định không hiểu file .env. Bạn cần thêm thư viện spring-dotenv vào file pom.xml (nếu dùng Maven):
+
+```xml
+<dependency>
+    <groupId>me.paulschwarz</groupId>
+    <artifactId>spring-dotenv</artifactId>
+    <version>4.0.0</version> <!-- Bạn có thể kiểm tra version mới nhất -->
+</dependency>
+```
+
+**Bước 2: Tạo file .env**
+
+Bạn tạo một file có tên chính xác là .env đặt ở thư mục gốc của dự án (ngang hàng với pom.xml).
+
+```none
+DB_URL=jdbc:mysql://localhost:3306/mydb
+DB_USERNAME=admin
+DB_PASSWORD=SuperSecretPass!
+```
+
+_(Lưu ý sống còn: Thêm ngay .env vào file .gitignore để không bị đẩy lên Git)._
+
+**Bước 3: Sử dụng trong application.yml**
+
+Bây giờ, thư viện sẽ tự động nạp các biến từ file `.env` vào hệ thống. Bạn chỉ cần gọi chúng ra:
+
+```yml
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+```
+
+Còn nếu các bạn muốn chỉ định một file env bất kì nằm trên hệ thống thì thư viện `spring-dotenv` hỗ trợ 2 tham số chính:
+
+- **spring.dotenv.directory**: Chỉ định thư mục chứa file (mặc định là ./ tức là thư mục gốc).
+- **spring.dotenv.filename**: Chỉ định tên file (mặc định là .env).
+
+Bạn có thể truyền nó qua tham số dòng lệnh như sau:
+
+```none
+java -jar myapp.jar --spring.dotenv.directory=/etc/secure/
+```
+
+Với lệnh trên, thư viện sẽ tìm kiếm một file có tên là .env nằm bên trong thư mục `/etc/secure/`.
+
+Nếu bạn muốn chỉ định cả tên file ví dụ `.env.production` thì câu lệnh sẽ là:
+
+```none
+java -jar myapp.jar --spring.dotenv.directory=/etc/secure/ --spring.dotenv.filename=.env.production
+```
+
+còn nếu không chỉ định thư viện sẽ mặc định đọc file `.env`
+
+#### 2️⃣ Cơ chế Native của Spring Boot (File ngoài)
+
+Spring Boot được thiết kế sẵn một cơ chế cực kỳ thông minh để đọc file cấu hình nằm bên ngoài file `.jar`.
+
+- Đặc điểm: Không cần cài thêm bất kỳ thư viện nào.
+- Cách hoạt động: Khi bạn chạy `java -jar myapp.jar`, Spring Boot sẽ tự động quét và ưu tiên đọc file application.yml (hoặc .properties) nếu nó được đặt trong thư mục config/ nằm ngay cạnh file .jar đó. Hoặc bạn có thể chỉ định đích danh đường dẫn file qua tham số: `--spring.config.location=file:/etc/secrets/my-config.yml`.
+
+Để triển khai cơ chế này, chúng ta có 2 phương án:
+
+**Cách A: Dựa vào thư mục mặc định (config/)**
+
+Khi ứng dụng Spring Boot (`myapp.jar`) chạy, nó sẽ tự động tìm kiếm file `application.yml` theo thứ tự ưu tiên sau:
+
+1. Thư mục `config/` nằm ngay cạnh file .jar đang chạy.
+2. Thư mục hiện tại (cùng cấp với file `.jar`).
+3. Bên trong file .jar (file mặc định bạn viết lúc code).
+
+Vậy trên server, bạn chỉ cần tạo thư mục `config`, ném file `application.yml` chứa mật khẩu thật vào đó, rồi chạy file .jar ở bên ngoài. Spring Boot sẽ ưu tiên dùng cấu hình ở ngoài.
+
+**Cách B: Chỉ định đường dẫn bất kỳ (Tùy biến cao nhất)**
+
+Giả sử bộ phận IT của công ty quy định mọi file bảo mật phải nằm ở ổ `D:\secrets\` (Windows) hoặc `/etc/secrets/` (Linux). Lúc này, bạn truyền tham số khi chạy lệnh:
+
+```none
+java -jar myapp.jar --spring.config.location=file:/etc/secrets/my-prod-config.yml
+```
+
+Lúc này, Spring Boot sẽ phớt lờ mọi file cấu hình mặc định và chỉ đọc đúng file bạn vừa chỉ định.
+
+Bây giờ, chúng ta hãy thử một bài toán thực tế để xem bạn áp dụng cơ chế Native (Phương pháp 2) như thế nào nhé 🤔:
+
+Giả sử trong source code (bên trong file `.jar`), bạn đã có sẵn file `application.yml` chứa hàng trăm dòng cấu hình chung không nhạy cảm (ví dụ: port chạy server, tên ứng dụng, cấu hình log). Trên server, bạn có một file `secrets.yml` chỉ chứa duy nhất 2 dòng là username và password của database.
+
+Nếu bạn dùng lệnh `--spring.config.location=file:/path/to/secrets.yml` như ở Cách B, Spring Boot sẽ chỉ đọc file secrets này và quên sạch hàng trăm dòng cấu hình chung kia, làm ứng dụng bị lỗi.
+
+Theo bạn, làm thế nào để bảo Spring Boot là: "Hãy đọc file cấu hình mặc định bên trong `.jar` đi, NHƯNG hãy đọc thêm cả file `secrets.yml` bên ngoài nữa để ghép chúng lại với nhau"?
+
+Bí quyết để giải quyết bài toán này nằm ở việc thay đổi tham số dòng lệnh. Thay vì dùng tham số `location`, chúng ta sẽ sử dụng `additional-location`.
+
+Cụ thể, câu lệnh khởi động sẽ là:
+
+```none
+java -jar myapp.jar --spring.config.additional-location=file:/path/to/secrets.yml
+```
+
+Dưới đây là cơ chế hoạt động:
+
+- 📁 `--spring.config.location`: Lệnh này báo với Spring Boot rằng: "Hãy bỏ qua mọi quy tắc tìm kiếm mặc định, CHỈ đọc duy nhất file ở đường dẫn này". Điều này sẽ làm ứng dụng mất đi các cấu hình gốc bên trong file `.jar`.
+- ➕ `--spring.config.additional-location`: Lệnh này báo rằng: "Hãy đọc file cấu hình mặc định trong `.jar` như bình thường, sau đó nạp THÊM cấu hình từ file bên ngoài". Spring Boot sẽ tự động gộp (merge) hai file này lại. Nếu có các khóa (keys) trùng nhau, giá trị ở file bên ngoài sẽ ghi đè giá trị bên trong.
+
+Với cách này, ứng dụng giữ được hàng trăm dòng cấu hình chung từ trong source code, đồng thời nhận được mật khẩu bảo mật từ file `secrets.yml` nằm độc lập trên server.
+
+**🛡️ Nguyên tắc bảo mật sống còn cho cả 2 phương pháp:**
+
+- **Tuyệt đối không commit**: File chứa giá trị thật (.env hoặc my-config.yml) phải được đưa vào .gitignore. Bạn chỉ nên commit file mẫu (ví dụ: .env.example) chứa tên biến nhưng bỏ trống giá trị để team dev biết cần cấu hình những gì.
+- **Khóa quyền hệ điều hành**: File lưu trên server phải được phân quyền nghiêm ngặt (ví dụ dùng lệnh chmod 600 trên Linux), đảm bảo chỉ duy nhất user OS dùng để chạy ứng dụng Spring Boot mới có quyền đọc file này.
+
+## Mức 2: Mã hóa cấu hình (Encryption) 🛡️
+
+Mức 1 rất tốt để giấu mật khẩu khỏi GitHub, nhưng nó vẫn có một điểm yếu chí mạng: Nếu một người có quyền truy cập vào server (hoặc container Docker) và gõ lệnh env, hoặc họ xem được file script khởi động ứng dụng, họ vẫn sẽ nhìn thấy mật khẩu của bạn dưới dạng chữ thô (plain-text).
+
+Để giải quyết vấn đề này, chúng ta dùng các thư viện mã hóa, nổi tiếng nhất trong Spring Boot là **Jasypt**.
+
+![](https://images.viblo.asia/685a14c2-1f59-4d44-9e4a-3435907f7b58.jpg)
+
+Thay vì để giá trị thật, bạn sẽ mã hóa nó và để trong file `application.yml` dưới dạng:
+
+```yml
+spring:
+  datasource:
+    password: ENC(u1+j/wTxZ3Rxyz...==)
+```
+
+Chữ `ENC(...)` báo cho Spring Boot biết đây là dữ liệu đã mã hóa. Khi ứng dụng khởi động, Jasypt sẽ tự động can thiệp và giải mã chuỗi này thành mật khẩu thật để kết nối database.
+
+### 1. Tạo chuỗi mã hóa
+
+Chuỗi mật khẩu mã hóa như ví dụ ở trên là `u1+j/wTxZ3Rxyz...==` chúng ta sẽ phải thủ công dán vào file `application.yml`, chính vì thế làm sao để chúng ta có được chuỗi mã hóa đó từ mật khẩu gốc của mình. Có một cách khá nhanh đó chính là bạn truy cập trực tiếp vào các trang tạo mã hóa Jasypt online và dán chuỗi mật khẩu thật cùng khóa của mình vào để tạo ra chuỗi mật khẩu mã hóa, hoặc cũng có thể ngược lại xem được mật khẩu thật từ chuỗi mật khẩu mã với khóa (tuy nhiên cách này chỉ nên dùng ở local với các biến không quá quan trọng). Còn với môi trường prod tuyệt đối không vì nguy cơ lộ lọt dữ liệu. Thay vào đó, chúng ta nên tự tạo mã hash ngay trên máy tính của mình bằng 2 cách phổ biến sau:
+
+**Cách 1: Sử dụng Maven Plugin (Nhanh và tiện nhất) 💻**
+
+Bạn thêm Jasypt plugin vào file `pom.xml`, sau đó mở Terminal của IDE và gõ một dòng lệnh:
+
+```none
+mvn jasypt:encrypt -Djasypt.encryptor.password="KhoaBaoMatCuaBan" -Djasypt.plugin.value="123456"
+```
+
+Kết quả trả về trên màn hình sẽ là chuỗi đã được mã hóa. Bạn chỉ việc copy nó (ví dụ: `u1+j/wTxZ...`) bọc vào trong ENC() và dán vào file `application.yml`.
+
+**Cách 2: Viết một hàm `main` nhỏ trong Test class 🛠️**
+
+Bạn tạo một đoạn code Java ngắn gọn để công cụ Jasypt tự chạy hàm mã hóa và in ra màn hình (Console):
+
+```java
+StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+encryptor.setPassword("KhoaBaoMatCuaBan"); // Chìa khóa
+String encrypted = encryptor.encrypt("123456"); // Mật khẩu thật
+System.out.println("Kết quả: ENC(" + encrypted + ")");
+```
+
+Sau khi copy được kết quả, bạn có thể xóa hàm này đi.
+
+### 2. Lưu trữ khóa
+
+Như các bạn cũng biết, để giải mã được đoạn `ENC(...)` kia, Jasypt chắc chắn cần một chìa khóa bí mật (master password hoặc secret key).
+
+Theo bạn, nếu chúng ta lại ghi cái "chìa khóa bí mật" này trực tiếp vào file `application.yml` cùng với đoạn mã hóa thì chuyện gì sẽ xảy ra đối với bài toán bảo mật của chúng ta? 🔑
+
+Nếu chúng ta để luôn chìa khóa giải mã (master key) vào file `application.yml`, điều đó giống như việc bạn khóa két sắt siêu cẩn thận rồi... cắm luôn chìa khóa ở ổ khóa vậy 🗝️. Bất kỳ ai xem được mã nguồn (source code) sẽ lấy được cả `chuỗi đã mã hóa` lẫn `chìa khóa`, từ đó họ dễ dàng giải mã ra mật khẩu thật. Công sức bảo mật trở về con số 0.
+
+Để làm chuẩn mực ở Mức 2 (Mã hóa cấu hình), chúng ta phải kết hợp với kiến thức của Mức 1: Không bao giờ lưu chìa khóa trong code, mà phải truyền nó từ hệ điều hành vào.
+
+Cách thực hành chuẩn mực với Jasypt sẽ diễn ra như sau:
+
+**1. Trong file cấu hình (application.yml):**
+
+Chỉ chứa dữ liệu đã mã hóa, hoàn toàn không có chìa khóa.
+
+```none
+spring:
+  datasource:
+    password: ENC(u1+j/wTxZ3Rxyz...==)
+```
+
+**2. Khi chạy ứng dụng (Deploy):**
+
+Chúng ta truyền chìa khóa bí mật (ví dụ tên là `jasypt.encryptor.password`) thông qua biến môi trường hoặc tham số dòng lệnh:
+
+- Chạy qua Terminal: java -jar myapp.jar --jasypt.encryptor.password=KhoaBaoMatCuaToi
+- Hoặc set biến môi trường OS: export JASYPT_ENCRYPTOR_PASSWORD=KhoaBaoMatCuaToi
+
+Bằng cách này, source code của bạn hoàn toàn an toàn kể cả khi bị lộ, vì kẻ gian không có biến môi trường trên server của bạn để giải mã.
+
+Tuy nhiên, Mức 2 vẫn có một nhược điểm: chìa khóa `JASYPT_ENCRYPTOR_PASSWORD` vẫn trôi nổi ở các biến môi trường trên server, quản trị viên hệ thống (sysadmin) vẫn có thể xem được. Điều này dẫn chúng ta đến cảnh giới cao nhất.
+
+## Mức 3 - Quản lý tập trung (Secret Vaults) 🏦
+
+Ở mức này, chúng ta sử dụng các hệ thống như **HashiCorp Vault** hoặc **AWS Secrets Manager**. Các công cụ này giống như một "ngân hàng kỹ thuật số" bọc thép. Spring Boot sẽ tự động gọi API đến "ngân hàng" này lúc khởi động để xin mật khẩu, lưu tạm vào RAM và dùng luôn, không mã hóa hay lưu trữ vào bất kỳ file nào.
+
+Nhưng để "ngân hàng" chịu giao mật khẩu database ra, ứng dụng Spring Boot của chúng ta phải chứng minh được danh tính của nó (Authentication). Theo bạn, làm thế nào để ứng dụng chứng minh được "Tôi là ứng dụng hợp lệ" với Vault mà không lại rơi vào vòng lặp "phải giấu một cái mật khẩu khác trong code"?
+
+Nếu các bạn chưa có câu trả lời, thì cũng không sao cả, đây thực sự là một trong những bài toán hóc búa nhất trong kiến trúc bảo mật. Giới kỹ sư phần mềm gọi nó là bài toán "Secret Zero" (Bí mật số 0): Làm sao để bảo vệ cái mật khẩu đầu tiên dùng để lấy các mật khẩu khác?
+
+Nếu chúng ta lại tạo ra một token hoặc mật khẩu để truy cập HashiCorp Vault, rồi nhét nó vào file cấu hình, thì chúng ta lại quay về vạch xuất phát.
+
+Để giải quyết triệt để, ở Mức độ 3, chúng ta không dùng mật khẩu tĩnh nữa, mà dựa vào Danh tính của hạ tầng (Infrastructure Identity). Hãy hình dung thế này: Thay vì cấp cho nhân viên một chiếc thẻ từ (thẻ có thể bị mất hoặc đánh cắp), hệ thống an ninh dùng camera nhận diện khuôn mặt. Nhân viên không cần cầm theo gì cả, hệ thống tự biết họ là ai dựa vào vị trí và hình dáng của họ.
+
+Trong thế giới thực tế, nó hoạt động như sau:
+
+**☁️ Trường hợp 1: Chạy trên Cloud (ví dụ AWS)** Thay vì cấp mật khẩu cho ứng dụng Spring Boot, bạn sẽ cấp cho máy chủ (EC2) hoặc môi trường chạy code (AWS Lambda, ECS) một "Căn cước công dân" gọi là IAM Role. Khi Spring Boot khởi động, nó sẽ tự động hỏi hạ tầng mạng của AWS: "Tôi đang chạy trên máy chủ nào? Cấp cho tôi một giấy thông hành tạm thời". AWS Secrets Manager sau đó sẽ kiểm tra giấy thông hành này, thấy hợp lệ là trả về mật khẩu Database. Hoàn toàn không có một dòng mật khẩu tĩnh nào tồn tại.
+
+**☸️ Trường hợp 2: Chạy trên Kubernetes (Docker)**
+
+Tương tự, Kubernetes cấp cho mỗi ứng dụng một chứng minh thư gọi là Service Account Token. Khi ứng dụng Spring Boot kết nối với HashiCorp Vault, nó đưa cái Token này ra. Vault sẽ tự động nói chuyện với Kubernetes API để xác minh: "Có đúng cái Token này là của ứng dụng X đang chạy trong Cluster của anh không?". Nếu đúng, Vault giao mật khẩu.
+
+Trong code Spring Boot, bạn chỉ cần khai báo phương thức xác thực, ví dụ:
+
+```yml
+spring:
+  cloud:
+    vault:
+      authentication: KUBERNETES # hoặc AWS_IAM
+```
+
+## Thứ tự ưu tiên
+
+Spring Boot có một danh sách thứ tự ưu tiên rất chặt chẽ khi đọc các giá trị cấu hình. Quy tắc cốt lõi là: _cấu hình bên ngoài sẽ ghi đè cấu hình bên trong, và cấu hình cụ thể sẽ ghi đè cấu hình chung._
+
+Dưới đây là thứ tự ưu tiên từ cao nhất xuống thấp nhất đối với các nguồn cấu hình phổ biến nhất:
+
+1️⃣ Tham số dòng lệnh (Command-line arguments): Các giá trị được truyền trực tiếp khi khởi chạy ứng dụng (ví dụ: `java -jar app.jar --server.port=9090`).
+
+2️⃣ Biến môi trường của Hệ điều hành (Environment variables): Các biến được cấu hình trên máy chủ hoặc trong container như Docker (ví dụ: `SERVER_PORT=80`).
+
+3️⃣ File cấu hình theo Profile (Profile-specific properties): Các file dành riêng cho từng môi trường, ví dụ như `application-prod.yml` hoặc `application-dev.properties`.
+
+4️⃣ File cấu hình chung (Application properties): File `application.yml` hoặc `application.properties` mặc định nằm trong thư mục gốc.
+
+5️⃣ Cấu hình mặc định trong code (Default properties): Các cấu hình được thiết lập qua annotation [@PropertySource](https://viblo.asia/u/PropertySource) hoặc phương thức `SpringApplication.setDefaultProperties`.
+
+Ở trên, mình sắp xếp theo thứ tự từ cao xuống thấp để bạn nhận thấy được giá trị cấu hình nào sẽ được ưu tiên cao nhất. Còn về bản chất, Spring Boot thực sự sẽ nạp các cấu hình từ độ ưu tiên thấp lên cao (5 ➡️ 4 ➡️ 3 ➡️ 2 ➡️ 1).
+
+Việc đọc cấu hình có độ ưu tiên thấp nhất trước (mức 5), rồi nạp dần lên mức cao nhất (mức 1) chính là cách hệ thống thực hiện nguyên tắc "kẻ đến sau ghi đè kẻ đến trước". Giá trị ở mức 1 được nạp vào bộ nhớ cuối cùng nên nó sẽ là giá trị được giữ lại và sử dụng.
+
+# Phần 5: [@RefreshScope](https://viblo.asia/u/RefreshScope)
+
+Trước khi đi vào cách sử dụng công cụ này, hãy thử hình dung thực tế nhé: Bình thường, nếu bạn đang chạy một ứng dụng Spring Boot trên máy chủ mà bạn trực tiếp mở file application.yml ra và sửa một cấu hình (ví dụ đổi một cái URL), thì sự thay đổi đó có lập tức có hiệu lực trong ứng dụng đang chạy không, hay bạn bắt buộc phải làm thao tác gì tiếp theo?
+
+Bình thường, nếu bạn sửa file application.yml trực tiếp trên máy chủ, sự thay đổi đó không lập tức có hiệu lực. Bạn bắt buộc phải khởi động lại (restart) toàn bộ ứng dụng.
+
+Tại sao lại như vậy? Khi ứng dụng khởi động, Spring Boot sẽ nạp (load) tất cả các file cấu hình và biến môi trường vào bộ nhớ RAM 🧠 một lần duy nhất. Sau đó, nó sẽ tạo ra các đối tượng (như class PaymentConfig của chúng ta) và gán cứng các giá trị này vào. Việc bạn sửa file văn bản bên ngoài không làm thay đổi các đối tượng đang chạy trong RAM.
+
+Việc phải tắt/bật lại server mỗi lần đổi một cái URL hay thay một cái mật khẩu có thể làm gián đoạn người dùng đang sử dụng hệ thống. Đây là lúc [@RefreshScope](https://viblo.asia/u/RefreshScope) (một tính năng thuộc Spring Cloud) giải quyết bài toán này.
+
+Khi bạn gắn [@RefreshScope](https://viblo.asia/u/RefreshScope) lên class, bạn đang báo cho Spring Boot biết: "Hãy theo dõi class này, nếu tôi ra lệnh làm mới, hãy hủy đối tượng cũ và tạo đối tượng mới với cấu hình mới nhất".
+
+Cách sử dụng rất đơn giản:
+
+```java
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Component;
+
+@Component
+@RefreshScope  // <--- Thêm dòng này
+@ConfigurationProperties(prefix = "app.payment")
+public class PaymentConfig {
+    private String apiUrl;
+    private String secretKey;
+
+    // Getters & Setters...
+}
+```
+
+Tuy nhiên, ứng dụng không tự động biết khi nào bạn sửa file xong để mà làm mới. Để ra lệnh cho nó, bạn cần cài đặt thêm thư viện Spring Boot Actuator. Thư viện này sẽ tạo ra một API có đường dẫn là POST `/actuator/refresh`. Khi bạn gọi API này, Spring Boot sẽ quét lại cấu hình và cập nhật cho các class có [@RefreshScope](https://viblo.asia/u/RefreshScope).
+
+Dựa vào cơ chế hoạt động này, bạn thử suy luận xem: Nếu chúng ta mở API `/actuator/refresh` ra mà không có cơ chế bảo vệ, việc bất kỳ ai cũng có thể gửi request liên tục vào đường dẫn này sẽ gây ra rủi ro gì cho hệ thống 🛡️?
+
+Việc phơi bày (expose) API /actuator/refresh ra ngoài internet mà không có lớp bảo vệ giống như việc bạn để ngỏ chìa khóa phòng cầu dao điện của tòa nhà vậy. Hệ thống sẽ đối mặt với 2 rủi ro cực kỳ lớn:
+
+- **Cạn kiệt tài nguyên và Sập hệ thống (Tấn công DoS)** 💥: Quá trình làm mới cấu hình (refresh) là một tác vụ rất nặng. Spring Boot phải hủy các đối tượng cũ, đọc lại toàn bộ biến môi trường, khởi tạo và liên kết lại các đối tượng (Beans) mới. Nếu một kẻ tấn công viết script gửi hàng trăm request mỗi giây vào đường dẫn này, CPU và RAM của máy chủ sẽ bị vắt kiệt để xử lý việc khởi tạo lại liên tục, khiến ứng dụng treo cứng và người dùng thật không thể truy cập được.
+- **Tiếp tay cho việc chiếm quyền điều khiển** 🔓: Actuator thường đi kèm với các endpoint khác như /actuator/env (cho phép xem và đôi khi là sửa biến môi trường). Nếu hacker tìm được cách tiêm (inject) một cấu hình độc hại vào hệ thống của bạn (ví dụ: đổi đường dẫn api-url thanh toán sang máy chủ của hacker), chúng chỉ cần gọi thêm /actuator/refresh là ứng dụng lập tức áp dụng đường dẫn giả mạo đó. Tiền của khách hàng sẽ chảy thẳng vào túi kẻ gian.
+
+**Cách phòng chống thực tế:**
+
+- Dùng Spring Security để yêu cầu phải có tài khoản/mật khẩu quản trị viên mới được phép gọi API này.
+- Cấu hình hạ tầng (như Nginx hoặc API Gateway) để chỉ cho phép các IP mạng nội bộ (Internal Network) mới nhìn thấy đường dẫn /actuator/..., chặn đứng mọi truy cập từ bên ngoài internet.
+
+# Lời kết
+
+Lúc này, ứng dụng của bạn đã đạt cảnh giới bảo mật cao nhất: Không có mật khẩu, không có khóa giải mã, mọi thứ được cấp phát động và tự động xoay vòng (rotate).
+
+Vậy là chúng ta đã cùng nhau "giải ngố" thành công bức tranh toàn cảnh về quản lý cấu hình trong Spring Boot. Từ việc chia tay thói quen "nhồi nhét" mọi thứ vào một file cấu hình duy nhất, hiểu được sự thông minh (và cả sự khắt khe) của cơ chế Relaxed Binding, cho đến nghệ thuật che giấu mật khẩu bằng Biến môi trường và đỉnh cao là thay đổi cấu hình "nóng" với [@RefreshScope](https://viblo.asia/u/RefreshScope).
+
+Việc thành thạo những kỹ năng này không chỉ giúp bạn chấm dứt nỗi lo nơm nớp về những pha lỡ tay "push" mật khẩu lên mạng, mà còn đánh dấu một bước chuyển mình quan trọng: từ tư duy "code sao cho chạy được" sang góc nhìn của một kỹ sư hệ thống — "code sao cho an toàn, linh hoạt và sẵn sàng triển khai (deploy) ở bất kỳ đâu".
+
+Mã nguồn của bạn giờ đây đã đủ sự "trưởng thành" để tự tin bước từ chiếc máy Local an toàn ra môi trường Production đầy khắc nghiệt. Ngay hôm nay, hãy thử mở lại dự án hiện tại của mình, dọn dẹp lại cấu trúc file YAML, rút gọn các thông tin nhạy cảm vào .env và tự mình trải nghiệm sự mượt mà mà nó mang lại.

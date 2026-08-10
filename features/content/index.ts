@@ -73,7 +73,26 @@ export function getDocsByCategory(category: string) {
   return getAllDocs().filter((doc) => doc.metadata?.category === category)
 }
 
+export function getDocBySlug(slug: string) {
+  return getAllDocs().find((doc) => doc.slug === slug)
+}
+
 /** Blog posts — docs under the `blog/` content folder. */
 export function getBlogPosts() {
   return getDocsByCategory(BLOG_CATEGORY)
+}
+
+export function findNeighbor(docs: Doc[], slug: string) {
+  const len = docs.length
+
+  for (let i = 0; i < len; ++i) {
+    if (docs[i].slug === slug) {
+      return {
+        previous: i > 0 ? docs[i - 1] : null,
+        next: i < len - 1 ? docs[i + 1] : null,
+      }
+    }
+  }
+
+  return { previous: null, next: null }
 }

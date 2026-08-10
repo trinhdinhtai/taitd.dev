@@ -9,11 +9,11 @@ _Bạn vừa hoàn thành một tính năng tuyệt vời sau nhiều đêm th�
 
 _Đừng quá lo lắng, đây là một "tai nạn" kinh điển mà gần như lập trình viên nào cũng từng trải qua. Khi mới làm quen với Spring Boot, chúng ta thường có thói quen tiện tay nhét mọi thông số cấu hình vào một file application.properties duy nhất. Cách này rất nhanh gọn khi làm việc độc lập, nhưng khi dự án phình to, cần đưa lên máy chủ thật hoặc làm việc nhóm, nó lập tức biến thành một rủi ro khổng lồ về bảo mật và vận hành. Đã đến lúc chúng ta cần "giải ngố" và nâng cấp hoàn toàn cách ứng dụng của mình quản lý các thông số này. Trong bài viết này, hãy cùng tìm hiểu nghệ thuật sử dụng YAML, Profiles và Biến môi trường để code của bạn không chỉ chạy đúng, mà còn an toàn và linh hoạt ở bất cứ đâu!_
 
-# Phần 1. Cơ bản về Properties và YAML 📝
+## Phần 1. Cơ bản về Properties và YAML
 
 Mặc định, khi bạn tạo một dự án Spring Boot, sẽ có một file tên là application.properties nằm trong thư mục src/main/resources. Đây là nơi chứa các thiết lập của ứng dụng. Bạn cũng có thể đổi đuôi file thành application.yml (hoặc .yaml). Cả hai đều có cùng mục đích nhưng khác nhau về cách trình bày văn bản.
 
-## 1.1 Định dạng .properties (Cấu trúc phẳng)
+### 1.1 Định dạng .properties (Cấu trúc phẳng)
 
 Định dạng này lưu trữ dữ liệu theo cấu trúc `key=value`. Mỗi dòng là một cấu hình độc lập và đường dẫn tới cấu hình được viết liền nhau.
 
@@ -26,7 +26,7 @@ spring.datasource.password=123456
 
 Đặc điểm ở đây là bạn phải lặp lại các tiền tố chung (như `spring.datasource.`) trên mỗi dòng.
 
-## 1.2 Định dạng `.yml` hoặc `.yaml` (Cấu trúc phân cấp)
+### 1.2 Định dạng `.yml` hoặc `.yaml` (Cấu trúc phân cấp)
 
 YAML sử dụng khoảng trắng (thụt lề) để tạo cấu trúc cây phân cấp. Nó giúp nhóm các cấu hình giống nhau lại, giảm việc lặp lại chữ và nhìn gọn gàng hơn.
 
@@ -42,11 +42,11 @@ spring:
 
 Lưu ý về cú pháp YAML: YAML rất nhạy cảm với khoảng trắng. Bạn phải dùng phím cách (Space) để thụt lề, không dùng phím Tab. Phía sau dấu hai chấm : luôn cần có một khoảng trắng trước khi viết giá trị (ví dụ: port: 8080).
 
-# Phần 2. Cấu hình theo môi trường (Profiles)
+## Phần 2. Cấu hình theo môi trường (Profiles)
 
 Trong thực tế, thông số kết nối database ở máy tính của bạn (môi trường dev) sẽ khác với máy chủ vận hành thực tế (môi trường prod). Spring Boot sử dụng khái niệm "Profile" để giải quyết việc này.
 
-## 2.1 Cách triển khai Profiles
+### 2.1 Cách triển khai Profiles
 
 Bạn có thể tạo ra nhiều file cấu hình đặt cạnh nhau trong thư mục `resources`, với quy tắc đặt tên bắt buộc là: `application-{tên_profile}.yml` (hoặc `.properties`).
 
@@ -71,7 +71,7 @@ Khi bạn không khai báo `spring.profiles.active`, Spring Boot sẽ chỉ đ�
 
 Vì cơ chế này, thực tế mọi người thường đặt các cấu hình dùng chung cho mọi môi trường vào file `application.yml`, và chỉ đưa những thông số cần thay đổi (như tài khoản database, port riêng) vào các file profile tương ứng để ghi đè.
 
-## 2.2 Chiến lược triển khai thực tế
+### 2.2 Chiến lược triển khai thực tế
 
 Bạn có thể tham khảo 3 chiến lược sử dụng trong thực tế dưới đấy:
 
@@ -100,7 +100,7 @@ Cơ chế này mang lại sự linh hoạt tuyệt vời cho ứng dụng.
 
 Sau khi đã định nghĩa các thông số trong file cấu hình (như `application.yml`), làm thế nào để lấy các giá trị đó đưa vào trong mã nguồn Java của bạn? Spring Boot cung cấp 3 cách phổ biến:
 
-## 3.1 Dùng [@Value](https://viblo.asia/u/Value) (Lấy giá trị đơn lẻ)
+## 3.1 Dùng `@Value` (Lấy giá trị đơn lẻ)
 
 Cách này dùng khi bạn chỉ cần lấy một vài giá trị rời rạc, ví dụ như tên ứng dụng hoặc một cấu hình đơn giản.
 
@@ -512,7 +512,7 @@ Dưới đây là thứ tự ưu tiên từ cao nhất xuống thấp nhất đ�
 
 Việc đọc cấu hình có độ ưu tiên thấp nhất trước (mức 5), rồi nạp dần lên mức cao nhất (mức 1) chính là cách hệ thống thực hiện nguyên tắc "kẻ đến sau ghi đè kẻ đến trước". Giá trị ở mức 1 được nạp vào bộ nhớ cuối cùng nên nó sẽ là giá trị được giữ lại và sử dụng.
 
-# Phần 5: [@RefreshScope](https://viblo.asia/u/RefreshScope)
+## Phần 5: `@RefreshScope`
 
 Trước khi đi vào cách sử dụng công cụ này, hãy thử hình dung thực tế nhé: Bình thường, nếu bạn đang chạy một ứng dụng Spring Boot trên máy chủ mà bạn trực tiếp mở file application.yml ra và sửa một cấu hình (ví dụ đổi một cái URL), thì sự thay đổi đó có lập tức có hiệu lực trong ứng dụng đang chạy không, hay bạn bắt buộc phải làm thao tác gì tiếp theo?
 

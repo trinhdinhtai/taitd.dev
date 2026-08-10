@@ -150,7 +150,7 @@
 }
 
 @utility diagonal-stripes {
-  @apply [--pattern-foreground:var(--color-line)]/56;
+  @apply [--pattern-foreground:var(--color-line)]/66;
   @apply bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed;
 }
 
@@ -163,10 +163,10 @@
 }
 
 @utility stripe-divider-vertical {
-  @apply relative w-8;
+  @apply relative w-8 self-stretch;
   &:before {
     content: "";
-    @apply absolute top-[-100vh] -z-1 h-[200vh] w-full diagonal-stripes;
+    @apply absolute inset-0 -z-1 diagonal-stripes;
   }
 }
 
@@ -180,7 +180,7 @@
   }
 }
 
-@utility prose-ncdai {
+@utility prose-taitd {
   @apply prose-headings:font-medium prose-headings:tracking-tight prose-headings:text-pretty md:prose-headings:text-balance prose-h2:text-xl prose-h3:text-lg;
   @apply prose-a:font-normal prose-a:wrap-break-word prose-a:text-foreground prose-a:link-underline;
   @apply prose-code:rounded-md prose-code:border prose-code:bg-muted/50 prose-code:px-1 prose-code:py-px prose-code:text-sm prose-code:font-normal prose-code:before:content-none prose-code:after:content-none retina:prose-code:border-[0.5px];
@@ -191,7 +191,7 @@
 }
 
 @utility code-inline {
-  @apply rounded-md border bg-muted/50 px-1 py-px font-mono text-sm font-normal whitespace-pre-wrap in-data-table-nowrap:whitespace-nowrap retina:border-[0.5px];
+  @apply rounded-md border bg-muted/50 px-1 py-px font-mono text-sm whitespace-pre-wrap in-data-table-nowrap:whitespace-nowrap retina:border-[0.5px];
 }
 
 @utility prose-no-margin {

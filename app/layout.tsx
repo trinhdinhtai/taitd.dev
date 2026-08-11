@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 import { fontVariables } from "@/lib/fonts"
-import { Providers } from "@/components/providers"
+import { Providers } from "@/components/providers-temp"
 
 export const metadata: Metadata = {
   title: "Create Next App",

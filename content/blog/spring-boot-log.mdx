@@ -1,0 +1,14 @@
+---
+title: Bạn đã thực sự hiểu về Log trong Spring Boot chưa?
+image: https://assets.chanhdai.com/images/blog/awesome-terminal.webp
+createdAt: 2026-07-26
+updatedAt: 2026-07-26
+---
+
+_Nếu ai đó hỏi bạn: 'Hệ thống Spring Boot của bạn đang dùng thư viện nào để ghi log?', bạn sẽ trả lời ra sao? SLF4J? Logback? Hay Log4j2? Nếu bạn đang cảm thấy bối rối giữa những cái tên này, thì tin tôi đi, bạn không cô đơn đâu!_
+
+_Hầu hết chúng ta khi code Spring Boot đều mặc định coi Logging là một 'tính năng tự chạy'. Chúng ta hài lòng với những dòng chữ trắng đen trôi tuột trên màn hình Console của IntelliJ. Cho đến khi đẩy app lên Production và nhận ra: Ổ cứng server đang gào thét vì ghi log quá tải, còn ứng dụng thì chậm đi trông thấy ở mỗi nhịp xử lý đồng bộ._
+
+_Cấu hình Log không chỉ là đổi màu cho đẹp, nó là nghệ thuật quản lý tài nguyên và hiệu năng hệ thống. Bài viết hôm nay sẽ thay đổi hoàn toàn cách bạn nhìn nhận về System.out.println hay những dòng [log.info](http://log.info/)() tưởng chừng vô hại. Chúng ta sẽ cùng đi từ số 0 đến cấu hình chuẩn chỉ cho môi trường thực tế._
+
+## I. Bức tranh tổng quan: Hệ sinh thái Logging trong Java

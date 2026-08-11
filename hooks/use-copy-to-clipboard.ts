@@ -1,48 +1,57 @@
-import { useState } from "react"
-import { toast } from "sonner"
+"use client"
 
-type CopyOptions = {
-  text: string
-  timeout?: number
-  successMessage?: React.ReactNode
-  errorMessage?: React.ReactNode
+import { useCallback, useRef, useState } from "react"
+import { useTiks } from "@rexa-developer/tiks/react"
+
+export type CopyState = "idle" | "done" | "error"
+
+export type UseCopyToClipboardOptions = {
+  onCopySuccess?: (text: string) => void
+  onCopyError?: (error: Error) => void
+  resetDelay?: number
 }
 
-export const useCopyToClipboard = (): {
-  copy: (options: CopyOptions) => Promise<void>
-  isCopied: boolean
-} => {
-  const [isCopied, setIsCopied] = useState(false)
+export function useCopyToClipboard({
+  onCopySuccess,
+  onCopyError,
+  resetDelay = 1500,
+}: UseCopyToClipboardOptions = {}) {
+  const [state, setState] = useState<CopyState>("idle")
+  const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const copy = async ({
-    text,
-    timeout,
-    successMessage,
-    errorMessage,
-  }: CopyOptions) => {
-    if (isCopied) return
+  const { success: tiksSuccess, error: tiksError } = useTiks()
 
-    if (!navigator?.clipboard) {
-      toast.error(
-        "Unable to access clipboard. Please grant permission to enable clipboard access."
-      )
-      return
-    }
+  const copy = useCallback(
+    async (text: string | (() => string)) => {
+      // Clear any pending reset
+      if (resetTimeoutRef.current) {
+        clearTimeout(resetTimeoutRef.current)
+      }
 
-    try {
-      await navigator.clipboard.writeText(text)
-      setIsCopied(true)
-      toast.success(successMessage ?? "Copied to clipboard!")
+      try {
+        const finalText = typeof text === "function" ? text() : text
+        await navigator.clipboard.writeText(finalText)
 
-      setTimeout(() => {
-        setIsCopied(false)
-      }, timeout ?? 2000)
-    } catch {
-      toast.error(
-        errorMessage ?? "Unable to copy to clipboard. Please try again."
-      )
-    }
-  }
+        setState("done")
 
-  return { copy, isCopied }
+        tiksSuccess()
+
+        onCopySuccess?.(finalText)
+      } catch (error) {
+        setState("error")
+
+        tiksError()
+
+        onCopyError?.(error instanceof Error ? error : new Error("Copy failed"))
+      } finally {
+        // Schedule reset to idle
+        resetTimeoutRef.current = setTimeout(() => {
+          setState("idle")
+        }, resetDelay)
+      }
+    },
+    [onCopySuccess, onCopyError, tiksSuccess, tiksError, resetDelay]
+  )
+
+  return { state, copy } as const
 }

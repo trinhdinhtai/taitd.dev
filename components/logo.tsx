@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { siteConfig } from "@/config/site"
+import { LogoMark } from "./logo-mark"
 
 const Logo = () => {
   return (
@@ -11,9 +11,9 @@ const Logo = () => {
         height={90}
         alt="logo"
         src="/images/Bongo-Cat.png"
-        className="absolute -right-8 -top-10"
+        className="absolute -top-8 -right-7 rotate-12"
       />
-      <span className="font-mono text-lg font-bold lowercase">{`${siteConfig.name}.dev()`}</span>
+      <LogoMark className="h-7" />
     </Link>
   )
 }

@@ -82,5 +82,8 @@
     "unist-builder": "3.0.0",
     "unist-util-visit": "^5.1.0"
   },
+  "engines": {
+    "node": ">=22.x"
+  },
   "packageManager": "pnpm@11.20.0"
 }

@@ -1,5 +1,4 @@
 import { MAIN_NAV } from "@/config/site"
-import { ThemeToggle } from "@/components/theme-toggle"
 
 import { CommandMenu } from "./command-menu"
 import Logo from "./logo"
@@ -31,13 +30,6 @@ export function SiteHeader() {
           />
 
           <NavItemGitHub />
-
-          <Separator
-            orientation="vertical"
-            className="mx-2 data-vertical:h-5 data-vertical:self-center"
-          />
-
-          <ThemeToggle />
         </div>
       </div>
     </header>

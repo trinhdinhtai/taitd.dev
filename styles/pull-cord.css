@@ -1,0 +1,81 @@
+/* ── PullCord — required styles ─────────────────────────────────────────────
+   Geometry/physics live in the component; only colours, the entrance and the
+   focus ring live here. Position + theme via custom properties:
+
+     --pullcord-top     anchor offset from the top (default 0px)
+     --pullcord-inset-x  inset from the viewport right edge (30px mobile, 10vw tablet+)
+     --pullcord-right   computed wrapper offset (inset minus anchor; used by the component)
+     --pullcord-z       z-index of the wrapper (default 60, above site header)
+     --pullcord-ink     rope colour (default neutral 45% gray)
+*/
+
+.pullcord {
+  --pullcord-z: 60;
+  --pullcord-bulb-outline: #cbd5e1;
+  --pullcord-bulb-wire: #94a3b8;
+  --pullcord-bulb-lit-filament: #fde047;
+  --pullcord-bulb-off-filament: #cbd5e1;
+  --pullcord-inset-x: 30px;
+  --pullcord-right: calc(
+    var(--pullcord-inset-x) - 32px + env(safe-area-inset-right, 0px)
+  );
+}
+
+@media (min-width: 1280px) {
+  .pullcord {
+    --pullcord-inset-x: 10vw;
+  }
+}
+
+.dark .pullcord {
+  --pullcord-bulb-outline: #94a3b8;
+  --pullcord-bulb-wire: #64748b;
+  --pullcord-bulb-off-filament: #94a3b8;
+}
+
+/* One-time drop-in: the rope + knob falls in from above under a CLEAN
+   gravity-accelerated fall with NO css bounce. On landing, the rope physics
+   takes the fall's momentum and does the overshoot + swing + settle as ONE
+   continuous motion. The transform lives on this INNER element so the outer
+   .pullcord keeps a stable z-index above the site header. */
+.pullcord-inner {
+  position: absolute;
+  inset: 0;
+}
+/* The entrance lives on its own class so the component can REMOVE it for good
+     after the first play. The easing accelerates and ENDS FAST so the fall hands
+     its velocity to the rope physics with no visible seam. */
+.pullcord-inner--drop {
+  animation: pullcord-drop 0.6s 0.4s cubic-bezier(0.45, 0, 0.9, 0.5) both;
+}
+@keyframes pullcord-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-230px);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pullcord-inner--drop {
+    animation: none;
+  }
+}
+
+.pullcord-knob {
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 50%;
+}
+
+.pullcord-knob:active {
+  cursor: grabbing;
+}
+
+.pullcord-knob:focus-visible {
+  outline: 2px solid var(--pullcord-ink, rgba(127, 127, 127, 0.6));
+  outline-offset: -9px; /* pulls the ring in to sit around the small weight */
+}

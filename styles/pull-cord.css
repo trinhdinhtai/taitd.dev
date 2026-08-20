@@ -10,6 +10,16 @@
 
 .pullcord {
   --pullcord-z: 60;
+  --pullcord-bulb-outline: #cbd5e1;
+  --pullcord-bulb-wire: #94a3b8;
+  --pullcord-bulb-lit-filament: #fde047;
+  --pullcord-bulb-off-filament: #cbd5e1;
+}
+
+.dark .pullcord {
+  --pullcord-bulb-outline: #94a3b8;
+  --pullcord-bulb-wire: #64748b;
+  --pullcord-bulb-off-filament: #94a3b8;
 }
 
 /* One-time drop-in: the rope + knob falls in from above under a CLEAN

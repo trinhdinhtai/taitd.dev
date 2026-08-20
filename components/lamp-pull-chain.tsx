@@ -24,7 +24,7 @@ function LampPullChain() {
   return (
     <PullCord
       onPull={() => onSwitchTheme()}
-      pulled={resolvedTheme === "dark"}
+      pulled={resolvedTheme === "light"}
       ariaLabel="Toggle theme"
     />
   )

@@ -33,8 +33,8 @@ const REST_Y = 176
 const SVG_H = 340
 const SEGMENTS = 16
 const REST_SEG = REST_Y / SEGMENTS
-const KNOB_R = 6.5
 const HIT = 46
+const FILAMENT_R = 2.3
 
 type RopeNode = { x: number; y: number; ox: number; oy: number; fixed: boolean }
 
@@ -62,11 +62,164 @@ function makeNodes(): RopeNode[] {
 }
 const INITIAL_PATH = buildPath(makeNodes())
 
+function PullCordBulb({
+  cx,
+  cy,
+  pulled,
+}: {
+  cx: number
+  cy: number
+  pulled: boolean
+}) {
+  const attach = cy
+  const baseTop = attach
+  const baseBottom = attach + 5.5
+  const glassTop = baseBottom
+  const glassBottom = attach + 23.5
+  const baseW = 7.2
+
+  const glassPath = [
+    `M ${cx - 2.9} ${glassTop}`,
+    `L ${cx + 2.9} ${glassTop}`,
+    `C ${cx + 4.4} ${glassTop + 1.5}, ${cx + 7.4} ${glassTop + 5}, ${cx + 7.8} ${glassTop + 9}`,
+    `C ${cx + 8.2} ${glassTop + 13}, ${cx + 7} ${glassBottom - 1.5}, ${cx} ${glassBottom}`,
+    `C ${cx - 7} ${glassBottom - 1.5}, ${cx - 8.2} ${glassTop + 13}, ${cx - 7.8} ${glassTop + 9}`,
+    `C ${cx - 7.4} ${glassTop + 5}, ${cx - 4.4} ${glassTop + 1.5}, ${cx - 2.9} ${glassTop}`,
+    "Z",
+  ].join(" ")
+
+  return (
+    <g>
+      <defs>
+        <clipPath id="pc-bulb-glass-clip">
+          <path d={glassPath} />
+        </clipPath>
+      </defs>
+
+      <path
+        d={glassPath}
+        fill="rgba(255, 255, 255, 0.06)"
+        stroke="var(--pullcord-bulb-outline, #cbd5e1)"
+        strokeWidth={0.85}
+        strokeLinejoin="round"
+      />
+
+      <g clipPath="url(#pc-bulb-glass-clip)">
+        <path
+          d={[
+            `M ${cx - 5.2} ${glassTop + 2.5}`,
+            `C ${cx - 7.4} ${glassTop + 4.8}, ${cx - 6.8} ${glassTop + 8.2}, ${cx - 4.6} ${glassTop + 9.6}`,
+            `C ${cx - 6.2} ${glassTop + 6.2}, ${cx - 6} ${glassTop + 3.8}, ${cx - 5.2} ${glassTop + 2.5}`,
+            "Z",
+          ].join(" ")}
+          fill="var(--pullcord-bulb-outline, #cbd5e1)"
+          opacity={0.55}
+        />
+      </g>
+
+      <path
+        d={[
+          `M ${cx - 1.6} ${glassTop + 1.2}`,
+          `L ${cx - 2.2} ${glassTop + 3.6}`,
+          `L ${cx + 2.2} ${glassTop + 3.6}`,
+          `L ${cx + 1.6} ${glassTop + 1.2}`,
+          "Z",
+        ].join(" ")}
+        fill="var(--pullcord-bulb-wire, #94a3b8)"
+        stroke="rgba(0,0,0,0.12)"
+        strokeWidth={0.25}
+      />
+
+      <line
+        x1={cx - 2.3}
+        y1={glassTop + 4.2}
+        x2={cx}
+        y2={glassTop + 8.8}
+        stroke="var(--pullcord-bulb-wire, #94a3b8)"
+        strokeWidth={0.45}
+        strokeLinecap="round"
+      />
+      <line
+        x1={cx + 2.3}
+        y1={glassTop + 4.2}
+        x2={cx}
+        y2={glassTop + 8.8}
+        stroke="var(--pullcord-bulb-wire, #94a3b8)"
+        strokeWidth={0.45}
+        strokeLinecap="round"
+      />
+      <circle
+        cx={cx}
+        cy={glassTop + 8.8}
+        r={FILAMENT_R}
+        fill={
+          pulled
+            ? "var(--pullcord-bulb-lit-filament)"
+            : "var(--pullcord-bulb-off-filament)"
+        }
+        filter={pulled ? "url(#pc-filament-glow)" : undefined}
+      />
+
+      <rect
+        x={cx - baseW / 2}
+        y={baseTop}
+        width={baseW}
+        height={baseBottom - baseTop}
+        rx={0.45}
+        fill="url(#pc-bulb-base)"
+        stroke="var(--pullcord-bulb-outline, #cbd5e1)"
+        strokeWidth={0.55}
+      />
+      <line
+        x1={cx - baseW / 2 + 0.6}
+        y1={baseTop + 0.4}
+        x2={cx - baseW / 2 + 0.6}
+        y2={baseBottom - 0.4}
+        stroke="rgba(255,255,255,0.35)"
+        strokeWidth={0.35}
+      />
+      <line
+        x1={cx + baseW / 2 - 0.6}
+        y1={baseTop + 0.4}
+        x2={cx + baseW / 2 - 0.6}
+        y2={baseBottom - 0.4}
+        stroke="rgba(255,255,255,0.22)"
+        strokeWidth={0.35}
+      />
+      {[0.85, 1.85, 2.85, 3.85].map((offset) => (
+        <line
+          key={offset}
+          x1={cx - baseW / 2 + 1}
+          y1={baseTop + offset}
+          x2={cx + baseW / 2 - 1}
+          y2={baseTop + offset}
+          stroke="#64748b"
+          strokeWidth={0.38}
+          strokeLinecap="round"
+        />
+      ))}
+
+      <path
+        d={[
+          `M ${cx - 1.5} ${baseTop}`,
+          `L ${cx + 1.5} ${baseTop}`,
+          `L ${cx + 2.4} ${baseTop - 1.5}`,
+          `L ${cx - 2.4} ${baseTop - 1.5}`,
+          "Z",
+        ].join(" ")}
+        fill="#3f2e23"
+        stroke="rgba(0,0,0,0.2)"
+        strokeWidth={0.25}
+      />
+    </g>
+  )
+}
+
 export interface PullCordProps {
   /** Fired once per pull, the moment the pull crosses the actuation depth
    *  (like a real pull-chain detenting mid-pull), and on click / Enter. */
   onPull?: () => void
-  /** Reflected as aria-pressed on the knob (e.g. true when your light is on). */
+  /** When true the bulb is lit (warm glass + glowing filament). */
   pulled?: boolean
   /** Accessible name for the knob button. */
   ariaLabel?: string
@@ -349,10 +502,32 @@ export function PullCord({
           style={{ overflow: "visible" }}
         >
           <defs>
-            <linearGradient id="pc-knob" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="100%" stopColor="#e7e7ec" />
+            <linearGradient id="pc-bulb-base" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#cbd5e1" />
+              <stop offset="18%" stopColor="#e2e8f0" />
+              <stop offset="50%" stopColor="#94a3b8" />
+              <stop offset="82%" stopColor="#e2e8f0" />
+              <stop offset="100%" stopColor="#cbd5e1" />
             </linearGradient>
+            <filter
+              id="pc-filament-glow"
+              x="-120%"
+              y="-120%"
+              width="340%"
+              height="340%"
+            >
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feFlood
+                floodColor="#facc15"
+                floodOpacity="0.75"
+                result="color"
+              />
+              <feComposite in="color" in2="blur" operator="in" result="glow" />
+              <feMerge>
+                <feMergeNode in="glow" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
             <filter
               id="pc-knob-sh"
               x="-70%"
@@ -382,14 +557,7 @@ export function PullCord({
 
           <g ref={groupRef}>
             <g filter="url(#pc-knob-sh)">
-              <circle
-                cx={ANCHOR_X}
-                cy={REST_Y}
-                r={KNOB_R}
-                fill="url(#pc-knob)"
-                stroke="rgba(0,0,0,0.10)"
-                strokeWidth={0.5}
-              />
+              <PullCordBulb cx={ANCHOR_X} cy={REST_Y} pulled={pulled} />
             </g>
           </g>
         </svg>
@@ -409,7 +577,7 @@ export function PullCord({
           style={{
             position: "absolute",
             left: ANCHOR_X - HIT / 2,
-            top: REST_Y - HIT / 2,
+            top: REST_Y + 10 - HIT / 2,
             width: HIT,
             height: HIT,
             padding: 0,

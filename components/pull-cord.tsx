@@ -482,7 +482,7 @@ export function PullCord({
       style={{
         position: "fixed",
         top: "var(--pullcord-top, 0px)",
-        right: "var(--pullcord-right, 7rem)",
+        right: "var(--pullcord-right)",
         zIndex: "var(--pullcord-z, 60)" as unknown as number,
         width: W,
         height: SVG_H,

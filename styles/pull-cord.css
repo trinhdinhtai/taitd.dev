@@ -3,7 +3,8 @@
    focus ring live here. Position + theme via custom properties:
 
      --pullcord-top     anchor offset from the top (default 0px)
-     --pullcord-right   distance from the right edge (default 7rem)
+     --pullcord-inset-x  inset from the viewport right edge (30px mobile, 10vw tablet+)
+     --pullcord-right   computed wrapper offset (inset minus anchor; used by the component)
      --pullcord-z       z-index of the wrapper (default 60, above site header)
      --pullcord-ink     rope colour (default neutral 45% gray)
 */
@@ -14,6 +15,16 @@
   --pullcord-bulb-wire: #94a3b8;
   --pullcord-bulb-lit-filament: #fde047;
   --pullcord-bulb-off-filament: #cbd5e1;
+  --pullcord-inset-x: 30px;
+  --pullcord-right: calc(
+    var(--pullcord-inset-x) - 32px + env(safe-area-inset-right, 0px)
+  );
+}
+
+@media (min-width: 1280px) {
+  .pullcord {
+    --pullcord-inset-x: 10vw;
+  }
 }
 
 .dark .pullcord {

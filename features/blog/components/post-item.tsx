@@ -1,7 +1,7 @@
 import type { ImageProps } from "next/image"
 import Image from "next/image"
 import Link from "next/link"
-import { format } from "date-fns"
+import { formatDate } from "@/utils/date"
 
 import type { Doc } from "@/features/content/types/document"
 
@@ -23,11 +23,11 @@ export function PostItem({
       {post.metadata.image && (
         <div className="relative select-none [--image-radius:var(--radius-xl)]">
           <Image
-            className="aspect-1200/630 rounded-(--image-radius) grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] group-hover/post:grayscale-0"
+            className="aspect-1200/680 rounded-(--image-radius) object-cover grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] group-hover/post:grayscale-0"
             src={post.metadata.image}
             alt={post.metadata.title}
             width={1200}
-            height={630}
+            height={680}
             quality={100}
             loading={imageLoading}
             unoptimized
@@ -56,7 +56,7 @@ export function PostItem({
           <dt className="sr-only">Published on</dt>
           <dd className="text-sm text-muted-foreground">
             <time dateTime={new Date(post.metadata.createdAt).toISOString()}>
-              {format(new Date(post.metadata.createdAt), "dd.MM.yyyy")}
+              {formatDate(post.metadata.createdAt)}
             </time>
           </dd>
         </dl>

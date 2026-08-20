@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/date"
 import { urlToName } from "@/utils/url"
 import {
   CakeIcon,
@@ -34,13 +35,8 @@ function getGenderIcon(gender: User["gender"]) {
   }
 }
 
-function formatDateOfBirth(dateOfBirth: string) {
-  const [year, month, day] = dateOfBirth.split("-")
-  return `${year}/${month}/${day}`
-}
-
 export function Overview() {
-  const dateOfBirth = formatDateOfBirth(USER.dateOfBirth)
+  const dateOfBirth = formatDate(USER.dateOfBirth)
 
   return (
     <Panel className="screen-line-bottom-none">

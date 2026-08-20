@@ -35,6 +35,9 @@ const SEGMENTS = 16
 const REST_SEG = REST_Y / SEGMENTS
 const HIT = 46
 const FILAMENT_R = 2.3
+const BULB_SCALE = 1.2
+const BULB_HEIGHT = 23.5 * BULB_SCALE
+const BULB_HIT = HIT * BULB_SCALE
 
 type RopeNode = { x: number; y: number; ox: number; oy: number; fixed: boolean }
 
@@ -556,8 +559,12 @@ export function PullCord({
           />
 
           <g ref={groupRef}>
-            <g filter="url(#pc-knob-sh)">
-              <PullCordBulb cx={ANCHOR_X} cy={REST_Y} pulled={pulled} />
+            <g
+              transform={`translate(${ANCHOR_X} ${REST_Y}) scale(${BULB_SCALE}) translate(${-ANCHOR_X} ${-REST_Y})`}
+            >
+              <g filter="url(#pc-knob-sh)">
+                <PullCordBulb cx={ANCHOR_X} cy={REST_Y} pulled={pulled} />
+              </g>
             </g>
           </g>
         </svg>
@@ -576,10 +583,10 @@ export function PullCord({
           onKeyDown={onKeyDown}
           style={{
             position: "absolute",
-            left: ANCHOR_X - HIT / 2,
-            top: REST_Y + 10 - HIT / 2,
-            width: HIT,
-            height: HIT,
+            left: ANCHOR_X - BULB_HIT / 2,
+            top: REST_Y + BULB_HEIGHT / 2 - BULB_HIT / 2,
+            width: BULB_HIT,
+            height: BULB_HIT,
             padding: 0,
             border: "none",
             background: "transparent",

@@ -33,6 +33,17 @@
   --pullcord-bulb-off-filament: #94a3b8;
 }
 
+/* Theme-driven filament — follows html.dark (next-themes) to avoid SSR mismatch. */
+.pullcord-bulb-filament {
+  fill: var(--pullcord-bulb-lit-filament);
+  filter: url(#pc-filament-glow);
+}
+
+.dark .pullcord-bulb-filament {
+  fill: var(--pullcord-bulb-off-filament);
+  filter: none;
+}
+
 /* One-time drop-in: the rope + knob falls in from above under a CLEAN
    gravity-accelerated fall with NO css bounce. On landing, the rope physics
    takes the fall's momentum and does the overshoot + swing + settle as ONE

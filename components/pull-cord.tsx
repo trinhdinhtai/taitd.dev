@@ -65,15 +65,7 @@ function makeNodes(): RopeNode[] {
 }
 const INITIAL_PATH = buildPath(makeNodes())
 
-function PullCordBulb({
-  cx,
-  cy,
-  pulled,
-}: {
-  cx: number
-  cy: number
-  pulled: boolean
-}) {
+function PullCordBulb({ cx, cy }: { cx: number; cy: number }) {
   const attach = cy
   const baseTop = attach
   const baseBottom = attach + 5.5
@@ -152,15 +144,10 @@ function PullCordBulb({
         strokeLinecap="round"
       />
       <circle
+        className="pullcord-bulb-filament"
         cx={cx}
         cy={glassTop + 8.8}
         r={FILAMENT_R}
-        fill={
-          pulled
-            ? "var(--pullcord-bulb-lit-filament)"
-            : "var(--pullcord-bulb-off-filament)"
-        }
-        filter={pulled ? "url(#pc-filament-glow)" : undefined}
       />
 
       <rect
@@ -563,7 +550,7 @@ export function PullCord({
               transform={`translate(${ANCHOR_X} ${REST_Y}) scale(${BULB_SCALE}) translate(${-ANCHOR_X} ${-REST_Y})`}
             >
               <g filter="url(#pc-knob-sh)">
-                <PullCordBulb cx={ANCHOR_X} cy={REST_Y} pulled={pulled} />
+                <PullCordBulb cx={ANCHOR_X} cy={REST_Y} />
               </g>
             </g>
           </g>

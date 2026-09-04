@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "build:icons": "node scripts/build-icons.ts",
+    "generate:og": "node node_modules/tsx/dist/cli.mjs scripts/generate-og-image.ts",
     "prepare": "husky"
   },
   "dependencies": {
@@ -75,8 +76,10 @@
     "remark-rehype": "^11.1.2",
     "rimraf": "^6.1.3",
     "shiki": "^4.4.2",
+    "sharp": "^0.34.5",
     "strip-indent": "^4.1.1",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "ts-morph": "26.0.0",
     "typescript": "^5",
     "unist-builder": "3.0.0",

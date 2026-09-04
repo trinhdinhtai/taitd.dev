@@ -17,4 +17,5 @@ export type SiteConfig = {
   utmParams: {
     source: string
   }
+  keywords: string[]
 }

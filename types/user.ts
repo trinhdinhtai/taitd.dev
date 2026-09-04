@@ -9,6 +9,9 @@ export type SocialProfile = {
 }
 
 export type User = {
+  firstName: string
+  lastName: string
+  username: string
   displayName: string
   address: string
   timeZone: string
@@ -18,6 +21,7 @@ export type User = {
   pronouns: string
   gender: string
   dateOfBirth: string
+  jobTitle: string
   jobs: {
     title: string
     company: string

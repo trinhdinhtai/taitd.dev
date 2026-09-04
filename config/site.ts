@@ -12,6 +12,9 @@ export const MAIN_NAV: NavItem<Route>[] = [
 ]
 
 export const USER: User = {
+  firstName: "Trịnh Đình",
+  lastName: "Tài",
+  username: "taitd",
   displayName: "Trịnh Đình Tài",
   address: "Hà Nội, Việt Nam",
   timeZone: "Asia/Ho_Chi_Minh",
@@ -21,6 +24,7 @@ export const USER: User = {
   pronouns: "he/him",
   gender: "male",
   dateOfBirth: "1996-03-15",
+  jobTitle: "Full Stack Developer",
   jobs: [
     {
       title: "Full Stack Developer / Technical Leader",
@@ -82,13 +86,18 @@ export const SOCIAL_LINKS: SocialLink[] = (
 
 export const GITHUB_USERNAME = SOCIAL.github.handle
 
+export const META_THEME_COLORS = {
+  light: "#ffffff",
+  dark: "#09090b",
+}
+
 export const SITE_CONFIG: SiteConfig = {
   name: "Taitd",
   handle: "@taitd",
   description:
     "This website is my personal blog. I write about web development, JavaScript, TypeScript, React, Node.js, CSS, and more.",
   url: "https://taitd.dev",
-  ogImage: "/images/og.png",
+  ogImage: "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/og.png",
   links: {
     mail: "taitd153.dev@gmail.com",
     twitter: "https://twitter.com/taitddev",
@@ -102,4 +111,13 @@ export const SITE_CONFIG: SiteConfig = {
   utmParams: {
     source: "taitd.dev",
   },
+  keywords: [
+    "taitd",
+    "trinhdinhtai",
+    "Trịnh Đình Tài",
+    "Trinh Dinh Tai",
+    "dinhtai",
+    "dinh tai",
+    "taitd.dev",
+  ],
 }

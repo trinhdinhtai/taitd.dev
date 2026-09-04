@@ -86,14 +86,18 @@ export const SOCIAL_LINKS: SocialLink[] = (
 
 export const GITHUB_USERNAME = SOCIAL.github.handle
 
+export const META_THEME_COLORS = {
+  light: "#ffffff",
+  dark: "#09090b",
+}
+
 export const SITE_CONFIG: SiteConfig = {
   name: "Taitd",
   handle: "@taitd",
   description:
     "This website is my personal blog. I write about web development, JavaScript, TypeScript, React, Node.js, CSS, and more.",
   url: "https://taitd.dev",
-  ogImage:
-    "https://assets.chanhdai.com/images/screenshot-og-image-dark.png?t=1778602757",
+  ogImage: "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/og.png",
   links: {
     mail: "taitd153.dev@gmail.com",
     twitter: "https://twitter.com/taitddev",

@@ -12,6 +12,9 @@ export const MAIN_NAV: NavItem<Route>[] = [
 ]
 
 export const USER: User = {
+  firstName: "Trịnh Đình",
+  lastName: "Tài",
+  username: "taitd",
   displayName: "Trịnh Đình Tài",
   address: "Hà Nội, Việt Nam",
   timeZone: "Asia/Ho_Chi_Minh",
@@ -21,6 +24,7 @@ export const USER: User = {
   pronouns: "he/him",
   gender: "male",
   dateOfBirth: "1996-03-15",
+  jobTitle: "Full Stack Developer",
   jobs: [
     {
       title: "Full Stack Developer / Technical Leader",
@@ -88,7 +92,8 @@ export const SITE_CONFIG: SiteConfig = {
   description:
     "This website is my personal blog. I write about web development, JavaScript, TypeScript, React, Node.js, CSS, and more.",
   url: "https://taitd.dev",
-  ogImage: "/images/og.png",
+  ogImage:
+    "https://assets.chanhdai.com/images/screenshot-og-image-dark.png?t=1778602757",
   links: {
     mail: "taitd153.dev@gmail.com",
     twitter: "https://twitter.com/taitddev",
@@ -102,4 +107,13 @@ export const SITE_CONFIG: SiteConfig = {
   utmParams: {
     source: "taitd.dev",
   },
+  keywords: [
+    "taitd",
+    "trinhdinhtai",
+    "Trịnh Đình Tài",
+    "Trinh Dinh Tai",
+    "dinhtai",
+    "dinh tai",
+    "taitd.dev",
+  ],
 }

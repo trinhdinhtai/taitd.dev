@@ -254,7 +254,6 @@ export function PullCord({
   const didDrag = useRef(false)
   const clicked = useRef(false) // once-per-pull guard: the switch clicks a single time per pull
   const pendingToggle = useRef(false)
-  const simPaused = useRef(false)
   const target = useRef({ x: ANCHOR_X, y: REST_Y })
   const wake = useRef<() => void>(() => {})
   const onDetentRef = useRef(onDetent)
@@ -303,19 +302,6 @@ export function PullCord({
       // normalise it to real time so the feel is identical at any refresh rate.
       const velCoef = tc * Math.pow(damping, dt * 60)
       const accCoef = dt * dt
-
-      if (simPaused.current) {
-        if (dragging.current) {
-          pts[last].x = target.current.x
-          pts[last].y = target.current.y
-          render()
-          raf = requestAnimationFrame(step)
-        } else {
-          render()
-          running = false
-        }
-        return
-      }
 
       pts[last].fixed = dragging.current
 
@@ -393,14 +379,7 @@ export function PullCord({
   }
 
   const doToggle = (origin: PullCordOrigin) => {
-    const result = onPullRef.current?.(origin)
-    if (result && typeof result.then === "function") {
-      simPaused.current = true
-      result.finally(() => {
-        simPaused.current = false
-        wake.current()
-      })
-    }
+    onPullRef.current?.(origin)
   }
 
   // A click / keypress simulates a real pull: detent sound, theme toggle, then yank.
@@ -513,7 +492,11 @@ export function PullCord({
 
   return (
     <div
-      className={className ? `pullcord ${className}` : "pullcord"}
+      className={
+        className
+          ? `pullcord pullcord-widget ${className}`
+          : "pullcord pullcord-widget"
+      }
       style={{
         position: "fixed",
         top: "var(--pullcord-top, 0px)",

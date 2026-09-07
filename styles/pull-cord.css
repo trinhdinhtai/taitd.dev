@@ -10,7 +10,6 @@
 */
 
 .pullcord {
-  view-transition-name: none;
   --pullcord-z: 60;
   --pullcord-bulb-outline: #cbd5e1;
   --pullcord-bulb-wire: #94a3b8;

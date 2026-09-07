@@ -205,10 +205,16 @@ function PullCordBulb({ cx, cy }: { cx: number; cy: number }) {
   )
 }
 
+export type PullCordOrigin = {
+  x: number
+  y: number
+}
+
 export interface PullCordProps {
-  /** Fired once per pull, the moment the pull crosses the actuation depth
-   *  (like a real pull-chain detenting mid-pull), and on click / Enter. */
-  onPull?: () => void
+  /** Fired when the pull crosses the actuation depth (detent click). */
+  onDetent?: () => void
+  /** Fired once per pull on release (drag) or immediately on click / Enter. */
+  onPull?: (origin: PullCordOrigin) => void | Promise<void>
   /** When true the bulb is lit (warm glass + glowing filament). */
   pulled?: boolean
   /** Accessible name for the knob button. */
@@ -222,6 +228,7 @@ export interface PullCordProps {
 }
 
 export function PullCord({
+  onDetent,
   onPull,
   pulled = false,
   ariaLabel = "Pull the cord",
@@ -246,9 +253,16 @@ export function PullCord({
   const dragging = useRef(false)
   const didDrag = useRef(false)
   const clicked = useRef(false) // once-per-pull guard: the switch clicks a single time per pull
+  const pendingToggle = useRef(false)
+  const simPaused = useRef(false)
   const target = useRef({ x: ANCHOR_X, y: REST_Y })
   const wake = useRef<() => void>(() => {})
+  const onDetentRef = useRef(onDetent)
   const onPullRef = useRef(onPull)
+
+  useLayoutEffect(() => {
+    onDetentRef.current = onDetent
+  }, [onDetent])
 
   useLayoutEffect(() => {
     onPullRef.current = onPull
@@ -289,6 +303,19 @@ export function PullCord({
       // normalise it to real time so the feel is identical at any refresh rate.
       const velCoef = tc * Math.pow(damping, dt * 60)
       const accCoef = dt * dt
+
+      if (simPaused.current) {
+        if (dragging.current) {
+          pts[last].x = target.current.x
+          pts[last].y = target.current.y
+          render()
+          raf = requestAnimationFrame(step)
+        } else {
+          render()
+          running = false
+        }
+        return
+      }
 
       pts[last].fixed = dragging.current
 
@@ -358,13 +385,28 @@ export function PullCord({
     return () => cancelAnimationFrame(raf)
   }, [])
 
-  // The "click" itself.
-  const doToggle = () => onPullRef.current?.()
+  const getKnobCenter = (): PullCordOrigin => {
+    const el = knobRef.current
+    if (!el) return { x: window.innerWidth * 0.9, y: 80 }
+    const r = el.getBoundingClientRect()
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2 }
+  }
 
-  // A click / keypress simulates a real pull: the switch clicks and the rope
-  // yanks down then retracts under physics.
+  const doToggle = (origin: PullCordOrigin) => {
+    const result = onPullRef.current?.(origin)
+    if (result && typeof result.then === "function") {
+      simPaused.current = true
+      result.finally(() => {
+        simPaused.current = false
+        wake.current()
+      })
+    }
+  }
+
+  // A click / keypress simulates a real pull: detent sound, theme toggle, then yank.
   const scriptedPull = () => {
-    doToggle()
+    onDetentRef.current?.()
+    doToggle(getKnobCenter())
     if (reduce) return
     const pts = nodesRef.current
     pts[pts.length - 1].oy -= 22 // downward yank -> the rope recoils + settles
@@ -374,7 +416,8 @@ export function PullCord({
   const onPanStart = () => {
     dragging.current = true
     didDrag.current = true
-    clicked.current = false // arm the switch for this pull
+    clicked.current = false
+    pendingToggle.current = false
     wake.current()
   }
 
@@ -395,7 +438,8 @@ export function PullCord({
     const clickAt = Math.min(stretchToggle, stretchMax - 1)
     if (!clicked.current && dist - REST_Y >= clickAt) {
       clicked.current = true
-      doToggle()
+      onDetentRef.current?.()
+      pendingToggle.current = true
     }
   }
 
@@ -412,8 +456,12 @@ export function PullCord({
       p.ox = p.x - vx * k
       p.oy = p.y - vy * k
     }
-    // Release: the cord retracts and settles under physics. The switch already
-    // clicked mid-pull (onPan), so there is deliberately no toggle here.
+
+    if (pendingToggle.current) {
+      pendingToggle.current = false
+      doToggle(getKnobCenter())
+    }
+
     wake.current()
     requestAnimationFrame(() => {
       didDrag.current = false

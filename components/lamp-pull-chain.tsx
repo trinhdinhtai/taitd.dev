@@ -30,6 +30,7 @@ function LampPullChain() {
   return (
     <>
       <PullCord
+        onDetent={() => clickSound()}
         onPull={() => onSwitchTheme()}
         pulled={isClient && resolvedTheme === "light"}
         ariaLabel="Toggle theme"

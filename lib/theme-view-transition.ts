@@ -4,7 +4,9 @@ export type ThemeTransitionOrigin = {
 }
 
 const ACTIVE_CLASS = "theme-transition-active"
-const DURATION_MS = 550
+const DURATION_MS = 1530
+/** Soft edge on the expanding reveal circle (SVG mask blur). */
+const HOLE_BLUR = 69
 /** Approximation of --expo-out for WAAPI / SVG. */
 const EASING = "cubic-bezier(0.16, 1, 0.3, 1)"
 
@@ -24,8 +26,9 @@ function maxRevealRadius(origin: ThemeTransitionOrigin) {
 }
 
 /**
- * SVG mask + WAAPI — expanding hole at `origin` (zoom-in). Pull cord stays live
- * above the veil (z-index 60 vs 55). Avoids CSS mask-image full-page repaints.
+ * SVG mask + WAAPI at `origin`. Light → dark: old veil shrinks (zoom-out).
+ * Dark → light: hole expands (zoom-in). Pull cord stays live above the veil
+ * (z-index 60 vs 55).
  */
 export function startThemeTransition(
   updateDom: () => void,
@@ -41,7 +44,11 @@ export function startThemeTransition(
   root.classList.add(ACTIVE_CLASS)
 
   const { innerWidth: vw, innerHeight: vh } = window
-  const maskId = `theme-transition-mask-${Date.now()}`
+  const maxR = maxRevealRadius(origin)
+  const zoomIn = previousTheme === "dark"
+  const uid = Date.now()
+  const maskId = `theme-transition-mask-${uid}`
+  const filterId = `theme-transition-blur-${uid}`
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
   svg.setAttribute("aria-hidden", "true")
@@ -49,19 +56,42 @@ export function startThemeTransition(
   svg.classList.add("theme-transition-overlay")
 
   const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs")
+
+  const blurFilter = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "filter"
+  )
+  blurFilter.setAttribute("id", filterId)
+  // objectBoundingBox clips blur when r≈0; use viewport space instead.
+  blurFilter.setAttribute("filterUnits", "userSpaceOnUse")
+  blurFilter.setAttribute("x", "0")
+  blurFilter.setAttribute("y", "0")
+  blurFilter.setAttribute("width", String(vw))
+  blurFilter.setAttribute("height", String(vh))
+
+  const blur = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "feGaussianBlur"
+  )
+  blur.setAttribute("stdDeviation", String(HOLE_BLUR))
+  blurFilter.append(blur)
+
   const mask = document.createElementNS("http://www.w3.org/2000/svg", "mask")
   mask.setAttribute("id", maskId)
+  mask.setAttribute("maskUnits", "userSpaceOnUse")
+  mask.setAttribute("maskContentUnits", "userSpaceOnUse")
 
   const maskBg = document.createElementNS("http://www.w3.org/2000/svg", "rect")
   maskBg.setAttribute("width", String(vw))
   maskBg.setAttribute("height", String(vh))
-  maskBg.setAttribute("fill", "white")
+  maskBg.setAttribute("fill", zoomIn ? "white" : "black")
 
   const hole = document.createElementNS("http://www.w3.org/2000/svg", "circle")
   hole.setAttribute("cx", String(origin.x))
   hole.setAttribute("cy", String(origin.y))
-  hole.setAttribute("r", "0")
-  hole.setAttribute("fill", "black")
+  hole.setAttribute("r", zoomIn ? "0" : String(maxR))
+  hole.setAttribute("fill", zoomIn ? "black" : "white")
+  hole.setAttribute("filter", `url(#${filterId})`)
 
   const veil = document.createElementNS("http://www.w3.org/2000/svg", "rect")
   veil.setAttribute("width", String(vw))
@@ -70,11 +100,9 @@ export function startThemeTransition(
   veil.setAttribute("mask", `url(#${maskId})`)
 
   mask.append(maskBg, hole)
-  defs.append(mask)
+  defs.append(blurFilter, mask)
   svg.append(defs, veil)
   document.body.appendChild(svg)
-
-  const maxR = maxRevealRadius(origin)
 
   return new Promise<void>((resolve) => {
     const finish = () => {
@@ -87,11 +115,16 @@ export function startThemeTransition(
       updateDom()
 
       requestAnimationFrame(() => {
-        const anim = hole.animate([{ r: "0px" }, { r: `${maxR}px` }], {
-          duration: DURATION_MS,
-          easing: EASING,
-          fill: "forwards",
-        })
+        const anim = hole.animate(
+          zoomIn
+            ? [{ r: "0px" }, { r: `${maxR}px` }]
+            : [{ r: `${maxR}px` }, { r: "0px" }],
+          {
+            duration: DURATION_MS,
+            easing: EASING,
+            fill: "forwards",
+          }
+        )
 
         anim.finished.then(finish).catch(finish)
       })

@@ -5,6 +5,7 @@ import SocialLinks from "@/components/features/portfolio/social-links"
 import StripeSeparator from "@/components/stripe-separator"
 import { Blog } from "@/features/portfolio/components/blog"
 import { Hello } from "@/features/portfolio/components/hello"
+import { TechStack } from "@/features/portfolio/components/tech-stack"
 
 export default function HomePage() {
   return (
@@ -22,6 +23,8 @@ export default function HomePage() {
           <Hello />
           <StripeSeparator />
           <Blog />
+          <StripeSeparator />
+          <TechStack />
         </div>
 
         <StripeSeparator orientation="vertical" />

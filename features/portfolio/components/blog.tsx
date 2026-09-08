@@ -9,7 +9,10 @@ import {
   Panel,
   PanelHeader,
   PanelTitle,
+  PanelTitleSup,
 } from "@/features/portfolio/components/panel"
+
+import { PanelTitleCopy } from "./panel-title-copy"
 
 const ID = "blog"
 
@@ -21,6 +24,8 @@ export function Blog() {
       <PanelHeader>
         <PanelTitle>
           <a href={`#${ID}`}>Blog</a>
+          <PanelTitleSup>({allPosts.length})</PanelTitleSup>
+          <PanelTitleCopy id={ID} />
         </PanelTitle>
       </PanelHeader>
 

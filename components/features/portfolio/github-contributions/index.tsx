@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import { getGitHubContributions } from "@/data/github-contributions"
 
-import { Panel } from "../panel"
+import { Panel } from "../../../../features/portfolio/components/panel"
 import { GitHubContributionFallback, GitHubContributionGraph } from "./graph"
 
 export function GitHubContributions() {

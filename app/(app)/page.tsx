@@ -3,6 +3,8 @@ import { Overview } from "@/components/features/portfolio/overview"
 import { ProfileHeader } from "@/components/features/portfolio/profile-header"
 import SocialLinks from "@/components/features/portfolio/social-links"
 import StripeSeparator from "@/components/stripe-separator"
+import { Blog } from "@/features/portfolio/components/blog"
+import { Hello } from "@/features/portfolio/components/hello"
 
 export default function HomePage() {
   return (
@@ -17,6 +19,9 @@ export default function HomePage() {
           <SocialLinks />
           <GitHubContributions />
           <StripeSeparator />
+          <Hello />
+          <StripeSeparator />
+          <Blog />
         </div>
 
         <StripeSeparator orientation="vertical" />

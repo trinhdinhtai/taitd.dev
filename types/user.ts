@@ -21,6 +21,7 @@ export type User = {
   pronouns: string
   gender: string
   dateOfBirth: string
+  about: string
   jobTitle: string
   jobs: {
     title: string

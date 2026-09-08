@@ -24,6 +24,8 @@ export const USER: User = {
   pronouns: "he/him",
   gender: "male",
   dateOfBirth: "1996-03-15",
+  about:
+    "I'm a full stack developer with a passion for building web applications. I'm a quick learner and I'm always looking to improve my skills.",
   jobTitle: "Full Stack Developer",
   jobs: [
     {

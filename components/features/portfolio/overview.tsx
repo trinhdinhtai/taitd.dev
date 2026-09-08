@@ -12,6 +12,10 @@ import {
 import type { User } from "@/types/user"
 import { USER } from "@/config/site"
 
+import {
+  Panel,
+  PanelContent,
+} from "../../../features/portfolio/components/panel"
 import { CurrentLocalTimeItem } from "./overview/current-local-time-item"
 import { EmailItem } from "./overview/email-item"
 import {
@@ -22,7 +26,6 @@ import {
 } from "./overview/intro-item"
 import { JobItem } from "./overview/job-item"
 import { PhoneItem } from "./overview/phone-item"
-import { Panel, PanelContent } from "./panel"
 
 function getGenderIcon(gender: User["gender"]) {
   switch (gender) {

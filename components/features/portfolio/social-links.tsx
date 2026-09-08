@@ -8,7 +8,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { Panel, PanelContent } from "./panel"
+import {
+  Panel,
+  PanelContent,
+} from "../../../features/portfolio/components/panel"
 import { SOCIAL_ICONS } from "./social-link-icons"
 
 export default function SocialLinks() {

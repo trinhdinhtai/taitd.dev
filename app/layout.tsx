@@ -41,6 +41,31 @@ export const metadata: Metadata = {
       },
     ],
   },
+  icons: {
+    icon: [
+      {
+        url: "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/favicon.ico",
+        sizes: "32x32",
+      },
+      {
+        url: "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/favicon.svg",
+        sizes: "any",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "hhttps://crfwhxnljoovwr4n.public.blob.vercel-storage.com/favicon-dark.svg",
+        sizes: "any",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    apple: {
+      url: "https://crfwhxnljoovwr4n.public.blob.vercel-storage.com/apple-touch-icon.png",
+      type: "image/png",
+      sizes: "180x180",
+    },
+  },
 }
 
 export const viewport: Viewport = {
